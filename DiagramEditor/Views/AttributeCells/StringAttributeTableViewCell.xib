@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="49" id="9cm-PD-MLt" customClass="StringAttributeTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="190" height="48"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9cm-PD-MLt" id="PCm-Wm-TuS">
+                <rect key="frame" x="0.0" y="0.0" width="190" height="47"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="QKV-Lg-jdV">
+                        <rect key="frame" x="8" y="8" width="59" height="27"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="74" id="hj3-dI-hyi"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="19"/>
+                        <color key="textColor" red="0.71764707565307617" green="0.76862746477127075" blue="0.89803922176361084" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mhm-p4-cxz">
+                        <rect key="frame" x="75" y="8" width="107" height="30"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                    </textField>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottomMargin" secondItem="QKV-Lg-jdV" secondAttribute="bottom" constant="4" id="0XP-9A-C57"/>
+                    <constraint firstAttribute="topMargin" secondItem="Mhm-p4-cxz" secondAttribute="top" id="5D7-mV-LiM"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Mhm-p4-cxz" secondAttribute="trailing" id="EtZ-mi-OuQ"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="Mhm-p4-cxz" secondAttribute="bottom" constant="1" id="Ja1-iI-oNm"/>
+                    <constraint firstAttribute="leadingMargin" secondItem="QKV-Lg-jdV" secondAttribute="leading" id="U5J-h7-HzF"/>
+                    <constraint firstItem="Mhm-p4-cxz" firstAttribute="leading" secondItem="QKV-Lg-jdV" secondAttribute="trailing" constant="8" id="khf-Mx-5XO"/>
+                    <constraint firstAttribute="topMargin" secondItem="QKV-Lg-jdV" secondAttribute="top" id="xBM-Wd-bji"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="attributeNameLabel" destination="QKV-Lg-jdV" id="COj-tk-eVO"/>
+                <outlet property="textField" destination="Mhm-p4-cxz" id="SzH-ez-UPG"/>
+            </connections>
+            <point key="canvasLocation" x="491" y="239"/>
+        </tableViewCell>
+    </objects>
+</document>
