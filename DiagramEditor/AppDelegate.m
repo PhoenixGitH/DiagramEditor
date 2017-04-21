@@ -686,6 +686,7 @@
                     ca.max = [NSNumber numberWithInteger:tempatt.max.intValue];
                     ca.min = [NSNumber numberWithInteger:tempatt.min.intValue];
                     ca.type = [tempatt.type copy];
+                    ca.annotations = [tempatt.annotations copy];
                     
                     if([pi.labelsAttributesArray containsObject:tempatt.name]){ //EL nombre de este atributo está entre los marcados como label
                         ca.isLabel = YES;

@@ -922,6 +922,8 @@
     
     GeoComponentPointAnnotation * point = [[GeoComponentPointAnnotation alloc] init];
     point.coordinate = tapPoint;
+    comp.latitude = tapPoint.latitude;
+    comp.longitude = tapPoint.longitude;
     point.component = comp;
 
     
@@ -938,6 +940,8 @@
     
     GeoComponentPointAnnotation * point = [[GeoComponentPointAnnotation alloc] init];
     point.coordinate = coord;
+    comp.latitude = lat;
+    comp.longitude = lon;
     point.component = comp;
     
     
@@ -3735,7 +3739,8 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
 {
     
     if([annotation isKindOfClass:[MKUserLocation class]]){
-       
+       //TODO: Change User location pin.
+        
     }else if([annotation isKindOfClass:[AlertAnnotation class]]){
         //It is an alert annotation
         Alert * associated = ((AlertAnnotation *)annotation).alert;

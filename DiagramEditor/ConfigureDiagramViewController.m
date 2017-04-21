@@ -1907,7 +1907,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
         //JsonDic es el fichero JSON (ecore)
         NSMutableDictionary *jsonDict = [NSJSONSerialization
                                          JSONObjectWithData:[jsonString dataUsingEncoding:NSUTF8StringEncoding]
-                                         options:NSJSONReadingMutableContainers
+                                         options:0
                                          error:&jsonError];
         
         NSArray * classes = [jsonDict objectForKey:@"classes"];
@@ -2160,6 +2160,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
                 temp.min = [f numberFromString:[atrDic objectForKey:@"min"]];
                 temp.max = [f numberFromString:[atrDic objectForKey:@"max"]];
                 temp.defaultValue = [atrDic objectForKey:@"default"];
+                temp.annotations = [atrDic objectForKey:@"annotations"];
                 if([temp.defaultValue isEqualToString:@"null"]){
                     temp.defaultValue = @"";
                 }

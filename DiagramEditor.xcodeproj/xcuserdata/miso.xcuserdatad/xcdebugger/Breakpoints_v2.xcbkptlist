@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DiagramEditor/EditorViewController.m"
+            timestampString = "514297879.077231"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3069"
+            endingLineNumber = "3069"
+            landmarkName = "-createNoteViewConfirmWithText:andImage:andLocation:onPoint:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[EditorViewController createNoteViewConfirmWithText:andImage:andLocation:onPoint:]"
+                  moduleName = "DiagramEditor"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/miso/Desktop/DiagramEditor/DiagramEditor/EditorViewController.m"
+                  timestampString = "514297879.303982"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "3071"
+                  endingLineNumber = "3071"
+                  offsetFromSymbolStart = "1230">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[EditorViewController createNoteViewConfirmWithText:andImage:andLocation:onPoint:]"
+                  moduleName = "DiagramEditor"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/miso/Desktop/DiagramEditor/DiagramEditor/EditorViewController.m"
+                  timestampString = "514297879.307337"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "3071"
+                  endingLineNumber = "3071"
+                  offsetFromSymbolStart = "1245">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DiagramEditor/EditorViewController.m"
+            timestampString = "514457496.894753"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3799"
+            endingLineNumber = "3799"
+            landmarkName = "-handleAnnotationPoint:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DiagramEditor/EditorViewController.m"
+            timestampString = "514457483.106228"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3743"
+            endingLineNumber = "3743"
+            landmarkName = "-mapView:viewForAnnotation:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

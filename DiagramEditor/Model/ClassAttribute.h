@@ -17,6 +17,7 @@
 @property NSNumber * max;
 @property NSString * defaultValue;
 @property NSString * currentValue;
+@property NSDictionary * annotations;
 
 @property BOOL isLabel;
 

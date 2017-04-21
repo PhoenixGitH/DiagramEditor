@@ -1,3 +1,4 @@
+
 //
 //  ComponentDetailsViewController.m
 //  DiagramEditor
@@ -7,6 +8,9 @@
 //
 
 #import "ComponentDetailsView.h"
+#import "RARest.h"
+#import "WARest.h"
+#import "CallModel.h"
 #import "Component.h"
 #import "AppDelegate.h"
 #import "Connection.h"
@@ -23,6 +27,7 @@
 #import "IntegerTableViewCell.h"
 #import "EnumTableViewCell.h"
 
+#define getInfo @"https://triggerstest.herokuapp.com/api/Call/"
 
 @interface ComponentDetailsView ()
 
@@ -365,9 +370,10 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
                         [atvc.textField setEnabled:NO];
                     }
                     
+                    // TODO: Add the new values getted by API.
                     for(ClassAttribute * atr in comp.attributes){
                         if([atr.name isEqualToString:atvc.attributeNameLabel.text]){
-                            atvc.textField.text =  atr.currentValue ;
+                            [self checkForAPIString: atr andCell: atvc];
                         }
                     }
                     [comp updateNameLabel];
@@ -406,7 +412,6 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
                     }else if([attr.currentValue isEqualToString:@"true"]){
                         [batvc.switchValue setOn:YES];
                     }
-                    
                     batvc.selectionStyle = UITableViewCellSelectionStyleNone;
                     
                 }
@@ -431,7 +436,7 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
                     }
                     
                     //Update textfield value for this attribute value
-                    [datvc.textField setText:attr.currentValue];
+                    [self checkForAPIDouble: attr andCell: datvc];
                     datvc.selectionStyle = UITableViewCellSelectionStyleNone;
                 }
                 return  datvc;
@@ -452,7 +457,7 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
                     }else{
                         [iatvc.textField setEnabled:NO];
                     }
-                    [iatvc.textField setText:attr.currentValue];
+                    [self checkForAPIInt: attr andCell: iatvc];
                     iatvc.selectionStyle = UITableViewCellSelectionStyleNone;
                 }
                 return iatvc;
@@ -644,6 +649,159 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
     
     return YES;
 }
+
+// Here we check if there are annotations for string.
+- (void) checkForAPIString: (ClassAttribute *) atr andCell: (StringAttributeTableViewCell *) atvc{
+    NSDictionary *annotations = atr.annotations;
+    if(annotations.count != 0){
+        NSArray *pol = [annotations valueForKey:@"policy"];
+        if([pol[0] isEqualToString:@"onOpen"]){
+            NSString *api = [annotations valueForKey:@"api"];
+            if(api){
+                [atvc.textField setText:[[self callForAPIValue:annotations] description]];
+                atvc.textField.enabled = NO;
+            }else{
+                atvc.textField.text =  atr.currentValue;
+            }
+        }
+    }else{
+        atvc.textField.text =  atr.currentValue;
+    }
+}
+
+// Here we check if there are annotations.
+- (void) checkForAPIInt: (ClassAttribute *) atr andCell: (IntegerTableViewCell *) iatvc{
+    NSDictionary *annotations = atr.annotations;
+    if(annotations.count != 0){
+        NSArray *pol = [annotations valueForKey:@"policy"];
+        if([pol[0] isEqualToString:@"onOpen"]){
+            NSString *api = [annotations valueForKey:@"api"];
+            if(api){
+                [iatvc.textField setText:[[self callForAPIValue:annotations] description]];
+                iatvc.textField.enabled = NO;
+            }else{
+                [iatvc.textField setText:atr.currentValue];
+            }
+        }
+    }else{
+        [iatvc.textField setText:atr.currentValue];
+    }
+}
+
+// Here we check if there are annotations.
+- (void) checkForAPIDouble: (ClassAttribute *) atr andCell: (DoubleTableViewCell *) iatvc{
+    NSDictionary *annotations = atr.annotations;
+    if(annotations.count != 0){
+        NSArray *pol = [annotations valueForKey:@"policy"];
+        if([pol[0] isEqualToString:@"onOpen"]){
+            NSString *api = [annotations valueForKey:@"api"];
+            if(api){
+                [iatvc.textField setText:[[self callForAPIValue:annotations] description]];
+                iatvc.textField.enabled = NO;
+            }else{
+                [iatvc.textField setText:atr.currentValue];
+            }
+        }
+    }else{
+        [iatvc.textField setText:atr.currentValue];
+    }
+}
+
+-(NSObject *) callForAPIValue: (NSDictionary *) annotations{
+    NSArray *api = [annotations valueForKey:@"api"];
+    
+    RARest * rar = [[RARest alloc] init];
+    rar.baseURL = [@"https://triggerstest.herokuapp.com/api/API/" stringByAppendingString:api[0]];
+
+    NSError *err;
+    
+    APIModel *result = [[APIModel alloc] initWithDictionary: [rar getValue] error: &err];
+    
+    NSArray <ParameterModel*> *params = [self checkForParamsType:annotations andAPI: result];
+    
+    NSArray *get = [annotations valueForKey:@"get"];
+    
+    CallModel *call = [[CallModel alloc] initWithValues:params andUrl:[result getURL] andParam:get[0] andAuth: [result getAuth]];
+    
+    NSData *data = [call toJSONData];
+    
+    NSURL *url = [NSURL URLWithString:getInfo];
+    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
+    
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+    NSString *postLength = [NSString stringWithFormat:@"%lu",(unsigned long)[data length]];
+    request.HTTPMethod = @"POST";
+    [request setValue:postLength forHTTPHeaderField:@"Content-Length" ];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    request.HTTPBody = data;
+    
+    __block NSObject *obj;
+    
+    dispatch_group_t group = dispatch_group_create();
+    dispatch_group_enter(group);
+    
+    NSURLSessionDataTask* dataTask = [session dataTaskWithRequest:request
+                                                completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+                                                    
+                                                    NSLog(@"Done");
+                                                    NSLog(@"Error:%@", [error description]);
+                                                    NSData *responseData = [[NSData alloc]initWithData:data];
+                                                    NSMutableDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableContainers error:nil];
+                                                    NSLog(@"Random Output= %@", jsonObject);
+                                                    obj = [jsonObject valueForKey:@"param"];
+                                                    dispatch_group_leave(group);
+                                                }];
+    
+    [dataTask resume];
+    
+    dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
+    
+    return obj;
+
+}
+
+// Comprueba como queremos extraer los datos de la API.
+// P.ej: geo = lat, lon. val = valor directo, attr: es un atributo directo como lon.
+- (NSArray <ParameterModel *> *)checkForParamsType:(NSDictionary *)annotations andAPI: (APIModel*) api{
+
+    NSArray *parameters = [api getParams];
+    
+    NSMutableArray <ParameterModel*> *params = [[NSMutableArray alloc] init];
+    
+    // TODO: Considerar si se quiere hacer por formulario.
+    for(int i = 0; i<parameters.count; i++){
+        NSArray *parame = [annotations valueForKey:[parameters[i] getNombre]];
+        if(parame){
+            ParameterModel *param;
+            NSString *parametro = [parame[0] componentsSeparatedByString:@"."][1];
+            if([parame[0] hasPrefix:@"geo"]){
+                // Se trata de latitud
+                if([parametro  isEqual: @"lat"]){
+                    NSString *string = [NSString stringWithFormat:@"%f", comp.latitude];
+                    param =  [[ParameterModel alloc] initWithValues:[parameters[i] getNombre] andValue:string];
+                // Es longitud
+                }else if ([parametro  isEqual: @"lon"]){
+                    NSString *string = [NSString stringWithFormat:@"%f", comp.longitude];
+                    param =  [[ParameterModel alloc] initWithValues:[parameters[i] getNombre] andValue:string];
+                }
+            
+            }else if([parame[0] hasPrefix:@"val"]){
+                param = [[ParameterModel alloc] initWithValues:[parameters[i] getNombre] andValue:parametro];
+            }else if([parame[0] hasPrefix:@"form"]){
+                //TODO: FORM DATA
+            }else{
+                //TODO: Other specific values from component.
+            }
+            [params addObject:param];
+        }
+        
+    }
+    return params;
+}
+
 
 
 //Center canvas on this element
