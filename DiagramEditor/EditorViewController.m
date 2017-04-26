@@ -29,6 +29,7 @@
 #import "DrawnAlert.h"
 #import "PathPiece.h"
 #import "GeoComponentAnnotationView.h"
+#import "UserAnnotation.h"
 #import "GeoComponentPointAnnotation.h"
 
 #define fileExtension @"demiso"
@@ -3740,7 +3741,25 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
     
     if([annotation isKindOfClass:[MKUserLocation class]]){
        //TODO: Change User location pin.
+        // Fetch all necessary data from the point object
+        /*float money = ((UserAnnotation*)annotation).money;
+        float temp = ((UserAnnotation*)annotation).temperature;
+
+        NSString* nombre = ((UserAnnotation*)annotation).name;
+
         
+        UserAnnotation* pin =
+        [[UserAnnotation alloc]initWithAnnotation:annotation
+                                                       name:nombre
+                                                    temperature:temp
+                                                    money:money];*/
+        ((MKUserLocation *) annotation).title = @"Mi name";
+        ((MKUserLocation *) annotation).subtitle = @"Subitle";
+        MKAnnotationView * pin = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"userLocation"];
+        pin.leftCalloutAccessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+        pin.rightCalloutAccessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+        pin.backgroundColor = dele.blue2;
+        return pin;
     }else if([annotation isKindOfClass:[AlertAnnotation class]]){
         //It is an alert annotation
         Alert * associated = ((AlertAnnotation *)annotation).alert;

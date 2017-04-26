@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		427419F51EAF46BE00C2A7F4 /* UserAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 427419F41EAF46BE00C2A7F4 /* UserAnnotation.m */; };
 		429E72F91E979D88006FFDA3 /* CallModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E72F81E979D88006FFDA3 /* CallModel.m */; };
 		429E73131E979DF7006FFDA3 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 429E72FD1E979DF7006FFDA3 /* Info.plist */; };
 		429E73141E979DF7006FFDA3 /* JSONModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E73001E979DF7006FFDA3 /* JSONModel.m */; };
@@ -211,6 +212,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		427419F31EAF46A200C2A7F4 /* UserAnnotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserAnnotation.h; sourceTree = "<group>"; };
+		427419F41EAF46BE00C2A7F4 /* UserAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserAnnotation.m; sourceTree = "<group>"; };
 		429E72F71E979D88006FFDA3 /* CallModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallModel.h; sourceTree = "<group>"; };
 		429E72F81E979D88006FFDA3 /* CallModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallModel.m; sourceTree = "<group>"; };
 		429E72FD1E979DF7006FFDA3 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -533,6 +536,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		427419F21EAF467D00C2A7F4 /* UserInfo */ = {
+			isa = PBXGroup;
+			children = (
+				427419F31EAF46A200C2A7F4 /* UserAnnotation.h */,
+				427419F41EAF46BE00C2A7F4 /* UserAnnotation.m */,
+			);
+			name = UserInfo;
+			sourceTree = "<group>";
+		};
 		429E72FC1E979DF7006FFDA3 /* JSONModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -896,6 +908,7 @@
 		F18510751C1824C8004EC4C8 /* DiagramEditor */ = {
 			isa = PBXGroup;
 			children = (
+				427419F21EAF467D00C2A7F4 /* UserInfo */,
 				429E731F1EA60282006FFDA3 /* Rest */,
 				429E72FC1E979DF7006FFDA3 /* JSONModel */,
 				F1B77AA31D80017D00753DB0 /* Creating palette stuff */,
@@ -1252,6 +1265,7 @@
 				F128C9981DAF7C0200288623 /* IntegerTableViewCell.m in Sources */,
 				F1B77AB21D801C8C00753DB0 /* VisibleClassesViewController.m in Sources */,
 				F1FEE72B1CE3693200FD4E9B /* ChatTableViewCell.m in Sources */,
+				427419F51EAF46BE00C2A7F4 /* UserAnnotation.m in Sources */,
 				F130A47E1D12DBDA00BDD212 /* ExpandableItemView.m in Sources */,
 				F1B77AE51D82BE8500753DB0 /* SlideMenuView.m in Sources */,
 				F1B77ABC1D8028AF00753DB0 /* NodeEdgeCell.m in Sources */,
