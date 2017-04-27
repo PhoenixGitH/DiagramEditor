@@ -63,6 +63,7 @@
         [mapOptionsButton setHidden:NO];
         CLLocationManager* myLocationManager = [[CLLocationManager alloc] init];
         [myLocationManager requestWhenInUseAuthorization];
+        [myLocationManager startUpdatingLocation];
         
     }else{
         [mapOptionsButton setHidden:YES];
@@ -241,6 +242,9 @@
         [mapOptionsButton setHidden:NO];
         [map setHidden:NO];
         [map setDelegate:self];
+        
+        map.userTrackingMode = YES;
+
         [map setShowsUserLocation:YES];
         dele.map = map;
         drawnsPolylineArray = [[NSMutableArray alloc] init];
@@ -3738,8 +3742,8 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
 
 -(MKAnnotationView *)mapView:(MKMapView *)mv viewForAnnotation:(id <MKAnnotation>)annotation
 {
-    
-    if([annotation isKindOfClass:[MKUserLocation class]]){
+    //[annotation isKindOfClass:[MKUserLocation class]]
+    if(mv.userLocation == annotation){
        //TODO: Change User location pin.
         // Fetch all necessary data from the point object
         /*float money = ((UserAnnotation*)annotation).money;
@@ -3753,9 +3757,10 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
                                                        name:nombre
                                                     temperature:temp
                                                     money:money];*/
-        ((MKUserLocation *) annotation).title = @"Mi name";
-        ((MKUserLocation *) annotation).subtitle = @"Subitle";
-        MKAnnotationView * pin = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"userLocation"];
+        MKUserLocation *an = ((MKUserLocation *) annotation);
+        an.subtitle = @"Subitle";
+        an.title = @"Mi name";
+        MKAnnotationView * pin = [[MKAnnotationView alloc] initWithAnnotation:an reuseIdentifier:@"userLocation"];
         pin.leftCalloutAccessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
         pin.rightCalloutAccessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
         pin.backgroundColor = dele.blue2;

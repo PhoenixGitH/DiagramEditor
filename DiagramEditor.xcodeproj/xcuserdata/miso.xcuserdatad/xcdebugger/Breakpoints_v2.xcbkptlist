@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DiagramEditor/EditorViewController.m"
-            timestampString = "514808141.121635"
+            timestampString = "514971657.456742"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3070"
-            endingLineNumber = "3070"
+            startingLineNumber = "3074"
+            endingLineNumber = "3074"
             landmarkName = "-createNoteViewConfirmWithText:andImage:andLocation:onPoint:"
             landmarkType = "7">
             <Locations>
@@ -58,12 +58,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DiagramEditor/EditorViewController.m"
-            timestampString = "514808141.121635"
+            timestampString = "514973735.671974"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3812"
-            endingLineNumber = "3812"
-            landmarkName = "-handleAnnotationPoint:"
+            startingLineNumber = "3817"
+            endingLineNumber = "3817"
+            landmarkName = "@implementation EditorViewController"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DiagramEditor/EditorViewController.m"
+            timestampString = "514971657.456742"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "3746"
+            endingLineNumber = "3746"
+            landmarkName = "-mapView:viewForAnnotation:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
