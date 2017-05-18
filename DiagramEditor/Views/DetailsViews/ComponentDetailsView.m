@@ -26,6 +26,7 @@
 #import "DoubleTableViewCell.h"
 #import "IntegerTableViewCell.h"
 #import "EnumTableViewCell.h"
+#import "DeviceSelector.h"
 
 #define getInfo @"https://triggerstest.herokuapp.com/api/Call/"
 
@@ -792,6 +793,9 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
                 param = [[ParameterModel alloc] initWithValues:[parameters[i] getNombre] andValue:parametro];
             }else if([parame[0] hasPrefix:@"form"]){
                 //TODO: FORM DATA
+            }else if([parame[0] hasPrefix:@"dev"]){
+                DeviceSelector *devsel = [[DeviceSelector alloc] init];
+                param = [[ParameterModel alloc] initWithValues:[parameters[i] getNombre] andValue: [devsel TypeToReturn:parame[0]]];
             }else{
                 //TODO: Other specific values from component.
             }

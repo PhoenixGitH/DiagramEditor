@@ -145,8 +145,8 @@
     
     locationManager.delegate = self;
     locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    [locationManager requestWhenInUseAuthorization];
-    [locationManager startUpdatingLocation];
+    //[locationManager requestWhenInUseAuthorization];
+    //[locationManager startUpdatingLocation];
 }
 
 

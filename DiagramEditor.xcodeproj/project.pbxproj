@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		427419F51EAF46BE00C2A7F4 /* UserAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 427419F41EAF46BE00C2A7F4 /* UserAnnotation.m */; };
+		42991C7B1EB33229007EE86D /* UserInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42991C7A1EB33229007EE86D /* UserInfo.xib */; };
 		429E72F91E979D88006FFDA3 /* CallModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E72F81E979D88006FFDA3 /* CallModel.m */; };
 		429E73131E979DF7006FFDA3 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 429E72FD1E979DF7006FFDA3 /* Info.plist */; };
 		429E73141E979DF7006FFDA3 /* JSONModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E73001E979DF7006FFDA3 /* JSONModel.m */; };
@@ -23,7 +24,12 @@
 		429E73251EA602CB006FFDA3 /* RARest.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E73231EA602CB006FFDA3 /* RARest.m */; };
 		429E73291EA60719006FFDA3 /* WriteAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E73281EA60719006FFDA3 /* WriteAction.m */; };
 		429E732C1EA60738006FFDA3 /* ReadAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E732B1EA60738006FFDA3 /* ReadAction.m */; };
+		42A9E3C11ECAE1910030F319 /* DeviceSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A9E3C01ECAE1910030F319 /* DeviceSelector.m */; };
+		42A9E3C41ECAF2920030F319 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 42A9E3C21ECAF2920030F319 /* Reachability.m */; };
+		42C8FE481EBB37DC00A95808 /* location_pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C8FE471EBB37DC00A95808 /* location_pin.png */; };
+		42C8FE4C1EBB3B9F00A95808 /* location_pin2.png in Resources */ = {isa = PBXBuildFile; fileRef = 42C8FE4B1EBB3B9F00A95808 /* location_pin2.png */; };
 		42CB2F831EA60D9D00568268 /* Action.m in Sources */ = {isa = PBXBuildFile; fileRef = 42CB2F821EA60D9D00568268 /* Action.m */; };
+		42F0DEFE1EBA06E500651C69 /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 42F0DEFD1EBA06E500651C69 /* UserInfo.m */; };
 		F107E4641C72221A007DD29E /* ThinkingView.m in Sources */ = {isa = PBXBuildFile; fileRef = F107E4631C72221A007DD29E /* ThinkingView.m */; };
 		F107E4661C722229007DD29E /* ThinkingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F107E4651C722229007DD29E /* ThinkingView.xib */; };
 		F10AB8061C50E53100DE6DCE /* open.png in Resources */ = {isa = PBXBuildFile; fileRef = F10AB8051C50E53100DE6DCE /* open.png */; };
@@ -214,6 +220,7 @@
 /* Begin PBXFileReference section */
 		427419F31EAF46A200C2A7F4 /* UserAnnotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserAnnotation.h; sourceTree = "<group>"; };
 		427419F41EAF46BE00C2A7F4 /* UserAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserAnnotation.m; sourceTree = "<group>"; };
+		42991C7A1EB33229007EE86D /* UserInfo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserInfo.xib; sourceTree = "<group>"; };
 		429E72F71E979D88006FFDA3 /* CallModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallModel.h; sourceTree = "<group>"; };
 		429E72F81E979D88006FFDA3 /* CallModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallModel.m; sourceTree = "<group>"; };
 		429E72FD1E979DF7006FFDA3 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -245,8 +252,16 @@
 		429E73281EA60719006FFDA3 /* WriteAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WriteAction.m; sourceTree = "<group>"; };
 		429E732A1EA60738006FFDA3 /* ReadAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReadAction.h; sourceTree = "<group>"; };
 		429E732B1EA60738006FFDA3 /* ReadAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReadAction.m; sourceTree = "<group>"; };
+		42A9E3BF1ECAE0CC0030F319 /* DeviceSelector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeviceSelector.h; sourceTree = "<group>"; };
+		42A9E3C01ECAE1910030F319 /* DeviceSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceSelector.m; sourceTree = "<group>"; };
+		42A9E3C21ECAF2920030F319 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		42A9E3C31ECAF2920030F319 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		42C8FE471EBB37DC00A95808 /* location_pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = location_pin.png; sourceTree = "<group>"; };
+		42C8FE4B1EBB3B9F00A95808 /* location_pin2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = location_pin2.png; sourceTree = "<group>"; };
 		42CB2F811EA60D9D00568268 /* Action.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Action.h; path = Model/Action.h; sourceTree = "<group>"; };
 		42CB2F821EA60D9D00568268 /* Action.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Action.m; path = Model/Action.m; sourceTree = "<group>"; };
+		42F0DEFC1EBA06D500651C69 /* UserInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
+		42F0DEFD1EBA06E500651C69 /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
 		F107E4621C72221A007DD29E /* ThinkingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThinkingView.h; sourceTree = "<group>"; };
 		F107E4631C72221A007DD29E /* ThinkingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThinkingView.m; sourceTree = "<group>"; };
 		F107E4651C722229007DD29E /* ThinkingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ThinkingView.xib; sourceTree = "<group>"; };
@@ -612,6 +627,17 @@
 			name = Rest;
 			sourceTree = "<group>";
 		};
+		42A9E3C51ECAF2EF0030F319 /* DeviceInfo */ = {
+			isa = PBXGroup;
+			children = (
+				42A9E3C21ECAF2920030F319 /* Reachability.m */,
+				42A9E3C31ECAF2920030F319 /* Reachability.h */,
+				42A9E3BF1ECAE0CC0030F319 /* DeviceSelector.h */,
+				42A9E3C01ECAE1910030F319 /* DeviceSelector.m */,
+			);
+			name = DeviceInfo;
+			sourceTree = "<group>";
+		};
 		F10BE4341C29663E0053A7F9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -695,15 +721,18 @@
 				F16C7DCE1C57AD4400CA9B25 /* SureView.h */,
 				F16C7DCF1C57AD4400CA9B25 /* SureView.m */,
 				F16C7DCC1C57AD2900CA9B25 /* SureView.xib */,
+				F17A93F01CF706E8008AE1EE /* YesOrNoView.m */,
 				F107E4621C72221A007DD29E /* ThinkingView.h */,
 				F107E4631C72221A007DD29E /* ThinkingView.m */,
 				F107E4651C722229007DD29E /* ThinkingView.xib */,
 				F17A93EF1CF706E8008AE1EE /* YesOrNoView.h */,
-				F17A93F01CF706E8008AE1EE /* YesOrNoView.m */,
-				F17A93F21CF706F8008AE1EE /* YesOrNoView.xib */,
 				F17A94271D003DC0008AE1EE /* TutorialSheet.h */,
-				F17A942A1D003DCF008AE1EE /* TutorialSheet.xib */,
+				F17A93F21CF706F8008AE1EE /* YesOrNoView.xib */,
 				F17A94281D003DC0008AE1EE /* TutorialSheet.m */,
+				F17A942A1D003DCF008AE1EE /* TutorialSheet.xib */,
+				42991C7A1EB33229007EE86D /* UserInfo.xib */,
+				42F0DEFD1EBA06E500651C69 /* UserInfo.m */,
+				42F0DEFC1EBA06D500651C69 /* UserInfo.h */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -831,6 +860,8 @@
 		F17B75AE1C22D9D500AB1B57 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				42C8FE4B1EBB3B9F00A95808 /* location_pin2.png */,
+				42C8FE471EBB37DC00A95808 /* location_pin.png */,
 				F128C98A1DA6484800288623 /* mapIcon.png */,
 				F1FEE7001CDCA51C00FD4E9B /* actions */,
 				F19607FB1CF347E1000DC248 /* addImage.png */,
@@ -937,6 +968,7 @@
 				F18510871C1824C8004EC4C8 /* Info.plist */,
 				F18510841C1824C8004EC4C8 /* LaunchScreen.storyboard */,
 				F185107F1C1824C8004EC4C8 /* Main.storyboard */,
+				42A9E3C51ECAF2EF0030F319 /* DeviceInfo */,
 			);
 			path = DiagramEditor;
 			sourceTree = "<group>";
@@ -1171,6 +1203,7 @@
 				F10AB80B1C50E85100DE6DCE /* cancel.png in Resources */,
 				F1FEE72E1CE3693200FD4E9B /* ChatView.xib in Resources */,
 				F17A93F31CF706F8008AE1EE /* YesOrNoView.xib in Resources */,
+				42991C7B1EB33229007EE86D /* UserInfo.xib in Resources */,
 				F163AFE61C7B1A1B00BAE67C /* tapDark.png in Resources */,
 				F18510831C1824C8004EC4C8 /* Assets.xcassets in Resources */,
 				F17FC7FE1D78187700DCA5CC /* geoposition.png in Resources */,
@@ -1184,11 +1217,13 @@
 				F10CC8EA1CBFA332007F2B11 /* master.png in Resources */,
 				F181349C1CBCF169000AE209 /* menu.png in Resources */,
 				F1FEE7131CE099FF00FD4E9B /* note.png in Resources */,
+				42C8FE4C1EBB3B9F00A95808 /* location_pin2.png in Resources */,
 				F157993D1C86FE030009D4C7 /* CloudFileCollectionViewCell.xib in Resources */,
 				F163AFE41C7B173300BAE67C /* DFAAutomaton.graphicR in Resources */,
 				F10AB80C1C50E85100DE6DCE /* ok.png in Resources */,
 				F1B77AB91D80280800753DB0 /* NodeEdgeCell.xib in Resources */,
 				F14181CB1C68DE4300E838F9 /* minusDark.png in Resources */,
+				42C8FE481EBB37DC00A95808 /* location_pin.png in Resources */,
 				F18A8E201C7C5A5900D87C00 /* circle.png in Resources */,
 				F128C9991DAF7C0200288623 /* IntegerTableViewCell.xib in Resources */,
 				F153797E1C91B9EA001D8FFB /* RowSwitchTableViewCell.xib in Resources */,
@@ -1235,6 +1270,7 @@
 				F1E763CE1DB8BEBF0099148E /* EnumTableViewCell.m in Sources */,
 				F15865141C85A2CA007D2E75 /* CloudDiagramsExplorer.m in Sources */,
 				F153797D1C91B9EA001D8FFB /* RowSwitchTableViewCell.m in Sources */,
+				42F0DEFE1EBA06E500651C69 /* UserInfo.m in Sources */,
 				F17A93F11CF706E8008AE1EE /* YesOrNoView.m in Sources */,
 				F1786DE81C561AF200963663 /* BooleanAttributeTableViewCell.m in Sources */,
 				F14CE3581D103AA3001A37D8 /* LinkPalette.m in Sources */,
@@ -1271,6 +1307,7 @@
 				F1B77ABC1D8028AF00753DB0 /* NodeEdgeCell.m in Sources */,
 				F17A93EE1CF5EC44008AE1EE /* DrawnAlert.m in Sources */,
 				F18A55E91C845CF500B134F0 /* NoDraggableClassesView.m in Sources */,
+				42A9E3C11ECAE1910030F319 /* DeviceSelector.m in Sources */,
 				F16C35C01C98247A006F4255 /* MCManager.m in Sources */,
 				F13666691D86E62F00B060B5 /* CreateGraphicRViewController.m in Sources */,
 				F128C99D1DAF7C1000288623 /* DoubleTableViewCell.m in Sources */,
@@ -1296,6 +1333,7 @@
 				F1FEE7111CE07F1C00FD4E9B /* DrawingAlert.m in Sources */,
 				429E73191E979DF7006FFDA3 /* JSONModel+networking.m in Sources */,
 				F1B77AAF1D800ACC00753DB0 /* SelectRootClassViewController.m in Sources */,
+				42A9E3C41ECAF2920030F319 /* Reachability.m in Sources */,
 				F1B77ADE1D82AC0200753DB0 /* EdgeVisualInfoTableViewCell.m in Sources */,
 				429E73171E979DF7006FFDA3 /* JSONAPI.m in Sources */,
 				F158651C1C85AA59007D2E75 /* DiagramFile.m in Sources */,

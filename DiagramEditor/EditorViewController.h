@@ -40,6 +40,8 @@ CreateNoteViewDelegate,
 DrawingViewDelegate,
 MKMapViewDelegate
 >{
+    CLLocationManager *loc;
+    
     AppDelegate * dele;
 
     Palette *palette;
@@ -74,11 +76,9 @@ MKMapViewDelegate
     
     __weak IBOutlet UIButton *cameraOutlet;
     
-    
     SureView * sureView;
     //__weak IBOutlet UISlider *slider;
     __weak IBOutlet UIButton *shareButtonOutlet;
-    
     
     BOOL sharingDiagram;
     

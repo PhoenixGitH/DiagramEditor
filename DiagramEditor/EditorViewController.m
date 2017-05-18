@@ -31,6 +31,7 @@
 #import "GeoComponentAnnotationView.h"
 #import "UserAnnotation.h"
 #import "GeoComponentPointAnnotation.h"
+#import "UserInfo.h"
 
 #define fileExtension @"demiso"
 
@@ -51,6 +52,7 @@
 @synthesize scrollView, loadedContent;
 
 
+
 -(void)viewDidAppear:(BOOL)animated{
     if(dele.shouldShowEditorTutorial == YES){
         doingTutorial = YES;
@@ -61,9 +63,10 @@
     
     if(dele.isGeoPalette == YES){
         [mapOptionsButton setHidden:NO];
-        CLLocationManager* myLocationManager = [[CLLocationManager alloc] init];
-        [myLocationManager requestWhenInUseAuthorization];
-        [myLocationManager startUpdatingLocation];
+        loc = [[CLLocationManager alloc] init];
+
+        //[myLocationManager requestWhenInUseAuthorization];
+        //[myLocationManager startUpdatingLocation];
         
     }else{
         [mapOptionsButton setHidden:YES];
@@ -3758,19 +3761,32 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
                                                     temperature:temp
                                                     money:money];*/
         MKUserLocation *an = ((MKUserLocation *) annotation);
-        an.subtitle = @"Subitle";
-        an.title = @"Mi name";
+        //an.subtitle = @"Subitle";
+        an.title = @"Tus datos";
         MKAnnotationView * pin = [[MKAnnotationView alloc] initWithAnnotation:an reuseIdentifier:@"userLocation"];
-        pin.leftCalloutAccessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-        pin.rightCalloutAccessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-        pin.backgroundColor = dele.blue2;
+        pin.canShowCallout = YES;
+        //pin.leftCalloutAccessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+        //pin.rightCalloutAccessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+        UserInfo *center = [[[NSBundle mainBundle] loadNibNamed:@"UserInfo" owner:self options:nil] firstObject];
+        
+        //[center initValues:@"Peter" andAddress:@"Madrid" andTemperature:@"5ºC"];
+        center.userData = [[NSArray alloc] initWithObjects:@"String", @"string", nil];
+        [center prepare];
+        pin.image = [UIImage imageNamed:@"location_pin2.png"];
+        [self.view addSubview:center];
+        center.backgroundColor = [UIColor clearColor];
+        [self.view bringSubviewToFront:center];
+        //[image addSubview:center];
+        UIView *mid = [[UIView alloc] initWithFrame:CGRectMake(0,0,350,150)];
+        mid.backgroundColor = [UIColor clearColor];
+        pin.detailCalloutAccessoryView = mid;
+        //[pin.detailCalloutAccessoryView addSubview:center];
+        
         return pin;
     }else if([annotation isKindOfClass:[AlertAnnotation class]]){
         //It is an alert annotation
         Alert * associated = ((AlertAnnotation *)annotation).alert;
         AlertAnnotationView * pin = [[AlertAnnotationView alloc] initWithAnnotation:annotation alert:associated];
-        
-        
         NSArray * gestureRecog = pin.gestureRecognizers;
         
         for(UIGestureRecognizer * r in gestureRecog){
@@ -3813,6 +3829,18 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
     }
 
     return nil;
+}
+
+- (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView{
+    [loc requestWhenInUseAuthorization];
+    [loc startUpdatingLocation];
+    
+    [mapView setHidden:NO];
+    [mapView setHidden:NO];
+    [mapView setDelegate:self];
+    
+    mapView.userTrackingMode = YES;
+    map = mapView;
 }
 
 
