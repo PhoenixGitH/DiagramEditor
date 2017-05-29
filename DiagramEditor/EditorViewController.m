@@ -3770,14 +3770,22 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
         UserInfo *center = [[[NSBundle mainBundle] loadNibNamed:@"UserInfo" owner:self options:nil] firstObject];
         
         //[center initValues:@"Peter" andAddress:@"Madrid" andTemperature:@"5ºC"];
-        center.userData = [[NSArray alloc] initWithObjects:@"String", @"string", nil];
-        [center prepare];
+        center.userData = [[NSMutableArray alloc] init];
+        
+        for(ClassAttribute* att in dele.userArray){
+            [center.userData addObject:att.name];
+        }
+        
+        [center prepare: dele];
+        
         pin.image = [UIImage imageNamed:@"location_pin2.png"];
         [self.view addSubview:center];
         center.backgroundColor = [UIColor clearColor];
         [self.view bringSubviewToFront:center];
         //[image addSubview:center];
         UIView *mid = [[UIView alloc] initWithFrame:CGRectMake(0,0,350,150)];
+        //[mid addSubview:center];
+        //[mid bringSubviewToFront:center];
         mid.backgroundColor = [UIColor clearColor];
         pin.detailCalloutAccessoryView = mid;
         //[pin.detailCalloutAccessoryView addSubview:center];

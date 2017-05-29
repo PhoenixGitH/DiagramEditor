@@ -11,7 +11,9 @@
 #import "BooleanAttributeTableViewCell.h"
 #import "StringAttributeTableViewCell.h"
 #import "BooleanAttributeTableViewCell.h"
-#import "BooleanAttributeTableViewCell.h"
+#import "DoubleTableViewCell.h"
+#import "IntegerTableViewCell.h"
+
 
 @interface UserInfo ()
 
@@ -19,10 +21,14 @@
 
 @implementation UserInfo
 
-- (void) prepare{
+- (void) prepare: (AppDelegate*) delegate{
+    _delegate = delegate;
     self.table.delegate = self;
     self.table.dataSource = self;
-    [self.table registerNib:[UINib nibWithNibName:@"StringAttributeTableViewCell" bundle:nil] forCellReuseIdentifier:@"AttrCellID"];
+    [self.table registerNib:[UINib nibWithNibName:@"StringAttributeTableViewCell" bundle:nil] forCellReuseIdentifier:@"StrCell"];
+    [self.table registerNib:[UINib nibWithNibName:@"BooleanAttributeTableViewCell" bundle:nil] forCellReuseIdentifier:@"BoolCell"];
+    [self.table registerNib:[UINib nibWithNibName:@"DoubleTableViewCell" bundle:nil] forCellReuseIdentifier:@"DoubleCell"];
+    [self.table registerNib:[UINib nibWithNibName:@"IntegerTableViewCell" bundle:nil] forCellReuseIdentifier:@"IntCell"];
     [self.table reloadData];
     [self.table layoutIfNeeded];
     self.table.translatesAutoresizingMaskIntoConstraints = NO;
@@ -47,29 +53,43 @@
     
     
     //UITableViewCell *cell;
-    
-    static NSString *MyIdentifier = @"AttrCellID";
-    
             
     //NSString* type = [_userData objectAtIndex:indexPath.row];
-    //NSString * type = attr.type;
-            
-    StringAttributeTableViewCell * atvc = [tableView dequeueReusableCellWithIdentifier:MyIdentifier forIndexPath:indexPath];
+    NSString * type = _delegate.userArray[indexPath.row].type;
     
-    //if(atvc == nil){
-        //NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"StringAttributeTableViewCell"
-                                                      //owner:self
-                                                    //options:nil];
-        //atvc = [nib objectAtIndex:0];
+    if([type isEqualToString:@"String"]){
+        StringAttributeTableViewCell * atvc = [tableView dequeueReusableCellWithIdentifier:@"StrCell"];
+        
         atvc.attributeNameLabel.text = self.userData[indexPath.row];
         atvc.backgroundColor = [UIColor clearColor];
-        //atvc.comp = comp;
-        //atvc.associatedAttribute = attr;
-        //atvc.detailsPreview = previewComponent;
-    //}
-    
-    return atvc;
         
+        return atvc;
+    }else if([type isEqualToString:@"boolean"] || [type isEqualToString:@"EBooleanObject"]){
+        BooleanAttributeTableViewCell * batvc = [tableView dequeueReusableCellWithIdentifier:@"BoolCell"];
+        
+        batvc.nameLabel.text = self.userData[indexPath.row];
+        batvc.backgroundColor = [UIColor clearColor];
+        
+        return batvc;
+    }else if([type isEqualToString:@"int"] || [type isEqualToString:@"Int"]){
+        
+        IntegerTableViewCell * iatvc = [tableView dequeueReusableCellWithIdentifier:@"IntCell"];
+        
+        iatvc.label.text = self.userData[indexPath.row];
+        iatvc.backgroundColor = [UIColor clearColor];
+    
+        return iatvc;
+    }else if([type isEqualToString:@"EDouble"] || [type isEqualToString:@"EFloat"]){
+        
+        DoubleTableViewCell * datvc = [tableView dequeueReusableCellWithIdentifier:@"DoubleCell"];
+        
+        datvc.label.text = self.userData[indexPath.row];
+        datvc.backgroundColor = [UIColor clearColor];
+        
+        return datvc;
+    }
+    
+    return nil;
 }
 
 

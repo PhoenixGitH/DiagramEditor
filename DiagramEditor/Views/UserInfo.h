@@ -10,15 +10,17 @@
 #define UserInfo_h
 
 #import <UIKit/UIKit.h>
+#import "AppDelegate.h"
 
 
 @interface UserInfo : UIView <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 
 
-@property NSArray *userData;
+@property NSMutableArray *userData;
 @property (weak, nonatomic) IBOutlet UITableView *table;
+@property AppDelegate *delegate;
 
--(void) prepare;
+-(void) prepare: (AppDelegate *) delegate;
 
 @end
 

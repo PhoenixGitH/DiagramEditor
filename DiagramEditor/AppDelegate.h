@@ -35,6 +35,9 @@
 @property NSMutableArray * components;
 @property NSMutableDictionary * elementsDictionary;
 
+// The user info Array.
+@property NSMutableArray<ClassAttribute *> * userArray;
+
 @property NSMutableArray * paletteItems;
 @property BOOL isGeoPalette;
 

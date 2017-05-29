@@ -1912,6 +1912,32 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
         
         NSArray * classes = [jsonDict objectForKey:@"classes"];
         
+        NSDictionary* user =[jsonDict objectForKey:@"user"];
+        
+        ClassAttribute * temp = [[ClassAttribute alloc] init];
+        
+        NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
+        f.numberStyle = NSNumberFormatterDecimalStyle;
+        
+        //Sacamos los atributos
+        NSArray * attrs = [user objectForKey:@"attributes"];
+        for(int a = 0; a < attrs.count; a++){
+            NSDictionary * atrDic = [attrs objectAtIndex:a];
+            temp = [[ClassAttribute alloc]init];
+            temp.name = [atrDic objectForKey:@"name"];
+            temp.type = [atrDic objectForKey:@"type"];
+            temp.min = [f numberFromString:[atrDic objectForKey:@"min"]];
+            temp.max = [f numberFromString:[atrDic objectForKey:@"max"]];
+            temp.defaultValue = [atrDic objectForKey:@"default"];
+            temp.annotations = [atrDic objectForKey:@"annotations"];
+            if([temp.defaultValue isEqualToString:@"null"]){
+                temp.defaultValue = @"";
+            }
+            
+            [dele.userArray addObject:temp];
+        }
+
+        
         
         //Para cada item de la paleta, vamos a obtener sus atributos y sus referencias
         for(int i = 0; i< dele.paletteItems.count; i++){

@@ -12,31 +12,21 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view tag="1" contentMode="scaleAspectFit" id="iN0-l3-epB" customClass="UserInfo">
-            <rect key="frame" x="0.0" y="0.0" width="250" height="150"/>
+            <rect key="frame" x="0.0" y="0.0" width="250" height="170"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WmG-YC-6gI">
-                    <rect key="frame" x="0.0" y="0.0" width="250" height="150"/>
-                    <subviews>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vKv-3b-HcC">
-                            <rect key="frame" x="0.0" y="0.0" width="250" height="150"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </tableView>
-                    </subviews>
-                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="vKv-3b-HcC">
+                    <rect key="frame" x="0.0" y="0.0" width="250" height="170"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="trailing" secondItem="vKv-3b-HcC" secondAttribute="trailing" id="4RB-CV-aaP"/>
-                        <constraint firstItem="vKv-3b-HcC" firstAttribute="top" secondItem="WmG-YC-6gI" secondAttribute="top" id="pK4-Nf-LL7"/>
-                        <constraint firstAttribute="bottom" secondItem="vKv-3b-HcC" secondAttribute="bottom" id="s3b-4g-adW"/>
-                        <constraint firstItem="vKv-3b-HcC" firstAttribute="leading" secondItem="WmG-YC-6gI" secondAttribute="leading" id="xrD-e9-blL"/>
+                        <constraint firstAttribute="width" constant="250" id="wgy-Rt-n8U"/>
+                        <constraint firstAttribute="height" constant="170" id="xcv-Xy-zhF"/>
                     </constraints>
-                </view>
+                </tableView>
             </subviews>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="WmG-YC-6gI" secondAttribute="bottom" id="5xX-hY-4Pz"/>
-                <constraint firstAttribute="trailing" secondItem="WmG-YC-6gI" secondAttribute="trailing" id="SdX-Mp-KtU"/>
-                <constraint firstItem="WmG-YC-6gI" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="UMJ-x6-gcb"/>
-                <constraint firstItem="WmG-YC-6gI" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ZXw-Cc-chK"/>
+                <constraint firstItem="vKv-3b-HcC" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="7Tw-db-EKv"/>
+                <constraint firstItem="vKv-3b-HcC" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="dhJ-4F-5r1"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>
@@ -45,7 +35,7 @@
             <connections>
                 <outlet property="table" destination="vKv-3b-HcC" id="V5G-Ig-Q5d"/>
             </connections>
-            <point key="canvasLocation" x="-29.5" y="-45"/>
+            <point key="canvasLocation" x="73" y="-235"/>
         </view>
     </objects>
 </document>

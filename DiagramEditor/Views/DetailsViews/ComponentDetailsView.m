@@ -656,13 +656,19 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
     NSDictionary *annotations = atr.annotations;
     if(annotations.count != 0){
         NSArray *pol = [annotations valueForKey:@"policy"];
-        if([pol[0] isEqualToString:@"onOpen"]){
-            NSString *api = [annotations valueForKey:@"api"];
-            if(api){
+        if(pol[0] == [NSNull null] || [pol[0] isEqualToString:@"onOpen"]){
+            NSArray *api = [annotations valueForKey:@"api"];
+            NSArray *device = [annotations valueForKey:@"device"];
+
+            if(api[0] != [NSNull null]){
                 [atvc.textField setText:[[self callForAPIValue:annotations] description]];
                 atvc.textField.enabled = NO;
+            }else if(device[0] != [NSNull null]){
+                DeviceSelector *devsel = [[DeviceSelector alloc] init];
+                [atvc.textField setText: [devsel TypeToReturn:device[0]]];
+                atvc.textField.enabled = NO;
             }else{
-                atvc.textField.text =  atr.currentValue;
+                [atvc.textField setText:atr.currentValue];
             }
         }
     }else{
@@ -675,10 +681,16 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
     NSDictionary *annotations = atr.annotations;
     if(annotations.count != 0){
         NSArray *pol = [annotations valueForKey:@"policy"];
-        if([pol[0] isEqualToString:@"onOpen"]){
-            NSString *api = [annotations valueForKey:@"api"];
-            if(api){
+        if(pol[0] == [NSNull null] || [pol[0] isEqualToString:@"onOpen"]){
+            NSArray *api = [annotations valueForKey:@"api"];
+            NSArray *device = [annotations valueForKey:@"device"];
+            
+            if(api[0] != [NSNull null]){
                 [iatvc.textField setText:[[self callForAPIValue:annotations] description]];
+                iatvc.textField.enabled = NO;
+            }else if(device[0] != [NSNull null]){
+                DeviceSelector *devsel = [[DeviceSelector alloc] init];
+                [iatvc.textField setText: [devsel TypeToReturn:device[0]]];
                 iatvc.textField.enabled = NO;
             }else{
                 [iatvc.textField setText:atr.currentValue];
@@ -694,11 +706,18 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
     NSDictionary *annotations = atr.annotations;
     if(annotations.count != 0){
         NSArray *pol = [annotations valueForKey:@"policy"];
-        if([pol[0] isEqualToString:@"onOpen"]){
-            NSString *api = [annotations valueForKey:@"api"];
-            if(api){
+        if(pol[0] == [NSNull null] || [pol[0] isEqualToString:@"onOpen"]){
+            NSArray *api = [annotations valueForKey:@"api"];
+            NSArray *device = [annotations valueForKey:@"device"];
+            
+            if(api[0] != [NSNull null]){
                 [iatvc.textField setText:[[self callForAPIValue:annotations] description]];
                 iatvc.textField.enabled = NO;
+            }else if(device[0] != [NSNull null]){
+                DeviceSelector *devsel = [[DeviceSelector alloc] init];
+                [iatvc.textField setText: [devsel TypeToReturn:device[0]]];
+                iatvc.textField.enabled = NO;
+
             }else{
                 [iatvc.textField setText:atr.currentValue];
             }

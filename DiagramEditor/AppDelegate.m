@@ -48,6 +48,8 @@
     
     colorDic = [[NSMutableDictionary alloc] init];
     
+    _userArray = [[NSMutableArray alloc] init];
+    
     //_myColor = [UIColor blackColor];
     _myColor = [[ColorPalette colorArray]objectAtIndex:0];
     
