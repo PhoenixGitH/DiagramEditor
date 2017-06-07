@@ -3762,7 +3762,7 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
                                                     money:money];*/
         MKUserLocation *an = ((MKUserLocation *) annotation);
         //an.subtitle = @"Subitle";
-        an.title = @"Tus datos";
+        an.title = @"Fill your data:";
         MKAnnotationView * pin = [[MKAnnotationView alloc] initWithAnnotation:an reuseIdentifier:@"userLocation"];
         pin.canShowCallout = YES;
         //pin.leftCalloutAccessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
@@ -3776,19 +3776,23 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
             [center.userData addObject:att.name];
         }
         
-        [center prepare: dele];
+        [center prepare: dele location:an.location];
         
         pin.image = [UIImage imageNamed:@"location_pin2.png"];
-        [self.view addSubview:center];
+        pin.userInteractionEnabled = YES;
+        //[self.view addSubview:center];
         center.backgroundColor = [UIColor clearColor];
-        [self.view bringSubviewToFront:center];
+        //[self.view bringSubviewToFront:center];
         //[image addSubview:center];
-        UIView *mid = [[UIView alloc] initWithFrame:CGRectMake(0,0,350,150)];
+        //UIView *mid = [[UIView alloc] init];
         //[mid addSubview:center];
         //[mid bringSubviewToFront:center];
-        mid.backgroundColor = [UIColor clearColor];
-        pin.detailCalloutAccessoryView = mid;
-        //[pin.detailCalloutAccessoryView addSubview:center];
+        //mid.backgroundColor = [UIColor clearColor];
+        
+        pin.detailCalloutAccessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"miso-2.png"]];
+        [pin.detailCalloutAccessoryView addSubview:center];
+        [pin.detailCalloutAccessoryView bringSubviewToFront:center];
+        pin.detailCalloutAccessoryView.userInteractionEnabled = YES;
         
         return pin;
     }else if([annotation isKindOfClass:[AlertAnnotation class]]){
@@ -3837,6 +3841,9 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
     }
 
     return nil;
+}
+
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view{
 }
 
 - (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView{

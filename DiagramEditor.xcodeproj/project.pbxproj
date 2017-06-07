@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		427419F51EAF46BE00C2A7F4 /* UserAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 427419F41EAF46BE00C2A7F4 /* UserAnnotation.m */; };
+		421327C71EDD6F1800786C46 /* miso-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 421327C61EDD6F1800786C46 /* miso-2.png */; };
 		42991C7B1EB33229007EE86D /* UserInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42991C7A1EB33229007EE86D /* UserInfo.xib */; };
 		429E72F91E979D88006FFDA3 /* CallModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E72F81E979D88006FFDA3 /* CallModel.m */; };
 		429E73131E979DF7006FFDA3 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 429E72FD1E979DF7006FFDA3 /* Info.plist */; };
@@ -218,8 +218,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		427419F31EAF46A200C2A7F4 /* UserAnnotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserAnnotation.h; sourceTree = "<group>"; };
-		427419F41EAF46BE00C2A7F4 /* UserAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserAnnotation.m; sourceTree = "<group>"; };
+		421327C61EDD6F1800786C46 /* miso-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "miso-2.png"; sourceTree = "<group>"; };
 		42991C7A1EB33229007EE86D /* UserInfo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserInfo.xib; sourceTree = "<group>"; };
 		429E72F71E979D88006FFDA3 /* CallModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallModel.h; sourceTree = "<group>"; };
 		429E72F81E979D88006FFDA3 /* CallModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallModel.m; sourceTree = "<group>"; };
@@ -551,15 +550,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		427419F21EAF467D00C2A7F4 /* UserInfo */ = {
-			isa = PBXGroup;
-			children = (
-				427419F31EAF46A200C2A7F4 /* UserAnnotation.h */,
-				427419F41EAF46BE00C2A7F4 /* UserAnnotation.m */,
-			);
-			name = UserInfo;
-			sourceTree = "<group>";
-		};
 		429E72FC1E979DF7006FFDA3 /* JSONModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -860,6 +850,7 @@
 		F17B75AE1C22D9D500AB1B57 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				421327C61EDD6F1800786C46 /* miso-2.png */,
 				42C8FE4B1EBB3B9F00A95808 /* location_pin2.png */,
 				42C8FE471EBB37DC00A95808 /* location_pin.png */,
 				F128C98A1DA6484800288623 /* mapIcon.png */,
@@ -939,7 +930,6 @@
 		F18510751C1824C8004EC4C8 /* DiagramEditor */ = {
 			isa = PBXGroup;
 			children = (
-				427419F21EAF467D00C2A7F4 /* UserInfo */,
 				429E731F1EA60282006FFDA3 /* Rest */,
 				429E72FC1E979DF7006FFDA3 /* JSONModel */,
 				F1B77AA31D80017D00753DB0 /* Creating palette stuff */,
@@ -1238,6 +1228,7 @@
 				F1B77ADF1D82AC0200753DB0 /* EdgeVisualInfoTableViewCell.xib in Resources */,
 				F1786DF41C56649B00963663 /* ExploreFilesView.xib in Resources */,
 				F10AB8061C50E53100DE6DCE /* open.png in Resources */,
+				421327C71EDD6F1800786C46 /* miso-2.png in Resources */,
 				F17B75B01C22DA7200AB1B57 /* arrow.png in Resources */,
 				F17B75AB1C22D79F00AB1B57 /* save.png in Resources */,
 				F16C7DC31C5781EB00CA9B25 /* ReferenceTableViewCell.xib in Resources */,
@@ -1301,7 +1292,6 @@
 				F128C9981DAF7C0200288623 /* IntegerTableViewCell.m in Sources */,
 				F1B77AB21D801C8C00753DB0 /* VisibleClassesViewController.m in Sources */,
 				F1FEE72B1CE3693200FD4E9B /* ChatTableViewCell.m in Sources */,
-				427419F51EAF46BE00C2A7F4 /* UserAnnotation.m in Sources */,
 				F130A47E1D12DBDA00BDD212 /* ExpandableItemView.m in Sources */,
 				F1B77AE51D82BE8500753DB0 /* SlideMenuView.m in Sources */,
 				F1B77ABC1D8028AF00753DB0 /* NodeEdgeCell.m in Sources */,

@@ -19,8 +19,9 @@
 @property NSMutableArray *userData;
 @property (weak, nonatomic) IBOutlet UITableView *table;
 @property AppDelegate *delegate;
+@property CLLocation *location;
 
--(void) prepare: (AppDelegate *) delegate;
+-(void) prepare: (AppDelegate *) delegate location: (CLLocation*) location;
 
 @end
 
