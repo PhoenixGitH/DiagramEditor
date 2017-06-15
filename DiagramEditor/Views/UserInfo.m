@@ -10,7 +10,6 @@
 #import "UserInfo.h"
 #import "BooleanAttributeTableViewCell.h"
 #import "StringAttributeTableViewCell.h"
-#import "BooleanAttributeTableViewCell.h"
 #import "DoubleTableViewCell.h"
 #import "IntegerTableViewCell.h"
 #import "APIModel.h"

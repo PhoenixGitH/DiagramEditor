@@ -1938,6 +1938,8 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
         }
 
         
+        //Extraemos las propiedades anotaciones del pin.
+        dele.paletteAnnotations = [jsonDict objectForKey:@"annotations"][0];
         
         //Para cada item de la paleta, vamos a obtener sus atributos y sus referencias
         for(int i = 0; i< dele.paletteItems.count; i++){
@@ -3557,7 +3559,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 -(void)showInfo{
-    NSString * str = @"Created in Miso Group \nhttp://www.miso.es\n\nCreated by \nDiego Vaquero Melchor";
+    NSString * str = @"Created in Miso Group \nhttp://www.miso.es\n\nCreated by \nDiego Vaquero Melchor & Javier Palomares";
     
     UIAlertController * alert=   [UIAlertController
                                   alertControllerWithTitle:@"Info"

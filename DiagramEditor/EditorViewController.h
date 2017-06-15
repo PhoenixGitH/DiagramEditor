@@ -17,6 +17,7 @@
 #import "EdgeListView.h"
 #import "SessionUsersView.h"
 #import "CreateNoteView.h"
+#import "UserInfo.h"
 
 @class Palette;
 @class PaletteItem;
@@ -45,6 +46,8 @@ MKMapViewDelegate
     AppDelegate * dele;
 
     Palette *palette;
+    
+    UserInfo *center;
     
     PaletteItem * tempIcon;
     __weak IBOutlet UIButton *newDiagram;

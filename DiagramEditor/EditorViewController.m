@@ -31,7 +31,10 @@
 #import "GeoComponentAnnotationView.h"
 #import "UserAnnotation.h"
 #import "GeoComponentPointAnnotation.h"
-#import "UserInfo.h"
+#import "BooleanAttributeTableViewCell.h"
+#import "StringAttributeTableViewCell.h"
+#import "DoubleTableViewCell.h"
+#import "IntegerTableViewCell.h"
 
 #define fileExtension @"demiso"
 
@@ -1500,17 +1503,34 @@
     /*  DIAGRAM   */
     [writer writeStartElement:@"diagram"];
     [writer writeAttribute:@"version" value: @"2.0"];
+    
+    if(dele.isGeoPalette){
+        NSDictionary *annotations = dele.paletteAnnotations;
+        
+        [writer writeStartElement:@"user"];
+        [writer writeAttribute:@"pinImage" value: [annotations objectForKey:@"pinImage"]];
+        
+        for(ClassAttribute *attr in dele.userArray){
+            [writer writeAttribute:attr.name value: attr.currentValue];
+        }
+        
+        [writer writeEndElement];
+        
+    }
+    
+    
     [writer writeStartElement:@"palette_name"];
     [writer writeAttribute:@"name" value: dele.currentPaletteFile.name];
     [writer writeEndElement];
+    
     
     [writer writeStartElement:@"subpalette"];
     [writer writeAttribute:@"name" value: dele.subPalette];
     [writer writeEndElement];
     
-    
     [writer writeStartElement:@"nodes"];
     Component * temp = nil;
+    
     for(int i = 0; i< dele.components.count; i++){
         temp = [dele.components objectAtIndex:i];
         [writer writeStartElement:@"node"];
@@ -3747,19 +3767,7 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
 {
     //[annotation isKindOfClass:[MKUserLocation class]]
     if(mv.userLocation == annotation){
-       //TODO: Change User location pin.
-        // Fetch all necessary data from the point object
-        /*float money = ((UserAnnotation*)annotation).money;
-        float temp = ((UserAnnotation*)annotation).temperature;
 
-        NSString* nombre = ((UserAnnotation*)annotation).name;
-
-        
-        UserAnnotation* pin =
-        [[UserAnnotation alloc]initWithAnnotation:annotation
-                                                       name:nombre
-                                                    temperature:temp
-                                                    money:money];*/
         MKUserLocation *an = ((MKUserLocation *) annotation);
         //an.subtitle = @"Subitle";
         an.title = @"Fill your data:";
@@ -3767,7 +3775,7 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
         pin.canShowCallout = YES;
         //pin.leftCalloutAccessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
         //pin.rightCalloutAccessoryView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-        UserInfo *center = [[[NSBundle mainBundle] loadNibNamed:@"UserInfo" owner:self options:nil] firstObject];
+        center = [[[NSBundle mainBundle] loadNibNamed:@"UserInfo" owner:self options:nil] firstObject];
         
         //[center initValues:@"Peter" andAddress:@"Madrid" andTemperature:@"5ºC"];
         center.userData = [[NSMutableArray alloc] init];
@@ -3778,16 +3786,23 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
         
         [center prepare: dele location:an.location];
         
-        pin.image = [UIImage imageNamed:@"location_pin2.png"];
+        NSDictionary *annotations = dele.paletteAnnotations;
+        
+        // Pin image from url
+        NSURL *url = [NSURL URLWithString:[annotations objectForKey:@"pinImage"]];
+        NSData *data = [NSData dataWithContentsOfURL:url];
+        UIImage *img = [[UIImage alloc] initWithData:data];
+        // Resize things
+        UIGraphicsBeginImageContext(CGSizeMake(50, 50));
+        [img drawInRect:CGRectMake(0, 0, 50, 50)];
+        img = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        // End resize things
+        pin.image = img;
+        // End pin image
+        
         pin.userInteractionEnabled = YES;
-        //[self.view addSubview:center];
         center.backgroundColor = [UIColor clearColor];
-        //[self.view bringSubviewToFront:center];
-        //[image addSubview:center];
-        //UIView *mid = [[UIView alloc] init];
-        //[mid addSubview:center];
-        //[mid bringSubviewToFront:center];
-        //mid.backgroundColor = [UIColor clearColor];
         
         pin.detailCalloutAccessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"miso-2.png"]];
         [pin.detailCalloutAccessoryView addSubview:center];
@@ -3844,6 +3859,32 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view{
+}
+
+// When map tapped store new data in order to send it after.
+- (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view{
+    // Only if the annotation is the user one.
+    if([view.reuseIdentifier isEqualToString:@"userLocation"]){
+        int i = 0;
+        // Fill every ClassAttribute data to send.
+        for (ClassAttribute *attr in dele.userArray) {
+            // Get the type of the data.
+            NSString *type = attr.type;
+            // Store depends on the type.
+            if([type isEqualToString:@"String"]){
+                attr.currentValue = ((StringAttributeTableViewCell *) center.table.visibleCells[i]).textField.text;
+            }else if([type isEqualToString:@"boolean"] || [type isEqualToString:@"EBooleanObject"]){
+                // If switch is on value = YES, else FALSE. :D
+                attr.currentValue = ((BooleanAttributeTableViewCell *) center.table.visibleCells[i]).switchValue.on? @"YES" : @"NO";
+            }else if([type isEqualToString:@"int"] || [type isEqualToString:@"Int"]){
+                attr.currentValue = ((IntegerTableViewCell *) center.table.visibleCells[i]).textField.text;
+            }else if([type isEqualToString:@"EDouble"] || [type isEqualToString:@"EFloat"]){
+                attr.currentValue = ((DoubleTableViewCell *) center.table.visibleCells[i]).textField.text;
+            }
+            // Go to next row in section.
+            i++;
+        }
+    }
 }
 
 - (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView{

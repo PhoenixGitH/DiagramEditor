@@ -38,6 +38,8 @@
 // The user info Array.
 @property NSMutableArray<ClassAttribute *> * userArray;
 
+@property NSDictionary *paletteAnnotations;
+
 @property NSMutableArray * paletteItems;
 @property BOOL isGeoPalette;
 
