@@ -19,6 +19,8 @@
 #import "YesOrNoView.h"
 #import "ColorPalette.h"
 #import "LinkPalette.h"
+#import "GeoComponentPointAnnotation.h"
+#import "AlertAnnotation.h"
 
 @interface AppDelegate ()
 
@@ -184,6 +186,8 @@
         
         loadingADiagram = YES;
         
+        self.isGeoPalette = [[dic objectForKey:@"GeoPallete"] boolValue];
+        
         
         
         if(chat == nil){
@@ -218,25 +222,69 @@
         if([self amITheMaster]){
             
         }else{
-            NSArray * subViews = [self.can subviews];
-            for(UIView * sub in subViews){
-                if(![sub isKindOfClass:[UIImageView class]]){
-                    if(sub != _yonv)
-                        [sub removeFromSuperview];
-                }
-            }
+            
             
             self.components = [dic objectForKey:@"components"];
             self.connections = [dic objectForKey:@"connections"];
             self.elementsDictionary = [dic objectForKey:@"elementsDictionary"];
             //self.drawnsArray = [dic objectForKey:@"drawnsArray"];
-            //self.notesArray = [dic objectForKey:@"notesArray"];
+            self.notesArray = [dic objectForKey:@"notesArray"];
             
-            for(int i = 0; i< components.count; i++){
-                [self.can addSubview: [components objectAtIndex:i]];
-                Component * t = [components objectAtIndex:i];
-                t.textLayer = nil;
-                [[components objectAtIndex:i]prepare];
+            
+            
+            if(_isGeoPalette){
+                for(id<MKAnnotation>  an in _map.annotations) {
+                    if (_map.userLocation != an) {
+                        [_map removeAnnotation:an];
+                    }
+                }
+                
+                for(int i = 0; i< components.count; i++){
+                    GeoComponentPointAnnotation * point = [[GeoComponentPointAnnotation alloc] init];
+                    point.component = components[i];
+                    point.coordinate = CLLocationCoordinate2DMake([components[i] latitude],[components[i] longitude]);;
+                    
+                    [_map addAnnotation:point];
+                    [[components objectAtIndex:i]prepare];
+
+                }
+                
+                for(Alert * al in notesArray){
+                    
+                    AlertAnnotation * annotation = [[AlertAnnotation alloc] init];
+                    
+                    
+                    annotation.coordinate = al.location.coordinate;
+                    
+                    
+                    annotation.alert = al;
+                    
+                    [_map addAnnotation:annotation];
+                    [_map setNeedsDisplay];
+                    
+                    //[_map addAnnotation:point];
+                    //[[components objectAtIndex:i]prepare];
+                    
+                }
+                
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintMap" object:nil];
+            }else{
+                
+                NSArray * subViews = [self.can subviews];
+                for(UIView * sub in subViews){
+                    if(![sub isKindOfClass:[UIImageView class]]){
+                        if(sub != _yonv)
+                            [sub removeFromSuperview];
+                    }
+                }
+                
+                for(int i = 0; i< components.count; i++){
+                    [self.can addSubview: [components objectAtIndex:i]];
+                    Component * t = [components objectAtIndex:i];
+                    t.textLayer = nil;
+                    [[components objectAtIndex:i]prepare];
+                }
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
             }
             
             /*for(int i = 0; i<notesArray.count; i++){
@@ -254,9 +302,6 @@
         self.serverId = [dic objectForKey:@"serverId"];
         self.currentMasterId = [dic objectForKey:@"currentMasterId"];
         
-
-        
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateMasterButton object:nil];
 
@@ -308,22 +353,54 @@
             NSData * appdeleData = [dataDic objectForKey:@"data"];
             NSDictionary * dic = [NSKeyedUnarchiver unarchiveObjectWithData:appdeleData];
             
-            NSArray * subViews = [self.can subviews];
-            for(UIView * sub in subViews){
-                [sub removeFromSuperview];
-            }
             
             self.components = [dic objectForKey:@"components"];
             self.connections = [dic objectForKey:@"connections"];
             self.elementsDictionary = [dic objectForKey:@"elementsDictionary"];
             
             
-            for(int i = 0; i< components.count; i++){
+            /*for(int i = 0; i< components.count; i++){
                 [self.can addSubview: [components objectAtIndex:i]];
                 [[components objectAtIndex:i]prepare];
+            }*/
+            
+            if(_isGeoPalette){
+                
+                // Remove all annotations and add new ones.
+                for(id<MKAnnotation>  an in _map.annotations) {
+                    if (_map.userLocation != an) {
+                        [_map removeAnnotation:an];
+                    }
+                }
+                
+                for(int i = 0; i< components.count; i++){
+                    GeoComponentPointAnnotation * point = [[GeoComponentPointAnnotation alloc] init];
+                    point.component = components[i];
+                    point.coordinate = CLLocationCoordinate2DMake([components[i] latitude],[components[i] longitude]);;
+                    
+                    
+                    [_map addAnnotation:point];
+                    [[components objectAtIndex:i]prepare];
+                    
+                }
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintMap" object:nil];
+
+            }else{
+                NSArray * subViews = [self.can subviews];
+                for(UIView * sub in subViews){
+                    [sub removeFromSuperview];
+                }
+
+                for(int i = 0; i< components.count; i++){
+                    [self.can addSubview: [components objectAtIndex:i]];
+                    [[components objectAtIndex:i]prepare];
+                }
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
+
             }
             
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
+            //[[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
+            
             
             [[NSNotificationCenter defaultCenter] postNotificationName:kUpdateMasterButton object:nil];
 
@@ -398,7 +475,11 @@
         
         DrawnAlert * da = [dataDic objectForKey:@"drawn"];
         [drawnsArray addObject:da];
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
+        if(_isGeoPalette){
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintMap" object:nil];
+        }else{
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
+        }
     }else if([msg isEqualToString:kDeleteDrawn]){
         
         DrawnAlert * da = [dataDic objectForKey:@"drawn"];
@@ -414,7 +495,11 @@
             [drawnsArray removeObject:sel];
         }
         
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
+        if(_isGeoPalette){
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintMap" object:nil];
+        }else{
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
+        }
     }
     else if([msg isEqualToString:kDeleteNote]){
         
@@ -432,7 +517,11 @@
         if(sel != nil){ //This note exists
             [notesArray removeObject:sel];
             [sel removeFromSuperview];
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
+            if(_isGeoPalette){
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintMap" object:nil];
+            }else{
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
+            }
         }
       
     }else if([msg isEqualToString:kPing]){
@@ -549,6 +638,8 @@
     if(_noVisibleItems != nil)
         [dic setObject:_noVisibleItems forKey:@"noVisibleItems"];
     
+    [dic setObject:[NSNumber numberWithBool:_isGeoPalette] forKey:@"GeoPallete"];
+
     
     NSData * data = [NSKeyedArchiver archivedDataWithRootObject:dic];
     return data;
@@ -581,6 +672,7 @@
         [dic setObject:drawnsArray forKey:@"drawnsArray"];
     
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dic];
+    
     
     return data;
 }

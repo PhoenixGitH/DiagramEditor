@@ -513,6 +513,8 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
                 
                 self.center = translatedPoint;
                 
+                
+                
             }else if(sender.state == UIGestureRecognizerStateEnded){
                 [dele.can setNeedsDisplay];
             }
@@ -1365,6 +1367,13 @@ withSelectedComponent:(Component *)comp
     [coder encodeObject:_expandableItems forKey:@"expandableItems"];
     [coder encodeBool:self.isExpandable forKey:@"isExpandable"];
     
+    //GeoComponent
+    [coder encodeFloat:self.latitude forKey:@"latitude"];
+    [coder encodeFloat:self.longitude forKey:@"longitude"];
+    
+    
+    [coder encodeObject:_annotationView forKey:@"annotationView"];
+    
     
     
 }
@@ -1420,6 +1429,11 @@ withSelectedComponent:(Component *)comp
         
         textLayer.foregroundColor = [UIColor clearColor].CGColor;
         
+        self.latitude = [coder decodeFloatForKey:@"latitude"];
+        self.longitude = [coder decodeFloatForKey:@"longitude"];
+        
+        _annotationView = [coder decodeObjectForKey:@"annotationView"];
+        
         CGRect rect;
         if([_labelPosition isEqualToString:@"node"]){
             rect = CGRectMake(leftMargin, self.frame.size.height/2 - fontSize, self.frame.size.width - (2*leftMargin),fontSize+5);
@@ -1440,6 +1454,8 @@ withSelectedComponent:(Component *)comp
         [self.layer addSublayer:textLayer];
         
         [self updateNameLabel];
+        
+        
         
     }
     return self;

@@ -94,7 +94,7 @@ FOUNDATION_EXPORT NSString *const kDeleteNote;
 #define alertsAnimationDuration 0.075
 
 #pragma mark Resend timer
-#define resendTime 0.3
+#define resendTime 10
 
 //Server alive?
 #define pingTime 1.0

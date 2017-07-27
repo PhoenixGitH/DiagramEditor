@@ -10,7 +10,7 @@
 #import "Component.h"
 #import "GeoComponentPointAnnotation.h"
 
-@interface GeoComponentAnnotationView : MKAnnotationView <MKAnnotation>{
+@interface GeoComponentAnnotationView : MKAnnotationView <MKAnnotation, NSCoding>{
     CLLocationCoordinate2D coordinate;
 }
 

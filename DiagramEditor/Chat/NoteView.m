@@ -156,7 +156,6 @@
     [self removeFromSuperview];
     
     
-    
     [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
     
     //Send delete to peers

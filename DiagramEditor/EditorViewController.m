@@ -249,7 +249,7 @@
         [map setHidden:NO];
         [map setDelegate:self];
         
-        map.userTrackingMode = YES;
+        //map.userTrackingMode = YES;
 
         [map setShowsUserLocation:YES];
         dele.map = map;
@@ -260,6 +260,27 @@
         if(dele.loadingADiagram == YES){
             for(Component * comp in dele.components){
                 [self addComponentAsAnnotationToMap:comp onLatitude:comp.latitude andLongitude:comp.longitude];
+            }
+            
+            //Load notes
+            for(Alert * al in dele.notesArray){
+                if(useImageAsIcon == YES){
+                    if(al.attach != nil)
+                        al.image = al.attach;
+                    else{
+                        al.image = noteAlert.image;
+                    }
+                }else{
+                    al.image = noteAlert.image;
+                }
+                //[canvas addSubview:al];
+                [self addAlertToMap:al onLocation:al.location];
+                [al setUserInteractionEnabled:YES];
+                UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showNoteContent:)];
+                [al addGestureRecognizer:tapgr];
+                
+                UIPanGestureRecognizer * pang = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleAlertPoint:)];
+                [al addGestureRecognizer:pang];
             }
         }
 
@@ -646,7 +667,11 @@
 }
 
 -(void)didReceiveNewAppDeleInfo{
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+    if(dele.isGeoPalette){
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintMap" object:self];
+    }else{
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+    }
 }
 
 
@@ -872,6 +897,10 @@
                         }else{ //Add to canvas
                             [self addComponentAsAnnotationToMap:comp onPoint:p];
                         }
+                        
+                        [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintMap" object:nil];
+                        
+                        [self resendInfo];
                         
                         
                     }else if([sender.type isEqualToString:@"graphicR:Edge"]){
@@ -1106,7 +1135,14 @@
     dele.notesArray = [[NSMutableArray alloc] init];
     dele.drawnsArray = [[NSMutableArray alloc] init];
     [canvas prepareCanvas];
+    for(id<MKAnnotation>  an in map.annotations) {
+        if (map.userLocation != an) {
+            [map removeAnnotation:an];
+        }
+    }
+    [self resendInfo];
 }
+
 
 #pragma mark Save diagram
 - (IBAction)saveCurrentDiagram:(id)sender {
@@ -2437,7 +2473,7 @@
     //NSLog(@"resend");
     NSData * appDeleData = [dele packElementsInfo];
     
-    NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     
     [dic setObject:appDeleData forKey:@"data"];
     [dic setObject:kUpdateData forKey:@"msg"];
@@ -2445,6 +2481,13 @@
     NSError * error = nil;
     
     NSData * allData = [NSKeyedArchiver archivedDataWithRootObject:dic];
+    
+    //NSDictionary *theDic = [NSKeyedUnarchiver unarchiveObjectWithData:allData];
+    
+    //NSDictionary * dict = [NSKeyedUnarchiver unarchiveObjectWithData:[theDic valueForKey:@"data"]];
+    
+    
+    
     [dele.manager.session sendData:allData
                            toPeers:dele.manager.session.connectedPeers
                           withMode:MCSessionSendDataReliable
@@ -2767,7 +2810,13 @@
     
     if(dele.isGeoPalette == YES){
         [self addAlertToMap:alert onPoint:point];
+        UIPanGestureRecognizer * notePanGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self
+                                                                                          action:@selector(handleAlertPoint:)];
+        [alert addGestureRecognizer:notePanGesture];
     }else{ //Use canvas
+        UIPanGestureRecognizer * notePanGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self
+                                                                                          action:@selector(handleNotePan:)];
+        [alert addGestureRecognizer:notePanGesture];
          [canvas addSubview:alert];
     }
     
@@ -2952,7 +3001,15 @@
     
     
     //[canvas addSubview:imageView];
-    [canvas addSubview:alert];
+    
+    // Depends on the type of Pallete.
+    if(dele.isGeoPalette){
+        [self addAlertToMap:alert onLocation:alert.location];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintMap" object:self];
+    }else{
+        [canvas addSubview:alert];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+    }
     
     [dele.notesArray addObject:alert];
     
@@ -3814,6 +3871,7 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
         //It is an alert annotation
         Alert * associated = ((AlertAnnotation *)annotation).alert;
         AlertAnnotationView * pin = [[AlertAnnotationView alloc] initWithAnnotation:annotation alert:associated];
+        GeoComponentPointAnnotation * gcpa = (GeoComponentPointAnnotation *)annotation;
         NSArray * gestureRecog = pin.gestureRecognizers;
         
         for(UIGestureRecognizer * r in gestureRecog){
@@ -3821,11 +3879,17 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
         }
         
         associated.associatedAnnotationView = pin;
+        associated.associatedAnnotationView.coordinate = gcpa.coordinate;
         
         [pin setEnabled:NO];
         
         pin.point = annotation;
+        //pin.image = [UIImage imageNamed:@"note.png"];
         
+        /*UIPanGestureRecognizer * pangr = [[UIPanGestureRecognizer alloc] initWithTarget:self
+                                                                                 action:@selector(handleAlertPoint:)];
+        pangr.cancelsTouchesInView = NO;
+        [pin addGestureRecognizer:pangr];*/
         return pin;
         
         
@@ -3895,15 +3959,16 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
     [mapView setHidden:NO];
     [mapView setDelegate:self];
     
-    mapView.userTrackingMode = YES;
+    //mapView.userTrackingMode = YES;
     map = mapView;
 }
 
 
+-(void)handleAlertPoint:(UIPanGestureRecognizer *)recog{
+    
+    Alert * alert = (Alert *)recog.view;
 
--(void)handleAnnotationPoint:(UIPanGestureRecognizer *)recog{
-   
-    GeoComponentAnnotationView * view = (GeoComponentAnnotationView *)recog.view;
+    AlertAnnotationView * view = alert.associatedAnnotationView;
     
     CGPoint p = [recog locationInView:map];
     
@@ -3917,10 +3982,49 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
     }else if(recog.state == UIGestureRecognizerStateChanged){
         [view.point setCoordinate:coor];
         view.coordinate = coor;
+        alert.location = [[CLLocation alloc] initWithLatitude:coor.longitude longitude:coor.longitude];
     }else if(recog.state == UIGestureRecognizerStateEnded){
         view.coordinate = coor;
+        alert.location = [[CLLocation alloc] initWithLatitude:coor.longitude longitude:coor.longitude];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintMap" object:nil];
+        
+        [self resendInfo];
     }
-      [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintMap" object:nil];
+    
+}
+
+
+
+-(void)handleAnnotationPoint:(UIPanGestureRecognizer *)recog{
+   
+    if(dele.amITheMaster || dele.manager.session.connectedPeers.count == 0){
+        
+        GeoComponentAnnotationView * view = (GeoComponentAnnotationView *)recog.view;
+    
+        CGPoint p = [recog locationInView:map];
+    
+        p.x = p.x + view.frame.size.width/4;
+        p.y = p.y + view.frame.size.height;
+    
+        CLLocationCoordinate2D coor = [map convertPoint:p toCoordinateFromView:self.view];
+        //NSLog(@"%.3f,%.3f", coor.latitude, coor.longitude);
+        if(recog.state == UIGestureRecognizerStateBegan){
+        
+        }else if(recog.state == UIGestureRecognizerStateChanged){
+            [view.point setCoordinate:coor];
+            view.coordinate = coor;
+            view.comp.longitude = coor.longitude;
+            view.comp.latitude = coor.latitude;
+        }else if(recog.state == UIGestureRecognizerStateEnded){
+            view.coordinate = coor;
+            view.comp.longitude = coor.longitude;
+            view.comp.latitude = coor.latitude;
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintMap" object:nil];
+            
+            [self resendInfo];
+        }
+        
+    }
     
 }
 
@@ -3973,8 +4077,12 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
         
         int numPoints = 2;
         CLLocationCoordinate2D* coords = malloc(numPoints * sizeof(CLLocationCoordinate2D));
-        coords[0] = sView.point.coordinate;
-        coords[1] = tView.point.coordinate;
+        //coords[0].latitude = source.latitude;
+        //coords[0].longitude = source.longitude;
+        //coords[1].latitude = target.latitude;
+        //coords[1].longitude = target.longitude;
+        coords[0] = sView.coordinate;
+        coords[1] = tView.coordinate;
         
         MKPolyline * line = [MKPolyline polylineWithCoordinates:coords count:numPoints];
 
@@ -4085,7 +4193,19 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
     
 }
 
-
+-(void)addAlertToMap:(Alert *)alert onLocation:(CLLocation *)point{
+    AlertAnnotation * annotation = [[AlertAnnotation alloc] init];
+    
+    
+    annotation.coordinate = point.coordinate;
+    
+    alert.location = point;
+    
+    
+    annotation.alert = alert;
+    
+    [map addAnnotation:annotation];
+}
 
 -(void)addAlertToMap:(Alert *)alert onPoint:(CGPoint)point{
     AlertAnnotation * annotation = [[AlertAnnotation alloc] init];

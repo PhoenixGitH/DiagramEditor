@@ -21,6 +21,7 @@
     [coder encodeObject:self.date  forKey:@"date"];
     [coder encodeObject:self.associatedComponent forKey:@"associatedComponent"];
     [coder encodeInt:self.identifier forKey:@"identifier"];
+    [coder encodeObject:self.location forKey:@"location"];
 }
 
 
@@ -33,6 +34,8 @@
         self.date = [coder decodeObjectForKey:@"date"];
         self.associatedComponent = [coder decodeObjectForKey:@"associatedComponent"];
         self.identifier = [coder decodeIntForKey:@"identifier"];
+        self.location = [coder decodeObjectForKey:@"location"];
+
     }
     return self;
 }

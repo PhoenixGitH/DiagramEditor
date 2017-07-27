@@ -15,8 +15,10 @@
     NSMutableArray * mapTypes;
     AppDelegate * dele;
     IBOutlet UISearchBar *directionSearchBar;
+    
 }
 - (IBAction)closeMapOptions:(id)sender;
 - (IBAction)testFlyover:(id)sender;
+- (IBAction)JumpToLocation:(id)sender;
 
 @end

@@ -10,6 +10,8 @@
 
 @implementation AlertAnnotationView
 
+@synthesize coordinate;
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -31,11 +33,23 @@
     
     [self addSubview:_alert];
     
+    //self.coordinate = _alert.location.coordinate;
     
     self.draggable = NO; //Can I drag this?
     
     
     return  self;
+}
+
+- (void)setCoordinate:(CLLocationCoordinate2D)newCoordinate {
+    [self willChangeValueForKey:@"coordinate"];
+    coordinate = newCoordinate;
+    [self didChangeValueForKey:@"coordinate"];
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+       shouldReceiveTouch:(UITouch *)touch{
+    return YES;
 }
 
 @end

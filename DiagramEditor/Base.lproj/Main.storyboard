@@ -583,24 +583,6 @@
                                     <action selector="testFlyover:" destination="919-qT-EMg" eventType="touchUpInside" id="Icu-f2-O24"/>
                                 </connections>
                             </button>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="uFv-Dj-BiS">
-                                <rect key="frame" x="91" y="274" width="289" height="44"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="go"/>
-                                <scopeButtonTitles>
-                                    <string>Title</string>
-                                    <string>Title</string>
-                                </scopeButtonTitles>
-                            </searchBar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nq9-gZ-qak">
-                                <rect key="frame" x="20" y="283" width="71" height="26"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="26" id="Fpy-vk-32r"/>
-                                    <constraint firstAttribute="width" constant="71" id="ctf-t1-NoH"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                <color key="textColor" red="0.7137255072593689" green="0.74901962280273438" blue="0.81960785388946533" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gnZ-fT-ITk">
                                 <rect key="frame" x="20" y="28" width="54" height="30"/>
                                 <constraints>
@@ -615,6 +597,34 @@
                                     <action selector="closeMapOptions:" destination="919-qT-EMg" eventType="touchUpInside" id="EM2-Pe-G2g"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="99p-kS-YA8">
+                                <rect key="frame" x="20" y="333" width="360" height="30"/>
+                                <color key="backgroundColor" red="0.35686275360000003" green="0.42745098469999998" blue="0.57254904510000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Jump to self location">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="JumpToLocation:" destination="919-qT-EMg" eventType="touchUpInside" id="zxm-NF-4vn"/>
+                                </connections>
+                            </button>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="uFv-Dj-BiS">
+                                <rect key="frame" x="91" y="253" width="289" height="44"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="go"/>
+                                <scopeButtonTitles>
+                                    <string>Title</string>
+                                    <string>Title</string>
+                                </scopeButtonTitles>
+                            </searchBar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nq9-gZ-qak">
+                                <rect key="frame" x="20" y="262" width="71" height="26"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="26" id="Fpy-vk-32r"/>
+                                    <constraint firstAttribute="width" constant="71" id="ctf-t1-NoH"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <color key="textColor" red="0.7137255072593689" green="0.74901962280273438" blue="0.81960785388946533" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.22745098173618317" green="0.30588236451148987" blue="0.47058823704719543" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -622,19 +632,22 @@
                             <constraint firstItem="uFv-Dj-BiS" firstAttribute="leading" secondItem="Nq9-gZ-qak" secondAttribute="trailing" id="5ye-Ma-aKD"/>
                             <constraint firstAttribute="leadingMargin" secondItem="Smq-z8-NKk" secondAttribute="leading" id="6PG-MY-5Cf"/>
                             <constraint firstAttribute="trailingMargin" secondItem="uFv-Dj-BiS" secondAttribute="trailing" id="6c9-xy-WCb"/>
+                            <constraint firstItem="99p-kS-YA8" firstAttribute="leading" secondItem="dt6-qB-dgi" secondAttribute="leadingMargin" id="8GH-Sh-xr8"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ePA-c5-bts" secondAttribute="trailing" constant="46" id="Dvq-F0-NfT"/>
                             <constraint firstItem="ePA-c5-bts" firstAttribute="top" secondItem="au5-8a-SW4" secondAttribute="bottom" constant="12" id="F2a-bP-RTM"/>
+                            <constraint firstItem="99p-kS-YA8" firstAttribute="trailing" secondItem="dt6-qB-dgi" secondAttribute="trailingMargin" id="IXK-yX-8Po"/>
                             <constraint firstAttribute="leadingMargin" secondItem="gnZ-fT-ITk" secondAttribute="leading" id="IuA-44-dhn"/>
                             <constraint firstAttribute="trailingMargin" secondItem="mvk-b1-sr5" secondAttribute="trailing" id="K2p-Qi-7Xb"/>
                             <constraint firstItem="54f-tY-yGf" firstAttribute="top" secondItem="ePA-c5-bts" secondAttribute="bottom" constant="34" id="LSt-WM-kD2"/>
                             <constraint firstItem="54f-tY-yGf" firstAttribute="leading" secondItem="Smq-z8-NKk" secondAttribute="trailing" constant="5" id="MCY-Tg-1fw"/>
                             <constraint firstItem="gnZ-fT-ITk" firstAttribute="top" secondItem="au5-8a-SW4" secondAttribute="bottom" constant="8" id="Pi9-b6-oJG"/>
                             <constraint firstItem="uFv-Dj-BiS" firstAttribute="top" secondItem="mvk-b1-sr5" secondAttribute="bottom" constant="3" id="QVt-Mh-3VB"/>
-                            <constraint firstItem="Nq9-gZ-qak" firstAttribute="top" secondItem="54f-tY-yGf" secondAttribute="bottom" constant="65" id="Snk-Eq-FKS"/>
+                            <constraint firstItem="99p-kS-YA8" firstAttribute="top" secondItem="uFv-Dj-BiS" secondAttribute="bottom" constant="36" id="Rus-4f-EBp"/>
+                            <constraint firstItem="Nq9-gZ-qak" firstAttribute="top" secondItem="54f-tY-yGf" secondAttribute="bottom" constant="44" id="Snk-Eq-FKS"/>
                             <constraint firstItem="Smq-z8-NKk" firstAttribute="top" secondItem="ePA-c5-bts" secondAttribute="bottom" constant="64" id="XXY-I0-Db8"/>
                             <constraint firstItem="Nq9-gZ-qak" firstAttribute="top" secondItem="mvk-b1-sr5" secondAttribute="bottom" constant="12" id="YiZ-vN-DY7"/>
                             <constraint firstAttribute="trailingMargin" secondItem="54f-tY-yGf" secondAttribute="trailing" id="ZBj-H5-fh2"/>
-                            <constraint firstItem="uFv-Dj-BiS" firstAttribute="top" secondItem="54f-tY-yGf" secondAttribute="bottom" constant="56" id="agc-BV-CUU"/>
+                            <constraint firstItem="uFv-Dj-BiS" firstAttribute="top" secondItem="54f-tY-yGf" secondAttribute="bottom" constant="35" id="agc-BV-CUU"/>
                             <constraint firstAttribute="leadingMargin" secondItem="Nq9-gZ-qak" secondAttribute="leading" id="oJe-dy-Ygr"/>
                             <constraint firstItem="ePA-c5-bts" firstAttribute="centerX" secondItem="dt6-qB-dgi" secondAttribute="centerX" constant="8" id="vTq-wT-Wbv"/>
                         </constraints>
@@ -653,7 +666,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3N4-8m-F3J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2540.8000000000002" y="669.26536731634189"/>
+            <point key="canvasLocation" x="2514" y="670"/>
         </scene>
         <!--Configure Graphics View Controller-->
         <scene sceneID="n2c-zc-1ud">

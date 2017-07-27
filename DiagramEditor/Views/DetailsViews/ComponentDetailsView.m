@@ -27,6 +27,7 @@
 #import "IntegerTableViewCell.h"
 #import "EnumTableViewCell.h"
 #import "DeviceSelector.h"
+#import "GeoComponentAnnotationView.h"
 
 #define getInfo @"https://triggerstest.herokuapp.com/api/Call/"
 
@@ -182,35 +183,54 @@
 
 - (IBAction)deleteCurrentComponent:(id)sender {
     
-    //Remove all connections for this element
-    Connection * conn = nil;
-    NSMutableArray * connsToRemove = [[NSMutableArray alloc] init];
-    for(int i = 0; i<dele.connections.count; i++){
-        conn = [dele.connections objectAtIndex:i];
+    if(dele.amITheMaster || dele.manager.session.connectedPeers.count <= 1){
+        //Remove all connections for this element
+        Connection * conn = nil;
+        NSMutableArray * connsToRemove = [[NSMutableArray alloc] init];
+        for(int i = 0; i<dele.connections.count; i++){
+            conn = [dele.connections objectAtIndex:i];
         
-        if(conn.target == comp || conn.source == comp){
-            //Remove this connection
-            [connsToRemove addObject:conn ];
+            if(conn.target == comp || conn.source == comp){
+                //Remove this connection
+                [connsToRemove addObject:conn ];
+            }
         }
+    
+        for(int i = 0; i<connsToRemove.count; i++){
+            conn = [connsToRemove objectAtIndex:i];
+            [dele.connections removeObject:conn];
+        }
+    
+    
+        //Remove this component
+        if(dele.isGeoPalette){
+            GeoComponentAnnotationView *aso = comp.annotationView;
+            
+            
+            [dele.map removeAnnotation:aso.point];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintMap" object:self];
+        }else{
+            [comp removeFromSuperview];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+        }
+        [dele.components removeObject:comp];
+    
+    
+    
+        //[self dismissViewControllerAnimated:YES completion:nil];
+    
+    
+    
+        [delegate closeDetailsViewAndUpdateThings];
+        [previewComponent setNeedsDisplay];
+    }else{
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
+                                                        message:@"You can't do that if you are not the master"
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil,nil];
+        [alert show];
     }
-    
-    for(int i = 0; i<connsToRemove.count; i++){
-        conn = [connsToRemove objectAtIndex:i];
-        [dele.connections removeObject:conn];
-    }
-    
-    
-    //Remove this component
-    [comp removeFromSuperview];
-    [dele.components removeObject:comp];
-    
-    
-    //[self dismissViewControllerAnimated:YES completion:nil];
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
-    
-    
-    [delegate closeDetailsViewAndUpdateThings];
-    [previewComponent setNeedsDisplay];
 }
 
 - (void)viewDidAppear:(BOOL)animated{

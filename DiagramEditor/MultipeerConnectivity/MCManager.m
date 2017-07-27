@@ -73,6 +73,17 @@
     
     NSDictionary * userInfo = @{@"peerID":peerID, @"data":data};
     
+    //NSLog(@"El valor del diccionario es: %@",[NSKeyedUnarchiver unarchiveObjectWithData:data]);
+    
+    NSDictionary* dic = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    
+    NSData * receivedData = [dic objectForKey:@"data"];
+    
+    NSDictionary * dataDic = [NSKeyedUnarchiver unarchiveObjectWithData:receivedData];
+    
+    NSLog(@"%@",dataDic);
+    
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter] postNotificationName:kReceivedData
                                                             object:nil

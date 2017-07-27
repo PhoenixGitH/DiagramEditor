@@ -791,7 +791,7 @@
 
 }
 
--(void)extractPalettesForContentsOfFile: (PaletteFile *) file{
+-(void) extractPalettesForContentsOfFile: (PaletteFile *) file{
     // [palette resetPalette];
     
     NSLog(@"extractPalettesForContentsOfFile");
@@ -1919,6 +1919,8 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
         NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
         f.numberStyle = NSNumberFormatterDecimalStyle;
         
+        [dele.userArray removeAllObjects];
+        
         //Sacamos los atributos
         NSArray * attrs = [user objectForKey:@"attributes"];
         for(int a = 0; a < attrs.count; a++){
@@ -2511,7 +2513,18 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
             dele.currentPaletteFile = tempPaletteFile;
             BOOL result = [self completePaletteForJSONAttributes];
             
+            NSDictionary *diaDict = [dic objectForKey:@"diagram"];
             
+            // If is geopallete get the values of the pin.
+            if(dele.isGeoPalette){
+                // Extract the value for the parameters.
+                NSDictionary * user = [diaDict objectForKey:@"user"];
+                // Fill the data of every attribute.
+                
+                for(ClassAttribute *attr in dele.userArray){
+                    attr.currentValue = [user objectForKey:[@"_" stringByAppendingString:attr.name]];
+                }
+            }
             
             NSMutableArray * loadedComponents = [[NSMutableArray alloc] init];
             for(NSDictionary * dic in nodes){

@@ -40,6 +40,36 @@
 }
 
 
+#pragma mark NSCoding
+
+- (void)encodeWithCoder:(NSCoder *)coder {
+    [coder encodeObject:_comp forKey:@"component"];
+    [coder encodeDouble:coordinate.latitude forKey:@"latitude"];
+    [coder encodeDouble:coordinate.longitude forKey:@"longitude"];
+    [coder encodeObject:_point forKey:@"point"];
+    
+    
+    
+    
+}
+
+- (id)initWithCoder:(NSCoder *)coder {
+    
+    self = [self initWithAnnotation:nil component:nil];
+    
+    if (self) {
+        
+        _comp = [coder decodeObjectForKey:@"component"];
+        double lat = [coder decodeDoubleForKey:@"latitude"];
+        double lon = [coder decodeDoubleForKey:@"longitude"];
+        self.coordinate = CLLocationCoordinate2DMake(lat,lon);
+        _point =     [coder decodeObjectForKey:@"point"];
+        
+    }
+    return self;
+}
+
+
 
 /*
 - (UIView*)hitTest:(CGPoint)point withEvent:(UIEvent*)event

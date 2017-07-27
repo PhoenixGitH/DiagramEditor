@@ -124,6 +124,11 @@
     
 }
 
+- (IBAction)JumpToLocation:(id)sender {
+    dele.map.userTrackingMode = YES;
+    dele.map.userTrackingMode = NO;
+}
+
 
 -(void)centerMapOnMapItem:(MKMapItem *)item{
     //[self dismissViewControllerAnimated:YES completion:nil];
@@ -178,4 +183,5 @@
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     [directionSearchBar endEditing:YES];
 }
+
 @end
