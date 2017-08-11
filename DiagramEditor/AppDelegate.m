@@ -144,6 +144,8 @@
         
     }
     
+    _peersConnected = [[NSMutableDictionary init] alloc];
+    
     return YES;
 }
 
@@ -251,7 +253,29 @@
                 
                 for(Alert * al in notesArray){
                     
-                    AlertAnnotation * annotation = [[AlertAnnotation alloc] init];
+                    /*AlertAnnotation * annotation = [[AlertAnnotation alloc] init];
+                    
+                    
+                    annotation.coordinate = al.location.coordinate;
+                    
+                    annotation.alert.frame = CGRectMake(0,0,60,60);
+                    annotation.alert = al;
+                    
+                    [_map addAnnotation:annotation];*/
+                    //[_map setNeedsDisplay];
+                    
+                    
+                    NSMutableDictionary * relinfo = [[NSMutableDictionary alloc] init];
+                    [relinfo setObject:[NSValue valueWithCGPoint:al.center] forKey:@"where"];
+                    [relinfo setObject:al.who forKey:@"who"];
+                    [relinfo setObject:kNoteType forKey:@"alertType"];
+                    
+                    [relinfo setObject:al forKey:@"note"];
+                    
+                    
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kNewAlert object:nil userInfo:relinfo];
+                    /*AlertAnnotation * annotation = [[AlertAnnotation alloc] init];
                     
                     
                     annotation.coordinate = al.location.coordinate;
@@ -260,7 +284,7 @@
                     annotation.alert = al;
                     
                     [_map addAnnotation:annotation];
-                    [_map setNeedsDisplay];
+                    [_map setNeedsDisplay];*/
                     
                     //[_map addAnnotation:point];
                     //[[components objectAtIndex:i]prepare];
@@ -272,10 +296,10 @@
                 
                 NSArray * subViews = [self.can subviews];
                 for(UIView * sub in subViews){
-                    if(![sub isKindOfClass:[UIImageView class]]){
+                    //if(![sub isKindOfClass:[UIImageView class]]){
                         if(sub != _yonv)
                             [sub removeFromSuperview];
-                    }
+                    //}
                 }
                 
                 for(int i = 0; i< components.count; i++){
@@ -284,10 +308,24 @@
                     t.textLayer = nil;
                     [[components objectAtIndex:i]prepare];
                 }
+                
+                for(Alert *al in notesArray){
+                    NSMutableDictionary * relinfo = [[NSMutableDictionary alloc] init];
+                    [relinfo setObject:[NSValue valueWithCGPoint:al.center] forKey:@"where"];
+                    [relinfo setObject:al.who forKey:@"who"];
+                    [relinfo setObject:kNoteType forKey:@"alertType"];
+                    
+                    [relinfo setObject:al forKey:@"note"];
+                    
+                    
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kNewAlert object:nil userInfo:relinfo];
+                }
+                
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
             }
             
-            /*for(int i = 0; i<notesArray.count; i++){
+            /*for(int i = 0; i<notesArray.count; i++)
                 [self.can addSubview:[notesArray objectAtIndex:i]];
                 
             }*/
@@ -357,6 +395,8 @@
             self.components = [dic objectForKey:@"components"];
             self.connections = [dic objectForKey:@"connections"];
             self.elementsDictionary = [dic objectForKey:@"elementsDictionary"];
+            //self.drawnsArray = [dic objectForKey:@"drawnsArray"];
+            self.notesArray = [dic objectForKey:@"notesArray"];
             
             
             /*for(int i = 0; i< components.count; i++){
@@ -383,6 +423,36 @@
                     [[components objectAtIndex:i]prepare];
                     
                 }
+                
+                for(Alert * al in notesArray){
+                    
+                    //NSString * noteText = [dataDic objectForKey:@"noteText"];
+                    
+                    //NSLog(@"%@ manda una alerta de tipo %@ en la pos (%f,%f)", who.displayName, type, where.x, where.y);
+                    
+                    
+                    /*AlertAnnotation * annotation = [[AlertAnnotation alloc] init];
+                    
+                    
+                    annotation.coordinate = al.location.coordinate;
+                    
+                    
+                    annotation.alert = al;
+                    
+                    [_map addAnnotation:annotation];
+                    [_map setNeedsDisplay];*/
+                    NSMutableDictionary * relinfo = [[NSMutableDictionary alloc] init];
+                    [relinfo setObject:[NSValue valueWithCGPoint:al.center] forKey:@"where"];
+                    [relinfo setObject:al.who forKey:@"who"];
+                    [relinfo setObject:kNoteType forKey:@"alertType"];
+                    
+                    [relinfo setObject:al forKey:@"note"];
+                    
+                    
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kNewAlert object:nil userInfo:relinfo];
+                }
+                
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintMap" object:nil];
 
             }else{
@@ -394,6 +464,10 @@
                 for(int i = 0; i< components.count; i++){
                     [self.can addSubview: [components objectAtIndex:i]];
                     [[components objectAtIndex:i]prepare];
+                }
+                for(int i = 0; i< notesArray.count; i++){
+                    [self.can addSubview: [notesArray objectAtIndex:i]];
+                    [[notesArray objectAtIndex:i]prepare];
                 }
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
 
@@ -439,6 +513,7 @@
                                                               userInfo:nil];
         }else{
             NSLog(@"Somebody has been kicked from session");
+            [_peersConnected removeObjectForKey:who];
         }
     }else if([msg isEqualToString:kNewChatMessage]){
 
@@ -528,6 +603,24 @@
         //Server alive
         missedServerAttemps = 0;
         //NSLog(@"Still connected to server");
+    }else if([msg isEqualToString:kUpdatePeer]){
+        MCPeerID * who = [dataDic objectForKey:@"peerID"];
+        
+        if(![who isEqual:myPeerInfo]){
+            [_peersConnected removeObjectForKey:who];
+            CLLocation *location = [dataDic objectForKey:@"location"];
+            [_peersConnected setObject:who forKey:location];
+        }
+    }else if([msg isEqualToString:kNewPeer]){
+        MCPeerID * who = [dataDic objectForKey:@"peerID"];
+        
+        if(![who isEqual:myPeerInfo]){
+            CLLocation *location = [dataDic objectForKey:@"location"];
+            [_peersConnected setObject:who forKey:location];
+            MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+            [annotation setCoordinate:location.coordinate];
+            [_map addAnnotation:annotation];
+        }
     }
 }
 

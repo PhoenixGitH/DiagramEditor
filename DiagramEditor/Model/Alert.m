@@ -21,7 +21,11 @@
     [coder encodeObject:self.date  forKey:@"date"];
     [coder encodeObject:self.associatedComponent forKey:@"associatedComponent"];
     [coder encodeInt:self.identifier forKey:@"identifier"];
-    [coder encodeObject:self.location forKey:@"location"];
+    [coder encodeFloat:_location.coordinate.latitude forKey:@"latitude"];
+    [coder encodeFloat:_location.coordinate.longitude forKey:@"longitude"];
+    [coder encodeFloat:self.center.x forKey:@"centerx"];
+    [coder encodeFloat:self.center.y forKey:@"centery"];
+
 }
 
 
@@ -34,7 +38,12 @@
         self.date = [coder decodeObjectForKey:@"date"];
         self.associatedComponent = [coder decodeObjectForKey:@"associatedComponent"];
         self.identifier = [coder decodeIntForKey:@"identifier"];
-        self.location = [coder decodeObjectForKey:@"location"];
+        float latitude = [coder decodeFloatForKey:@"latitude"];
+        float longitude = [coder decodeFloatForKey:@"longitude"];
+        _location = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
+        float centerx = [coder decodeFloatForKey:@"centerx"];
+        float centery = [coder decodeFloatForKey:@"centery"];
+        self.center = CGPointMake(centerx,centery);
 
     }
     return self;

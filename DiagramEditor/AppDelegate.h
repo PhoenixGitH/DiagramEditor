@@ -88,6 +88,10 @@
 @property NSMutableArray * notesArray;
 @property NSMutableArray * drawnsArray;
 
+@property NSMutableDictionary * peersConnected;
+
+
+
 @property DrawnAlert * selectedDrawn;
 @property YesOrNoView * yonv;
 @property UIColor * myColor;

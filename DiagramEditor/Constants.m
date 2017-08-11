@@ -34,6 +34,8 @@ NSString *const DASH_DOT = @"dash_dot";
 
 
 #pragma mark Collaboration
+NSString * const kNewPeer = @"kNewPeer";
+NSString * const kUpdatePeer = @"kUpdatePeer";
 NSString * const kInitialInfoFromServer = @"kInitialInfoFromServer";
 NSString * const kChangedState = @"kChangedState";
 NSString * const kReceivedData = @"kReceivedData";
@@ -55,6 +57,10 @@ NSString * const kDisconnectYourself = @"kDisconnectYourself";
 NSString * const kNewChatMessage = @"kNewChatMessage";
 
 NSString * const kGoOut = @"kGoOut";
+
+
+
+
 
 NSString * const kNewColor = @"kNewColor";
 

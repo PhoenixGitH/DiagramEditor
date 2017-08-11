@@ -1,8 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -19,14 +23,14 @@
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cM1-Gm-vhK">
                                     <rect key="frame" x="148" y="270" width="101" height="38"/>
-                                    <color key="backgroundColor" red="0.2274509817" green="0.3058823645" blue="0.47058823700000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" red="0.2274509817" green="0.3058823645" blue="0.47058823700000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="101" id="A9P-iR-ATS"/>
                                         <constraint firstAttribute="height" constant="38" id="oIe-bp-WTe"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                     <state key="normal" title="Create">
-                                        <color key="titleColor" red="0.71372550729999995" green="0.74901962280000001" blue="0.81960785390000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="titleColor" red="0.71372550729999995" green="0.74901962280000001" blue="0.81960785390000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </state>
                                     <connections>
                                         <action selector="confirmCreatingAlert:" destination="iN0-l3-epB" eventType="touchUpInside" id="ovJ-gv-KnE"/>
@@ -34,14 +38,14 @@
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dzd-Wv-bnb">
                                     <rect key="frame" x="25" y="270" width="101" height="36"/>
-                                    <color key="backgroundColor" red="0.2274509817" green="0.3058823645" blue="0.47058823700000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" red="0.2274509817" green="0.3058823645" blue="0.47058823700000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="36" id="iH2-xm-KNZ"/>
                                         <constraint firstAttribute="width" constant="101" id="pZ7-eT-7hY"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                     <state key="normal" title="Cancel">
-                                        <color key="titleColor" red="0.7137255072593689" green="0.74901962280273438" blue="0.81960785388946533" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="titleColor" red="0.7137255072593689" green="0.74901962280273438" blue="0.81960785388946533" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </state>
                                     <connections>
                                         <action selector="cancelCreatingAlert:" destination="iN0-l3-epB" eventType="touchUpInside" id="Pzg-dW-1ij"/>
@@ -65,7 +69,7 @@
                                         <constraint firstAttribute="height" constant="21" id="vyC-iM-P3q"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <color key="textColor" red="0.7137255072593689" green="0.74901962280273438" blue="0.81960785388946533" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="textColor" red="0.7137255072593689" green="0.74901962280273438" blue="0.81960785388946533" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Va-5d-Ntf">
@@ -81,10 +85,10 @@
                                 </button>
                                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IfJ-w7-LQW">
                                     <rect key="frame" x="8" y="37" width="259" height="164"/>
-                                    <color key="backgroundColor" red="0.64445112179487185" green="0.14827896078648253" blue="0.16718544842252522" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" red="0.64445112179487185" green="0.14827896078648253" blue="0.16718544842252522" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </scrollView>
                             </subviews>
-                            <color key="backgroundColor" red="0.35686275362968445" green="0.42745098471641541" blue="0.57254904508590698" alpha="0.0" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" red="0.35686275362968445" green="0.42745098471641541" blue="0.57254904508590698" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstItem="vx1-GL-bYt" firstAttribute="leading" secondItem="5Va-5d-Ntf" secondAttribute="trailing" constant="17" id="4dc-rn-KhS"/>
                                 <constraint firstItem="eEl-X9-IKL" firstAttribute="top" secondItem="eQl-nR-YRz" secondAttribute="top" constant="8" id="8s8-8b-EBo"/>
@@ -105,14 +109,14 @@
                             </constraints>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="eQl-nR-YRz" firstAttribute="centerY" secondItem="wUt-7l-m5e" secondAttribute="centerY" id="Syb-tV-8mZ"/>
                         <constraint firstItem="eQl-nR-YRz" firstAttribute="centerX" secondItem="wUt-7l-m5e" secondAttribute="centerX" id="e9q-NZ-6Pn"/>
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="wUt-7l-m5e" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="jXK-C2-zzW"/>
                 <constraint firstAttribute="bottom" secondItem="wUt-7l-m5e" secondAttribute="bottom" id="m2Y-6A-RaS"/>

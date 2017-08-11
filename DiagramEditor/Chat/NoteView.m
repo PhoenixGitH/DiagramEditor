@@ -157,7 +157,7 @@
     
     
     [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:nil];
-    
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintMap" object:nil];
     //Send delete to peers
     
     NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];

@@ -1140,7 +1140,7 @@
             [map removeAnnotation:an];
         }
     }
-    [self resendInfo];
+    [self updateMap:nil];
 }
 
 
@@ -2141,7 +2141,7 @@
     }
     return current;
 }
--(UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
+-(UIView *)ZoomingInScrollView:(UIScrollView *)scrollView{
     return canvas;
 }
 
@@ -2756,6 +2756,10 @@
             tempCreateNote = cnv;
             
         }else{
+            if(dele.isGeoPalette == YES){
+                point = [recog locationInView:self.view];
+            }
+
             [self sendAlert:view onPoint:pointInSV];
         }
         
@@ -2846,7 +2850,8 @@
     }else if(recog.state == UIGestureRecognizerStateChanged){
         [sender setCenter:pointInSV];
     }else if(recog.state == UIGestureRecognizerStateEnded){
-        
+        //[sender setCenter:pointInSV];
+        [self resendInfo];
     }
     
     [canvas setNeedsDisplay];
@@ -2894,6 +2899,7 @@
         alert.image = interrogationAlert.image;
     }else if(view == noteAlert){
         alert.image = noteAlert.image;
+        [dele.notesArray addObject:alert];
     }
     
     UITapGestureRecognizer * showNotecontent = [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -2901,14 +2907,13 @@
     [alert addGestureRecognizer:showNotecontent];
     [alert setUserInteractionEnabled:YES];
     
+    [dic setObject:alert forKey:@"note"];
     
     if(dele.isGeoPalette == YES){
         [self addAlertToMap:alert onPoint:point];
     }else{
         [canvas addSubview:alert];
     }
-    
-    [dele.notesArray addObject:alert];
     
     //Add self destruct
     NSMutableDictionary * whatView = [[NSMutableDictionary alloc] init];
@@ -2990,7 +2995,10 @@
         [alert addGestureRecognizer:showNotecontent];
         //alert.text = [dic objectForKey:@"noteText"];
         
-        
+        if(![dele.notesArray containsObject:alert]){
+            [dele.notesArray addObject:alert];
+        }
+
     }else if([type isEqualToString:kInterrogation]){
         //imageView.image = interrogationAlert.image;
         alert.image = interrogationAlert.image;
@@ -3011,7 +3019,6 @@
         [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
     }
     
-    [dele.notesArray addObject:alert];
     
     
     NSMutableDictionary * whatView = [[NSMutableDictionary alloc] init];
@@ -3074,6 +3081,8 @@
         AlertAnnotationView * alertview = view.associatedAnnotationView;
         [map removeAnnotation: alertview.point];
     }
+    
+    [dele.notesArray removeObject:view];
     
     
     [sender invalidate];
@@ -3226,7 +3235,7 @@
     
     for(int i = 0; i< bezierPoints.count; i++){
         NSValue * val = bezierPoints[i];
-        CLLocationCoordinate2D coor = [map convertPoint:val.CGPointValue toCoordinateFromView:self.view];
+        CLLocationCoordinate2D coor = [map convertPoint:val.CGPointValue toCoordinateFromView:map];
         coordinateArray[i] = coor;
     }
     
@@ -3335,7 +3344,7 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
     
     UIAlertAction* yesButton = [UIAlertAction
                                 actionWithTitle:@"Let's go"
-                                style:UIAlertActionStyleDefault
+                                 style:UIAlertActionStyleDefault
                                 handler:^(UIAlertAction * action)
                                 {
                                     [alert dismissViewControllerAnimated:YES completion:nil];
@@ -3671,6 +3680,7 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
         [dele.tutSheet removeGestureRecognizer:gr];
     }
     
+    // Collaboration Stuff.
     [collaborationButton setEnabled:YES];
     [self.view sendSubviewToBack:collaborationButton];
     
@@ -3870,6 +3880,7 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
     }else if([annotation isKindOfClass:[AlertAnnotation class]]){
         //It is an alert annotation
         Alert * associated = ((AlertAnnotation *)annotation).alert;
+        NSLog(@"Equals: %d" , associated.image == exclamationAlert.image);
         AlertAnnotationView * pin = [[AlertAnnotationView alloc] initWithAnnotation:annotation alert:associated];
         GeoComponentPointAnnotation * gcpa = (GeoComponentPointAnnotation *)annotation;
         NSArray * gestureRecog = pin.gestureRecognizers;
@@ -3893,7 +3904,7 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
         return pin;
         
         
-    }else{
+    }else if(([annotation isKindOfClass:[GeoComponentPointAnnotation class]])){
         Component * associated = ((GeoComponentPointAnnotation *)annotation).component;
         GeoComponentPointAnnotation * gcpa = (GeoComponentPointAnnotation *)annotation;
         
@@ -3916,6 +3927,37 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
                                                                                  action:@selector(handleAnnotationPoint:)];
         pangr.cancelsTouchesInView = NO;
         [pin addGestureRecognizer:pangr];
+        return pin;
+    }else{
+        MKPointAnnotation *an = ((MKPointAnnotation *) annotation);
+        MKPinAnnotationView *pin = [[MKPinAnnotationView alloc] initWithAnnotation:an reuseIdentifier:@"peerLocation"];
+        an.title = @"Peer data:";
+        [pin setAnimatesDrop:YES];
+        [pin setCanShowCallout:YES];
+        
+        center = [[[NSBundle mainBundle] loadNibNamed:@"UserInfo" owner:self options:nil] firstObject];
+        
+        //[center initValues:@"Peter" andAddress:@"Madrid" andTemperature:@"5ºC"];
+        center.userData = [[NSMutableArray alloc] init];
+        
+        for(ClassAttribute* att in dele.userArray){
+            [center.userData addObject:att.name];
+        }
+        
+        CLLocation *loc = [[CLLocation alloc] initWithLatitude:an.coordinate.latitude longitude:an.coordinate.longitude];
+        
+        [center prepare: dele location:loc];
+        
+        pin.image = [UIImage imageNamed:@"location_pin2.png"];
+        
+        pin.userInteractionEnabled = YES;
+        center.backgroundColor = [UIColor clearColor];
+        
+        pin.detailCalloutAccessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"miso-2.png"]];
+        [pin.detailCalloutAccessoryView addSubview:center];
+        [pin.detailCalloutAccessoryView bringSubviewToFront:center];
+        pin.detailCalloutAccessoryView.userInteractionEnabled = NO;
+        
         return pin;
     }
 
@@ -3969,23 +4011,23 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
     Alert * alert = (Alert *)recog.view;
 
     AlertAnnotationView * view = alert.associatedAnnotationView;
-    
+
     CGPoint p = [recog locationInView:map];
     
-    p.x = p.x + view.frame.size.width/4;
-    p.y = p.y + view.frame.size.height;
+    p.x = p.x + alert.frame.size.width/4;
+    p.y = p.y + alert.frame.size.height;
     
     CLLocationCoordinate2D coor = [map convertPoint:p toCoordinateFromView:self.view];
-    //NSLog(@"%.3f,%.3f", coor.latitude, coor.longitude);
+    NSLog(@"%.3f,%.3f", coor.latitude, coor.longitude);
     if(recog.state == UIGestureRecognizerStateBegan){
         
     }else if(recog.state == UIGestureRecognizerStateChanged){
         [view.point setCoordinate:coor];
         view.coordinate = coor;
-        alert.location = [[CLLocation alloc] initWithLatitude:coor.longitude longitude:coor.longitude];
+        alert.location = [[CLLocation alloc] initWithLatitude:coor.latitude longitude:coor.longitude];
     }else if(recog.state == UIGestureRecognizerStateEnded){
         view.coordinate = coor;
-        alert.location = [[CLLocation alloc] initWithLatitude:coor.longitude longitude:coor.longitude];
+        alert.location = [[CLLocation alloc] initWithLatitude:coor.latitude longitude:coor.longitude];
         [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintMap" object:nil];
         
         [self resendInfo];
