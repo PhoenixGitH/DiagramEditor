@@ -166,130 +166,7 @@
     
     sharingDiagram = NO;
     
-    dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
-    dele.manager.browser.delegate = self;
-    
-    if(dele.notesArray == nil)
-        dele.notesArray = [[NSMutableArray alloc] init];
-    
-    if(dele.drawnsArray == nil)
-        dele.drawnsArray = [[NSMutableArray alloc] init];
-    
-    
-    
-    if (dele.isGeoPalette == NO) { //Prepare canvas
-        //Prepare canvas
-        canvas = [[Canvas alloc] initWithFrame:CGRectMake(0, 0, canvasW, canvasW)];
-        
-        [canvas prepareCanvas];
-        dele.can = canvas;
-        dele.originalCanvasRect = canvas.frame;
-        //canvas.backgroundColor = [dele blue0];
-        canvas.backgroundColor = [UIColor colorWithRed:218/255.0 green:224/255.0 blue:235/255.0 alpha:0.6];
-        [canvas setNeedsDisplay];
-        
-        //Add canvas to scrollView contents
-        [scrollView addSubview:canvas];
-        [scrollView setScrollEnabled:YES];
-        [scrollView setContentSize:CGSizeMake(canvas.frame.size.width, canvas.frame.size.height)];
-        [scrollView setBounces:NO];
-        scrollView.contentSize = CGSizeMake(canvas.frame.size.width, canvas.frame.size.height);
-        scrollView.minimumZoomScale = 0.7;
-        scrollView.maximumZoomScale = 4.0;
-        scrollView.delegate = self;
-        
-        [mapOptionsButton setHidden:YES];
-        
-        //[self setZoomForIntValue:0]; //No zoom
-        float nullZoom = [self getZoomScaleForIntValue:0];
-        [scrollView setZoomScale:nullZoom animated:YES];
-        
-        
-        //Si estoy cargando un fichero
-        if(dele.loadingADiagram){
-            
-    
-                for(Component * comp in dele.components){
-                    [canvas addSubview:comp];
-                    [comp updateNameLabel];
-                }
-                
-                
-                
-                //Load notes
-                for(Alert * al in dele.notesArray){
-                    if(useImageAsIcon == YES){
-                        if(al.attach != nil)
-                            al.image = al.attach;
-                        else{
-                            al.image = noteAlert.image;
-                        }
-                    }else{
-                        al.image = noteAlert.image;
-                    }
-                    [canvas addSubview:al];
-                    [al setUserInteractionEnabled:YES];
-                    UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showNoteContent:)];
-                    [al addGestureRecognizer:tapgr];
-                    
-                    UIPanGestureRecognizer * pang = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleNotePan:)];
-                    [al addGestureRecognizer:pang];
-                }
-                
-                //repaint canvas
-                [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
-            
-            
-        }else{
-        }
-        
-    }else{ //Is geoPalette, prepare map
-        [mapOptionsButton setHidden:NO];
-        [map setHidden:NO];
-        [map setDelegate:self];
-        
-        //map.userTrackingMode = YES;
-
-        [map setShowsUserLocation:YES];
-        dele.map = map;
-        drawnsPolylineArray = [[NSMutableArray alloc] init];
-        pathCoordinates = [[NSMutableDictionary alloc] init];
-        
-        
-        if(dele.loadingADiagram == YES){
-            for(Component * comp in dele.components){
-                [self addComponentAsAnnotationToMap:comp onLatitude:comp.latitude andLongitude:comp.longitude];
-            }
-            
-            //Load notes
-            for(Alert * al in dele.notesArray){
-                if(useImageAsIcon == YES){
-                    if(al.attach != nil)
-                        al.image = al.attach;
-                    else{
-                        al.image = noteAlert.image;
-                    }
-                }else{
-                    al.image = noteAlert.image;
-                }
-                //[canvas addSubview:al];
-                [self addAlertToMap:al onLocation:al.location];
-                [al setUserInteractionEnabled:YES];
-                UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showNoteContent:)];
-                [al addGestureRecognizer:tapgr];
-                
-                UIPanGestureRecognizer * pang = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleAlertPoint:)];
-                [al addGestureRecognizer:pang];
-            }
-        }
-
-         [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintMap" object:self];
-        
-        [map setNeedsDisplay];
-        
-        
-    }
     
     
     
@@ -694,6 +571,9 @@
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dic];
     NSError * error = nil;
     
+    [dele.peersConnected removeObjectForKey:peer.displayName];
+    [self resetPeersLocation];
+    
     [dele.manager.session sendData:data
                            toPeers:dele.manager.session.connectedPeers
                           withMode:MCSessionSendDataReliable
@@ -706,6 +586,35 @@
     }
 }
 
+- (void) resetPeersLocation{
+    for(id<MKAnnotation>  an in dele.map.annotations) {
+        if ([an isKindOfClass:[MKPointAnnotation class]]) {
+            [dele.map removeAnnotation:an];
+        }
+    }
+    NSArray<MCPeerID *> *values = [dele.peersConnected allKeys];
+    NSArray *all = [dele.peersConnected allValues];
+    for(int i=0; i<values.count; i++){
+        if(![values[i] isEqual:dele.myPeerInfo.peerID.displayName]){
+            
+            /* Extract location info */
+            float lon = 0.0,lat = 0.0;
+            
+            for(ClassAttribute *attr in all[i]){
+                if([attr.name isEqualToString:@"lonLoc"]){
+                    lon = [attr.max floatValue];
+                }else if([attr.name isEqualToString:@"latLoc"]){
+                    lat = [attr.max floatValue];
+                }
+            }
+            MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+            CLLocation *location = [[CLLocation alloc] initWithLatitude:lat longitude:lon];
+            [annotation setCoordinate:location.coordinate];
+            [dele.map addAnnotation:annotation];
+        }
+        
+    }
+}
 
 
 -(void)makeNewMasterToPeer:(MCPeerID *)peer{
@@ -786,6 +695,162 @@
     /*palette.paletteItems = [[NSMutableArray alloc] initWithArray:dele.paletteItems];
      [palette preparePalette];
      palette.name = dele.subPalette;*/
+    
+    dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+    
+    dele.manager.browser.delegate = self;
+    
+    if(dele.notesArray == nil)
+        dele.notesArray = [[NSMutableArray alloc] init];
+    
+    if(dele.drawnsArray == nil)
+        dele.drawnsArray = [[NSMutableArray alloc] init];
+    
+    
+    
+    if (dele.isGeoPalette == NO) { //Prepare canvas
+        //Prepare canvas
+        canvas = [[Canvas alloc] initWithFrame:CGRectMake(0, 0, canvasW, canvasW)];
+        
+        [canvas prepareCanvas];
+        dele.can = canvas;
+        dele.originalCanvasRect = canvas.frame;
+        //canvas.backgroundColor = [dele blue0];
+        canvas.backgroundColor = [UIColor colorWithRed:218/255.0 green:224/255.0 blue:235/255.0 alpha:0.6];
+        [canvas setNeedsDisplay];
+        
+        //Add canvas to scrollView contents
+        [scrollView addSubview:canvas];
+        [scrollView setScrollEnabled:YES];
+        [scrollView setContentSize:CGSizeMake(canvas.frame.size.width, canvas.frame.size.height)];
+        [scrollView setBounces:NO];
+        scrollView.contentSize = CGSizeMake(canvas.frame.size.width, canvas.frame.size.height);
+        scrollView.minimumZoomScale = 0.7;
+        scrollView.maximumZoomScale = 4.0;
+        scrollView.delegate = self;
+        
+        [mapOptionsButton setHidden:YES];
+        
+        //[self setZoomForIntValue:0]; //No zoom
+        float nullZoom = [self getZoomScaleForIntValue:0];
+        [scrollView setZoomScale:nullZoom animated:YES];
+        
+        
+        //Si estoy cargando un fichero
+        if(dele.loadingADiagram){
+            
+            
+            for(Component * comp in dele.components){
+                [canvas addSubview:comp];
+                [comp updateNameLabel];
+            }
+            
+            
+            
+            //Load notes
+            for(Alert * al in dele.notesArray){
+                if(useImageAsIcon == YES){
+                    if(al.attach != nil)
+                        al.image = al.attach;
+                    else{
+                        al.image = noteAlert.image;
+                    }
+                }else{
+                    al.image = noteAlert.image;
+                }
+                [canvas addSubview:al];
+                [al setUserInteractionEnabled:YES];
+                UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showNoteContent:)];
+                [al addGestureRecognizer:tapgr];
+                
+                UIPanGestureRecognizer * pang = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleNotePan:)];
+                [al addGestureRecognizer:pang];
+            }
+            
+            //repaint canvas
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+            
+            
+        }else{
+        }
+        
+    }else{ //Is geoPalette, prepare map
+        [mapOptionsButton setHidden:NO];
+        [map setHidden:NO];
+        [map setDelegate:self];
+        
+        //map.userTrackingMode = YES;
+        
+        [map setShowsUserLocation:YES];
+        dele.map = map;
+        drawnsPolylineArray = [[NSMutableArray alloc] init];
+        pathCoordinates = [[NSMutableDictionary alloc] init];
+        
+        
+        if(dele.loadingADiagram == YES){
+            for(Component * comp in dele.components){
+                [self addComponentAsAnnotationToMap:comp onLatitude:comp.latitude andLongitude:comp.longitude];
+            }
+            
+            //Load notes
+            for(Alert * al in dele.notesArray){
+                if(useImageAsIcon == YES){
+                    if(al.attach != nil)
+                        al.image = al.attach;
+                    else{
+                        al.image = noteAlert.image;
+                    }
+                }else{
+                    al.image = noteAlert.image;
+                }
+                //[canvas addSubview:al];
+                [self addAlertToMap:al onLocation:al.location];
+                [al setUserInteractionEnabled:YES];
+                UITapGestureRecognizer * tapgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showNoteContent:)];
+                [al addGestureRecognizer:tapgr];
+                
+                UIPanGestureRecognizer * pang = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleAlertPoint:)];
+                [al addGestureRecognizer:pang];
+            }
+        }
+        
+        
+        
+        if(!dele.amITheMaster){
+            NSArray<MCPeerID *> *values = [dele.peersConnected allKeys];
+            NSArray *all = [dele.peersConnected allValues];
+            for(int i=0; i<values.count; i++){
+                if(![values[i] isEqual:dele.myPeerInfo.peerID]){
+                    
+                    
+                    
+                    /* Extract location info */
+                    float lon = 0.0,lat = 0.0;
+                    
+                    for(ClassAttribute *attr in all[i]){
+                        if([attr.name isEqualToString:@"lonLoc"]){
+                            lon = [attr.max floatValue];
+                        }else if([attr.name isEqualToString:@"latLoc"]){
+                            lat = [attr.max floatValue];
+                        }
+                    }
+                    MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+                    CLLocation *location = [[CLLocation alloc] initWithLatitude:lat longitude:lon];
+                    [annotation setCoordinate:location.coordinate];
+                    [map addAnnotation:annotation];
+                }
+                
+            }
+            
+        }
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintMap" object:self];
+        
+        
+        [map setNeedsDisplay];
+        
+        
+    }
     
     //Añadimos a los items de la paleta el gestor de gestos para poder arrastrarlos
     for(int i  =0; i< palette.paletteItems.count; i++){
@@ -968,6 +1033,7 @@
 
     
     [map addAnnotation:point];
+    [map setNeedsDisplay];
     
 }
 
@@ -986,6 +1052,7 @@
     
     
     [map addAnnotation:point];
+    [map setNeedsDisplay];
     
 }
 
@@ -1134,6 +1201,8 @@
     dele.connections = [[NSMutableArray alloc] init];
     dele.notesArray = [[NSMutableArray alloc] init];
     dele.drawnsArray = [[NSMutableArray alloc] init];
+    dele.userArray = [[NSMutableArray alloc] init];
+    dele.peersConnected = [[NSMutableDictionary alloc] init];
     [canvas prepareCanvas];
     for(id<MKAnnotation>  an in map.annotations) {
         if (map.userLocation != an) {
@@ -2375,7 +2444,27 @@
     
     NSMutableDictionary * dicToSend = [[NSMutableDictionary alloc] init];
     
+    NSMutableArray *array = [[NSMutableArray alloc] initWithArray:dele.userArray copyItems:YES];
     
+    /* Converting to string */
+    NSNumber *num = [NSNumber numberWithDouble:map.userLocation.location.coordinate.latitude];
+    
+    ClassAttribute *attr = [[ClassAttribute alloc] init];
+    attr.max = num;
+    attr.name = @"latLoc";
+    
+    [array addObject:attr];
+    
+    num = [NSNumber numberWithDouble:map.userLocation.location.coordinate.longitude];
+    
+    attr = [[ClassAttribute alloc] init];
+    attr.max = num;
+    attr.name = @"lonLoc";
+    
+    [array addObject:attr];
+    // End converting
+    
+    [dele.peersConnected setObject:array forKey:dele.myPeerInfo.peerID.displayName];
     
     NSData * deleData  =[dele packAppDelegate];
     
@@ -2386,6 +2475,9 @@
     
     
     NSError * error = nil;
+    
+    
+    
     [dele.manager.session sendData:allData
                            toPeers:dele.manager.session.connectedPeers
                           withMode:MCSessionSendDataReliable
@@ -3243,6 +3335,8 @@
     [map addOverlay:line];
     
     [drawnsPolylineArray addObject:line];
+    
+    [self resendInfo];
 }
 
 
@@ -3851,7 +3945,7 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
             [center.userData addObject:att.name];
         }
         
-        [center prepare: dele location:an.location];
+        [center prepare: dele location:an.location andInfo:dele.userArray];
         
         NSDictionary *annotations = dele.paletteAnnotations;
         
@@ -3876,11 +3970,55 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
         [pin.detailCalloutAccessoryView bringSubviewToFront:center];
         pin.detailCalloutAccessoryView.userInteractionEnabled = YES;
         
+        if(!dele.amITheMaster){
+            MCPeerID * pid = dele.myPeerInfo.peerID;
+        
+            NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+            [dic setObject:pid forKey:@"peerID"];
+            
+            NSMutableArray *array = [[NSMutableArray alloc] initWithArray:dele.userArray copyItems:YES];
+            
+            /* Converting to string */
+            NSNumber *num = [NSNumber numberWithDouble:an.location.coordinate.latitude];
+            
+            ClassAttribute *attr = [[ClassAttribute alloc] init];
+            attr.max = num;
+            attr.name = @"latLoc";
+            
+            [array addObject:attr];
+            
+            num = [NSNumber numberWithDouble:an.location.coordinate.longitude];
+            
+            attr = [[ClassAttribute alloc] init];
+            attr.max = num;
+            attr.name = @"lonLoc";
+            
+            [array addObject:attr];
+            // End converting
+            
+            [dic setObject:array forKey:@"InfoUser"];
+            
+            data = [NSKeyedArchiver archivedDataWithRootObject:dic];
+            NSError * error = nil;
+            NSMutableDictionary * Datadic = [[NSMutableDictionary alloc] init];
+            
+            [Datadic setObject:kNewPeer forKey:@"msg"];
+            [Datadic setObject:data forKey:@"data"];
+            
+            NSData *finalData = [NSKeyedArchiver archivedDataWithRootObject:Datadic];
+            
+            
+            [dele.manager.session sendData:finalData
+                                   toPeers:dele.manager.session.connectedPeers
+                                  withMode:MCSessionSendDataReliable
+                                     error:&error];
+        }
+        
         return pin;
     }else if([annotation isKindOfClass:[AlertAnnotation class]]){
         //It is an alert annotation
         Alert * associated = ((AlertAnnotation *)annotation).alert;
-        NSLog(@"Equals: %d" , associated.image == exclamationAlert.image);
+        
         AlertAnnotationView * pin = [[AlertAnnotationView alloc] initWithAnnotation:annotation alert:associated];
         GeoComponentPointAnnotation * gcpa = (GeoComponentPointAnnotation *)annotation;
         NSArray * gestureRecog = pin.gestureRecognizers;
@@ -3935,27 +4073,49 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
         [pin setAnimatesDrop:YES];
         [pin setCanShowCallout:YES];
         
-        center = [[[NSBundle mainBundle] loadNibNamed:@"UserInfo" owner:self options:nil] firstObject];
+        UserInfo *centero = [[[NSBundle mainBundle] loadNibNamed:@"UserInfo" owner:self options:nil] firstObject];
         
         //[center initValues:@"Peter" andAddress:@"Madrid" andTemperature:@"5ºC"];
-        center.userData = [[NSMutableArray alloc] init];
+        centero.userData = [[NSMutableArray alloc] init];
         
-        for(ClassAttribute* att in dele.userArray){
-            [center.userData addObject:att.name];
+        NSArray *infos = [dele.peersConnected allValues];
+        
+        double lon = 0.0,lat = 0.0;
+        
+        for(NSArray* infor in infos){
+            for(ClassAttribute *attr in infor){
+                if([attr.name isEqualToString:@"lonLoc"]){
+                    lon = [attr.max doubleValue];
+                }else if([attr.name isEqualToString:@"latLoc"]){
+                    lat = [attr.max doubleValue];
+                }
+                else{
+                    [centero.userData addObject:attr.name];
+                }
+            }
+            double lonPin = 0.0,latPin = 0.0;
+            latPin = an.coordinate.latitude;
+            lonPin = an.coordinate.longitude;
+            if((fabs(lat - latPin) <= 0.000000000001) && (fabs(lon - lonPin) <= 0.000000000001)){
+                [centero.userData removeAllObjects];
+            }else{
+                CLLocation *loca = [[CLLocation alloc] initWithLatitude:an.coordinate.latitude longitude:an.coordinate.longitude];
+                
+                [centero prepare: dele location:loca andInfo:infor];
+                break;
+            }
         }
         
-        CLLocation *loc = [[CLLocation alloc] initWithLatitude:an.coordinate.latitude longitude:an.coordinate.longitude];
         
-        [center prepare: dele location:loc];
         
         pin.image = [UIImage imageNamed:@"location_pin2.png"];
         
         pin.userInteractionEnabled = YES;
-        center.backgroundColor = [UIColor clearColor];
+        centero.backgroundColor = [UIColor clearColor];
         
         pin.detailCalloutAccessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"miso-2.png"]];
-        [pin.detailCalloutAccessoryView addSubview:center];
-        [pin.detailCalloutAccessoryView bringSubviewToFront:center];
+        [pin.detailCalloutAccessoryView addSubview:centero];
+        [pin.detailCalloutAccessoryView bringSubviewToFront:centero];
         pin.detailCalloutAccessoryView.userInteractionEnabled = NO;
         
         return pin;
@@ -3964,8 +4124,6 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
     return nil;
 }
 
-- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view{
-}
 
 // When map tapped store new data in order to send it after.
 - (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view{
@@ -4003,6 +4161,7 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
     
     //mapView.userTrackingMode = YES;
     map = mapView;
+    
 }
 
 

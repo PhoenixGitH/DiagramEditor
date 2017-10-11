@@ -8,16 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ClassAttribute : NSObject<NSCoding>
+@interface ClassAttribute : NSObject<NSCoding, NSCopying>
 
 
-@property NSString * name;
-@property NSString * type;
-@property NSNumber * min;
-@property NSNumber * max;
-@property NSString * defaultValue;
-@property NSString * currentValue;
-@property NSDictionary * annotations;
+@property (nonatomic,copy) NSString * name;
+@property (nonatomic,copy) NSString * type;
+@property (nonatomic,copy) NSNumber * min;
+@property (nonatomic,copy) NSNumber * max;
+@property (nonatomic,copy) NSString * defaultValue;
+@property (nonatomic,copy) NSString * currentValue;
+@property (nonatomic,copy) NSDictionary * annotations;
 
 @property BOOL isLabel;
 

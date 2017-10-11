@@ -144,7 +144,7 @@
         
     }
     
-    _peersConnected = [[NSMutableDictionary init] alloc];
+    _peersConnected = [[NSMutableDictionary alloc] init];
     
     return YES;
 }
@@ -190,7 +190,15 @@
         
         self.isGeoPalette = [[dic objectForKey:@"GeoPallete"] boolValue];
         
+        self.paletteAnnotations = [dic objectForKey:@"annotations"];
         
+        self.peersConnected = [dic objectForKey:@"connected"];
+        self.userArray = [dic objectForKey:@"userInfo"];
+        
+        for(ClassAttribute* attr in _userArray){
+            attr.currentValue = @"";
+            attr.defaultValue = @"";
+        }
         
         if(chat == nil){
             chat = [[[NSBundle mainBundle] loadNibNamed:@"ChatView"
@@ -232,36 +240,25 @@
             //self.drawnsArray = [dic objectForKey:@"drawnsArray"];
             self.notesArray = [dic objectForKey:@"notesArray"];
             
-            
-            
             if(_isGeoPalette){
                 for(id<MKAnnotation>  an in _map.annotations) {
-                    if (_map.userLocation != an) {
+                    if (_map.userLocation != an && ![an isKindOfClass:[MKPointAnnotation class]]) {
                         [_map removeAnnotation:an];
                     }
                 }
                 
-                for(int i = 0; i< components.count; i++){
-                    GeoComponentPointAnnotation * point = [[GeoComponentPointAnnotation alloc] init];
-                    point.component = components[i];
-                    point.coordinate = CLLocationCoordinate2DMake([components[i] latitude],[components[i] longitude]);;
-                    
-                    [_map addAnnotation:point];
-                    [[components objectAtIndex:i]prepare];
-
-                }
                 
                 for(Alert * al in notesArray){
                     
                     /*AlertAnnotation * annotation = [[AlertAnnotation alloc] init];
-                    
-                    
-                    annotation.coordinate = al.location.coordinate;
-                    
-                    annotation.alert.frame = CGRectMake(0,0,60,60);
-                    annotation.alert = al;
-                    
-                    [_map addAnnotation:annotation];*/
+                     
+                     
+                     annotation.coordinate = al.location.coordinate;
+                     
+                     annotation.alert.frame = CGRectMake(0,0,60,60);
+                     annotation.alert = al;
+                     
+                     [_map addAnnotation:annotation];*/
                     //[_map setNeedsDisplay];
                     
                     
@@ -276,20 +273,33 @@
                     
                     [[NSNotificationCenter defaultCenter] postNotificationName:kNewAlert object:nil userInfo:relinfo];
                     /*AlertAnnotation * annotation = [[AlertAnnotation alloc] init];
-                    
-                    
-                    annotation.coordinate = al.location.coordinate;
-                    
-                    
-                    annotation.alert = al;
-                    
-                    [_map addAnnotation:annotation];
-                    [_map setNeedsDisplay];*/
+                     
+                     
+                     annotation.coordinate = al.location.coordinate;
+                     
+                     
+                     annotation.alert = al;
+                     
+                     [_map addAnnotation:annotation];
+                     [_map setNeedsDisplay];*/
                     
                     //[_map addAnnotation:point];
                     //[[components objectAtIndex:i]prepare];
                     
                 }
+                
+                for(int i = 0; i< components.count; i++){
+                    GeoComponentPointAnnotation * point = [[GeoComponentPointAnnotation alloc] init];
+                    point.component = components[i];
+                    point.coordinate = CLLocationCoordinate2DMake([components[i] latitude],[components[i] longitude]);;
+                    
+                    [_map addAnnotation:point];
+                    [[components objectAtIndex:i]prepare];
+
+                }
+                
+                
+                
                 
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintMap" object:nil];
             }else{
@@ -412,6 +422,36 @@
                         [_map removeAnnotation:an];
                     }
                 }
+            
+                for(Alert * al in notesArray){
+                    
+                    //NSString * noteText = [dataDic objectForKey:@"noteText"];
+                    
+                    //NSLog(@"%@ manda una alerta de tipo %@ en la pos (%f,%f)", who.displayName, type, where.x, where.y);
+                    
+                    
+                    /*AlertAnnotation * annotation = [[AlertAnnotation alloc] init];
+                     
+                     
+                     annotation.coordinate = al.location.coordinate;
+                     
+                     
+                     annotation.alert = al;
+                     
+                     [_map addAnnotation:annotation];
+                     [_map setNeedsDisplay];*/
+                    NSMutableDictionary * relinfo = [[NSMutableDictionary alloc] init];
+                    [relinfo setObject:[NSValue valueWithCGPoint:al.center] forKey:@"where"];
+                    [relinfo setObject:al.who forKey:@"who"];
+                    [relinfo setObject:kNoteType forKey:@"alertType"];
+                    
+                    [relinfo setObject:al forKey:@"note"];
+                    
+                    
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kNewAlert object:nil userInfo:relinfo];
+                }
+
                 
                 for(int i = 0; i< components.count; i++){
                     GeoComponentPointAnnotation * point = [[GeoComponentPointAnnotation alloc] init];
@@ -424,34 +464,6 @@
                     
                 }
                 
-                for(Alert * al in notesArray){
-                    
-                    //NSString * noteText = [dataDic objectForKey:@"noteText"];
-                    
-                    //NSLog(@"%@ manda una alerta de tipo %@ en la pos (%f,%f)", who.displayName, type, where.x, where.y);
-                    
-                    
-                    /*AlertAnnotation * annotation = [[AlertAnnotation alloc] init];
-                    
-                    
-                    annotation.coordinate = al.location.coordinate;
-                    
-                    
-                    annotation.alert = al;
-                    
-                    [_map addAnnotation:annotation];
-                    [_map setNeedsDisplay];*/
-                    NSMutableDictionary * relinfo = [[NSMutableDictionary alloc] init];
-                    [relinfo setObject:[NSValue valueWithCGPoint:al.center] forKey:@"where"];
-                    [relinfo setObject:al.who forKey:@"who"];
-                    [relinfo setObject:kNoteType forKey:@"alertType"];
-                    
-                    [relinfo setObject:al forKey:@"note"];
-                    
-                    
-                    
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kNewAlert object:nil userInfo:relinfo];
-                }
                 
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintMap" object:nil];
 
@@ -506,14 +518,18 @@
     }else if([msg isEqualToString:kDisconnectYourself]){
         MCPeerID * who = [dataDic objectForKey:@"peerID"];
         if([who.displayName isEqualToString:myPeerInfo.peerID.displayName]){ //It's for me
+            
             [manager.session disconnect];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:kGoOut
                                                                 object:nil
                                                               userInfo:nil];
+            
+            
         }else{
             NSLog(@"Somebody has been kicked from session");
-            [_peersConnected removeObjectForKey:who];
+            [self resetPeersLocation];
+            
         }
     }else if([msg isEqualToString:kNewChatMessage]){
 
@@ -606,21 +622,71 @@
     }else if([msg isEqualToString:kUpdatePeer]){
         MCPeerID * who = [dataDic objectForKey:@"peerID"];
         
-        if(![who isEqual:myPeerInfo]){
-            [_peersConnected removeObjectForKey:who];
-            CLLocation *location = [dataDic objectForKey:@"location"];
-            [_peersConnected setObject:who forKey:location];
+        if(![who isEqual:myPeerInfo.peerID]){
+            [_peersConnected removeObjectForKey:who.displayName];
+            //CLLocation *location = [dataDic objectForKey:@"location"];
+            //[_peersConnected setObject:who.displayName forKey:location];
+            [self resetPeersLocation];
+            
         }
     }else if([msg isEqualToString:kNewPeer]){
-        MCPeerID * who = [dataDic objectForKey:@"peerID"];
         
-        if(![who isEqual:myPeerInfo]){
-            CLLocation *location = [dataDic objectForKey:@"location"];
-            [_peersConnected setObject:who forKey:location];
+        NSData * appdeleData = [dataDic objectForKey:@"data"];
+        NSDictionary * dic = [NSKeyedUnarchiver unarchiveObjectWithData:appdeleData];
+        
+        MCPeerID * who = [dic objectForKey:@"peerID"];
+        
+        if(![who.displayName isEqual:myPeerInfo.peerID.displayName]){
+            
+            
+            NSMutableArray *info = [dic objectForKey:@"InfoUser"];
+            [_peersConnected setObject:info forKey:who.displayName];
             MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+            
+            /* Extract location info */
+            float lon = 0.0,lat = 0.0;
+            
+            for(ClassAttribute *attr in info){
+                if([attr.name isEqualToString:@"lonLoc"]){
+                    lon = [attr.max floatValue];
+                }else if([attr.name isEqualToString:@"latLoc"]){
+                    lat = [attr.max floatValue];
+                }
+            }
+            CLLocation *location = [[CLLocation alloc] initWithLatitude:lat longitude:lon];
             [annotation setCoordinate:location.coordinate];
             [_map addAnnotation:annotation];
         }
+    }
+}
+
+- (void) resetPeersLocation{
+    for(id<MKAnnotation>  an in _map.annotations) {
+        if ([an isKindOfClass:[MKPointAnnotation class]]) {
+            [_map removeAnnotation:an];
+        }
+    }
+    NSArray<MCPeerID *> *values = [_peersConnected allKeys];
+    NSArray *all = [_peersConnected allValues];
+    for(int i=0; i<values.count; i++){
+        if(![values[i] isEqual:myPeerInfo.peerID.displayName]){
+            
+            /* Extract location info */
+            float lon = 0.0,lat = 0.0;
+            
+            for(ClassAttribute *attr in all[i]){
+                if([attr.name isEqualToString:@"lonLoc"]){
+                    lon = [attr.max floatValue];
+                }else if([attr.name isEqualToString:@"latLoc"]){
+                    lat = [attr.max floatValue];
+                }
+            }
+            MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+            CLLocation *location = [[CLLocation alloc] initWithLatitude:lat longitude:lon];
+            [annotation setCoordinate:location.coordinate];
+            [_map addAnnotation:annotation];
+        }
+        
     }
 }
 
@@ -696,7 +762,7 @@
 -(NSData *)packAppDelegate{
     NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
     
-    if (components != nil)
+    if(components != nil)
         [dic setObject:components forKey:@"components"];
     if(connections != nil)
         [dic setObject:connections forKey:@"connections"];
@@ -710,6 +776,14 @@
         [dic setObject:subPalette forKey:@"subpalette"];
     if(graphicR != nil)
         [dic setObject:graphicR forKey:@"graphicR"];
+    
+    if(_peersConnected.count > 0){
+        [dic setObject:_peersConnected forKey:@"connected"];
+    }
+    
+    if(_userArray.count > 0){
+        [dic setObject:_userArray forKey:@"userInfo"];
+    }
     
     //Server info
     if(serverId != nil)
@@ -732,7 +806,9 @@
         [dic setObject:_noVisibleItems forKey:@"noVisibleItems"];
     
     [dic setObject:[NSNumber numberWithBool:_isGeoPalette] forKey:@"GeoPallete"];
-
+    
+    
+    [dic setObject:_paletteAnnotations forKey:@"annotations"];
     
     NSData * data = [NSKeyedArchiver archivedDataWithRootObject:dic];
     return data;
@@ -942,6 +1018,27 @@
         missedServerAttemps = 0;
         [_connectedToServerTimer invalidate];
         _connectedToServerTimer = nil;
+        
+        /*NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+        [dic setObject:myPeerInfo.peerID forKey:@"peerID"];
+        
+        NSData *dataSend = [NSKeyedArchiver archivedDataWithRootObject:dic];
+        
+        NSMutableDictionary * dicSend = [[NSMutableDictionary alloc] init];
+        [dicSend setObject:dataSend forKey:@"data"];
+        [dicSend setObject:kDisconnectYourself forKey:@"msg"];
+        
+        NSLog(@"Sending disconnect yourself");
+        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dic];
+        NSError * error = nil;
+        
+        [manager.session sendData:data
+                               toPeers:manager.session.connectedPeers
+                              withMode:MCSessionSendDataReliable
+                                 error:&error];*/
+        
+        
+        
         [[NSNotificationCenter defaultCenter] postNotificationName:kGoOut
                                                             object:nil
                                                           userInfo:nil];

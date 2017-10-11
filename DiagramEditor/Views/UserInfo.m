@@ -1,3 +1,4 @@
+
 //
 //  UserInfo.m
 //  DiagramEditor
@@ -28,9 +29,10 @@
 
 @implementation UserInfo
 
-- (void) prepare: (AppDelegate*) delegate location: (CLLocation *) location{
+- (void) prepare: (AppDelegate*) delegate location: (CLLocation *) location andInfo: (NSArray<ClassAttribute*> *) userinfo{
     _delegate = delegate;
     _location = location;
+    self.userinfo = userinfo;
     self.table.delegate = self;
     self.table.dataSource = self;
     [self.table registerNib:[UINib nibWithNibName:@"StringAttributeTableViewCell" bundle:nil] forCellReuseIdentifier:@"StrCell"];
@@ -63,14 +65,14 @@
     //UITableViewCell *cell;
             
     //NSString* type = [_userData objectAtIndex:indexPath.row];
-    NSString * type = _delegate.userArray[indexPath.row].type;
+    NSString * type = _userinfo[indexPath.row].type;
     
     if([type isEqualToString:@"String"]){
         StringAttributeTableViewCell * atvc = [tableView dequeueReusableCellWithIdentifier:@"StrCell"];
         
         atvc.attributeNameLabel.text = self.userData[indexPath.row];
-        [self checkForAPIString:_delegate.userArray[indexPath.row] andCell:atvc];
-        //atvc.textField.text = _delegate.userArray[indexPath.row].defaultValue;
+        [self checkForAPIString:_userinfo[indexPath.row] andCell:atvc];
+        //atvc.textField.text = _userinfo[indexPath.row].defaultValue;
         atvc.backgroundColor = [UIColor clearColor];
         
         return atvc;
@@ -78,8 +80,8 @@
         BooleanAttributeTableViewCell * batvc = [tableView dequeueReusableCellWithIdentifier:@"BoolCell"];
         
         batvc.nameLabel.text = self.userData[indexPath.row];
-        _delegate.userArray[indexPath.row].defaultValue = @"1";
-        [batvc.switchValue setOn: [_delegate.userArray[indexPath.row].defaultValue intValue]];
+        _userinfo[indexPath.row].defaultValue = @"1";
+        [batvc.switchValue setOn: [_userinfo[indexPath.row].defaultValue intValue]];
         batvc.backgroundColor = [UIColor clearColor];
         
         return batvc;
@@ -88,8 +90,8 @@
         IntegerTableViewCell * iatvc = [tableView dequeueReusableCellWithIdentifier:@"IntCell"];
         
         iatvc.label.text = self.userData[indexPath.row];
-        [self checkForAPIInt: _delegate.userArray[indexPath.row] andCell:iatvc];
-        //iatvc.textField.text = _delegate.userArray[indexPath.row].defaultValue;
+        [self checkForAPIInt: _userinfo[indexPath.row] andCell:iatvc];
+        //iatvc.textField.text = _userinfo[indexPath.row].defaultValue;
         iatvc.backgroundColor = [UIColor clearColor];
     
         return iatvc;
@@ -100,8 +102,8 @@
         datvc.label.text = self.userData[indexPath.row];
         datvc.backgroundColor = [UIColor clearColor];
         
-        [self checkForAPIDouble: _delegate.userArray[indexPath.row] andCell:datvc];
-        //datvc.textField.text = _delegate.userArray[indexPath.row].defaultValue;
+        [self checkForAPIDouble: _userinfo[indexPath.row] andCell:datvc];
+        //datvc.textField.text = _userinfo[indexPath.row].defaultValue;
 
         
         return datvc;

@@ -81,4 +81,23 @@
 
 
 
+- (nonnull id)copyWithZone:(nullable NSZone *)zone {
+    ClassAttribute *copy = [[[self class] alloc] init];
+    
+    if (copy)
+    {
+        copy.name = self.name;
+        copy.type = self.type;
+        copy.min = self.min;
+        copy.max = self.max;
+        copy.defaultValue = self.defaultValue;
+        copy.currentValue = self.currentValue;
+        copy.isLabel = self.isLabel;
+        copy.annotations = nil;
+    }
+    
+    return copy;
+    
+}
+
 @end

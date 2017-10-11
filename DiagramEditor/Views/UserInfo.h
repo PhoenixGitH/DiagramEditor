@@ -20,8 +20,9 @@
 @property (weak, nonatomic) IBOutlet UITableView *table;
 @property AppDelegate *delegate;
 @property CLLocation *location;
+@property NSArray<ClassAttribute*> *userinfo;
 
--(void) prepare: (AppDelegate *) delegate location: (CLLocation*) location;
+-(void) prepare: (AppDelegate *) delegate location: (CLLocation*) location andInfo: (NSArray<ClassAttribute*> *) userinfo;
 
 @end
 
