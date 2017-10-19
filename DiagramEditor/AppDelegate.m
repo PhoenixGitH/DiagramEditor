@@ -1019,7 +1019,7 @@
         [_connectedToServerTimer invalidate];
         _connectedToServerTimer = nil;
         
-        /*NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+        NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
         [dic setObject:myPeerInfo.peerID forKey:@"peerID"];
         
         NSData *dataSend = [NSKeyedArchiver archivedDataWithRootObject:dic];
@@ -1035,7 +1035,7 @@
         [manager.session sendData:data
                                toPeers:manager.session.connectedPeers
                               withMode:MCSessionSendDataReliable
-                                 error:&error];*/
+                                 error:&error];
         
         
         
