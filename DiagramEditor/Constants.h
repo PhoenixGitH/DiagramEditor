@@ -63,6 +63,7 @@ FOUNDATION_EXPORT NSString *const kNewPeer;
 FOUNDATION_EXPORT NSString *const kUpdatePeer;
 FOUNDATION_EXPORT NSString *const kInitialInfoFromServer;
 FOUNDATION_EXPORT NSString *const kChangedState;
+FOUNDATION_EXPORT NSString *const kResetPeers;
 FOUNDATION_EXPORT NSString *const kReceivedData;
 FOUNDATION_EXPORT NSString *const kUpdateData;
 FOUNDATION_EXPORT NSString *const kIWantToBeMaster;

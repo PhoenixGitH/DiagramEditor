@@ -85,6 +85,10 @@
     
     if(state == MCSessionStateNotConnected){
         
+        [dele.peersConnected removeObjectForKey:peer.displayName];
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:kResetPeers object:nil];
+        
         NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
         [dic setObject:peer forKey:@"peerID"];
         

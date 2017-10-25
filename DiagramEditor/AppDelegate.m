@@ -99,6 +99,8 @@
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(didReceiveData:) name:kReceivedData object:nil];
     
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(resetPeersLocation:) name:kResetPeers object:nil];
+    
     
     currentMasterId = nil;
     serverId = nil;
@@ -528,7 +530,8 @@
             
         }else{
             NSLog(@"Somebody has been kicked from session");
-            [self resetPeersLocation];
+            [_peersConnected removeObjectForKey:who.displayName];
+            [self resetPeersLocation: nil];
             
         }
     }else if([msg isEqualToString:kNewChatMessage]){
@@ -626,7 +629,7 @@
             [_peersConnected removeObjectForKey:who.displayName];
             //CLLocation *location = [dataDic objectForKey:@"location"];
             //[_peersConnected setObject:who.displayName forKey:location];
-            [self resetPeersLocation];
+            [self resetPeersLocation: nil];
             
         }
     }else if([msg isEqualToString:kNewPeer]){
@@ -660,7 +663,7 @@
     }
 }
 
-- (void) resetPeersLocation{
+- (void) resetPeersLocation: (NSNotification *) not{
     for(id<MKAnnotation>  an in _map.annotations) {
         if ([an isKindOfClass:[MKPointAnnotation class]]) {
             [_map removeAnnotation:an];
@@ -1019,25 +1022,8 @@
         [_connectedToServerTimer invalidate];
         _connectedToServerTimer = nil;
         
-        /*NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
-        [dic setObject:myPeerInfo.peerID forKey:@"peerID"];
         
-        NSData *dataSend = [NSKeyedArchiver archivedDataWithRootObject:dic];
-        
-        NSMutableDictionary * dicSend = [[NSMutableDictionary alloc] init];
-        [dicSend setObject:dataSend forKey:@"data"];
-        [dicSend setObject:kDisconnectYourself forKey:@"msg"];
-        
-        NSLog(@"Sending disconnect yourself");
-        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dic];
-        NSError * error = nil;
-        
-        [manager.session sendData:data
-                               toPeers:manager.session.connectedPeers
-                              withMode:MCSessionSendDataReliable
-                                 error:&error];
-        */
-        
+        [manager.session disconnect];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:kGoOut
                                                             object:nil

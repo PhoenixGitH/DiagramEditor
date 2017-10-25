@@ -39,6 +39,7 @@ NSString * const kUpdatePeer = @"kUpdatePeer";
 NSString * const kInitialInfoFromServer = @"kInitialInfoFromServer";
 NSString * const kChangedState = @"kChangedState";
 NSString * const kReceivedData = @"kReceivedData";
+NSString * const kResetPeers = @"kResetPeers";
 NSString * const kUpdateData = @"kUpdateData";
 NSString * const kIWantToBeMaster = @"kIWantToBeMaster";
 NSString * const kYouAreTheNewMaster = @"kYouAreTheNewMaster";
