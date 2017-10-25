@@ -80,16 +80,37 @@
     
     NSDictionary * dic = not.userInfo;
     
-    MCPeerID * peer = [dic objectForKey:@"peeerID"];
+    MCPeerID * peer = [dic objectForKey:@"peerID"];
     MCSessionState state = [[dic objectForKey:@"state"]integerValue];
     
-    if([peer.displayName isEqualToString:dele.myPeerInfo.peerID.displayName] && state == MCSessionStateNotConnected){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
-                                                        message:@"Ha sido desconectado"
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
+    if(state == MCSessionStateNotConnected){
+        
+        NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+        [dic setObject:peer forKey:@"peerID"];
+        
+        NSData *dataSend = [NSKeyedArchiver archivedDataWithRootObject:dic];
+        
+        NSMutableDictionary * dicSend = [[NSMutableDictionary alloc] init];
+        [dicSend setObject:dataSend forKey:@"data"];
+        [dicSend setObject:kDisconnectYourself forKey:@"msg"];
+        
+        NSLog(@"Sending disconnect yourself");
+        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dic];
+        NSError * error = nil;
+        
+        [dele.manager.session sendData:data
+                          toPeers:dele.manager.session.connectedPeers
+                         withMode:MCSessionSendDataReliable
+                            error:&error];
+        
+        if([peer.displayName isEqualToString:dele.myPeerInfo.peerID.displayName]){
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Info"
+                                                            message:@"Ha sido desconectado"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
     }
     
     /*if(state == MCSessionStateNotConnected){
@@ -102,6 +123,8 @@
         [alert show];
 
     }*/
+    
+    
     
     NSLog(@"%@ changed state to %ld", peer.displayName, (long)state);
     [self recoverUsersFromAppDelegateSession];
