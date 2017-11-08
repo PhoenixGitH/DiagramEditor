@@ -67,6 +67,10 @@
     //NSString* type = [_userData objectAtIndex:indexPath.row];
     NSString * type = _userinfo[indexPath.row].type;
     
+    NSDictionary *annotations = _delegate.paletteAnnotations;
+    
+    NSString *private = [annotations objectForKey:@"privacity"];
+    
     if([type isEqualToString:@"String"]){
         StringAttributeTableViewCell * atvc = [tableView dequeueReusableCellWithIdentifier:@"StrCell"];
         
@@ -74,6 +78,8 @@
         [self checkForAPIString:_userinfo[indexPath.row] andCell:atvc];
         //atvc.textField.text = _userinfo[indexPath.row].defaultValue;
         atvc.backgroundColor = [UIColor clearColor];
+        if([private isEqualToString:@"privateData"])
+            atvc.textField.text = @"Private";
         
         return atvc;
     }else if([type isEqualToString:@"boolean"] || [type isEqualToString:@"EBooleanObject"]){
@@ -82,6 +88,9 @@
         batvc.nameLabel.text = self.userData[indexPath.row];
         _userinfo[indexPath.row].defaultValue = @"1";
         [batvc.switchValue setOn: [_userinfo[indexPath.row].defaultValue intValue]];
+        if([private isEqualToString:@"privateData"])
+           [batvc.switchValue setEnabled:FALSE];
+        
         batvc.backgroundColor = [UIColor clearColor];
         
         return batvc;
@@ -94,6 +103,9 @@
         //iatvc.textField.text = _userinfo[indexPath.row].defaultValue;
         iatvc.backgroundColor = [UIColor clearColor];
     
+        if([private isEqualToString:@"privateData"])
+            iatvc.textField.text = @"0";
+        
         return iatvc;
     }else if([type isEqualToString:@"EDouble"] || [type isEqualToString:@"EFloat"]){
         
@@ -105,6 +117,8 @@
         [self checkForAPIDouble: _userinfo[indexPath.row] andCell:datvc];
         //datvc.textField.text = _userinfo[indexPath.row].defaultValue;
 
+        if([private isEqualToString:@"privateData"])
+            datvc.textField.text = @"0.00";
         
         return datvc;
     }

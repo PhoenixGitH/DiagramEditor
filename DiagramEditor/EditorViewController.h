@@ -39,7 +39,8 @@ EdgeListDelegate,
 MCBrowserViewControllerDelegate,
 CreateNoteViewDelegate,
 DrawingViewDelegate,
-MKMapViewDelegate
+MKMapViewDelegate,
+CLLocationManagerDelegate
 >{
     CLLocationManager *loc;
     

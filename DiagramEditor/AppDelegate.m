@@ -623,13 +623,16 @@
         missedServerAttemps = 0;
         //NSLog(@"Still connected to server");
     }else if([msg isEqualToString:kUpdatePeer]){
-        MCPeerID * who = [dataDic objectForKey:@"peerID"];
+        NSData * appdeleData = [dataDic objectForKey:@"data"];
+        NSDictionary * dic = [NSKeyedUnarchiver unarchiveObjectWithData:appdeleData];
         
-        if(![who isEqual:myPeerInfo.peerID]){
+        MCPeerID * who = [dic objectForKey:@"peerID"];
+        
+        if(![who isEqual:myPeerInfo.peerID.displayName]){
             [_peersConnected removeObjectForKey:who.displayName];
-            //CLLocation *location = [dataDic objectForKey:@"location"];
-            //[_peersConnected setObject:who.displayName forKey:location];
-            [self resetPeersLocation: nil];
+            NSMutableArray *info = [dic objectForKey:@"InfoUser"];
+            [_peersConnected setObject:info forKey:who.displayName];
+            [self resetPeersLocation:nil];
             
         }
     }else if([msg isEqualToString:kNewPeer]){
@@ -644,21 +647,7 @@
             
             NSMutableArray *info = [dic objectForKey:@"InfoUser"];
             [_peersConnected setObject:info forKey:who.displayName];
-            MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-            
-            /* Extract location info */
-            float lon = 0.0,lat = 0.0;
-            
-            for(ClassAttribute *attr in info){
-                if([attr.name isEqualToString:@"lonLoc"]){
-                    lon = [attr.max floatValue];
-                }else if([attr.name isEqualToString:@"latLoc"]){
-                    lat = [attr.max floatValue];
-                }
-            }
-            CLLocation *location = [[CLLocation alloc] initWithLatitude:lat longitude:lon];
-            [annotation setCoordinate:location.coordinate];
-            [_map addAnnotation:annotation];
+            [self resetPeersLocation:nil];
         }
     }
 }

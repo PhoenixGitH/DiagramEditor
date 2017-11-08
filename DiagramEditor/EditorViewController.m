@@ -4166,7 +4166,8 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
 - (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView{
     [loc requestWhenInUseAuthorization];
     [loc startUpdatingLocation];
-    
+    loc.delegate = self;
+    loc.distanceFilter = 5.0f;
     [mapView setHidden:NO];
     [mapView setHidden:NO];
     [mapView setDelegate:self];
@@ -4456,5 +4457,55 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
     
 }
 
+#pragma CLLocation Manager stuff
+- (void)locationManager:(CLLocationManager *)manager
+     didUpdateLocations:(NSArray<CLLocation *> *)locations{
+    
+    CLLocation *loc = locations[0];
+    
+    MCPeerID * pid = dele.myPeerInfo.peerID;
+    
+    if(pid){
+        NSMutableDictionary * dic = [[NSMutableDictionary alloc] init];
+        [dic setObject:pid forKey:@"peerID"];
+        
+        NSMutableArray *array = [[NSMutableArray alloc] initWithArray:dele.userArray copyItems:YES];
+        
+        /* Converting to string */
+        NSNumber *num = [NSNumber numberWithDouble:loc.coordinate.latitude];
+        
+        ClassAttribute *attr = [[ClassAttribute alloc] init];
+        attr.max = num;
+        attr.name = @"latLoc";
+        
+        [array addObject:attr];
+        
+        num = [NSNumber numberWithDouble:loc.coordinate.longitude];
+        
+        attr = [[ClassAttribute alloc] init];
+        attr.max = num;
+        attr.name = @"lonLoc";
+        
+        [array addObject:attr];
+        // End converting
+        
+        [dic setObject:array forKey:@"InfoUser"];
+        
+        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dic];
+        NSError * error = nil;
+        NSMutableDictionary * Datadic = [[NSMutableDictionary alloc] init];
+        
+        [Datadic setObject:kUpdatePeer forKey:@"msg"];
+        [Datadic setObject:data forKey:@"data"];
+        
+        NSData *finalData = [NSKeyedArchiver archivedDataWithRootObject:Datadic];
+        
+        
+        [dele.manager.session sendData:finalData
+                               toPeers:dele.manager.session.connectedPeers
+                              withMode:MCSessionSendDataReliable
+                                 error:&error];
+    }
+}
 
 @end
