@@ -166,8 +166,6 @@
     
     sharingDiagram = NO;
     
-    
-    
     dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
     dele.manager.browser.delegate = self;
@@ -3957,7 +3955,7 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
             [center.userData addObject:att.name];
         }
         
-        [center prepare: dele location:an.location andInfo:dele.userArray];
+        [center prepare: dele location:an.location andInfo:dele.userArray andOwnData:TRUE];
         
         NSDictionary *annotations = dele.paletteAnnotations;
         
@@ -4091,9 +4089,9 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
         centero.userData = [[NSMutableArray alloc] init];
         
         NSArray *infos = [dele.peersConnected allValues];
-        
+        NSArray *peers = [dele.peersConnected allKeys];
         double lon = 0.0,lat = 0.0;
-        
+        int i = 0;
         for(NSArray* infor in infos){
             for(ClassAttribute *attr in infor){
                 if([attr.name isEqualToString:@"lonLoc"]){
@@ -4113,16 +4111,16 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
             }else{
                 CLLocation *loca = [[CLLocation alloc] initWithLatitude:an.coordinate.latitude longitude:an.coordinate.longitude];
                 
-                [centero prepare: dele location:loca andInfo:infor];
+                [centero prepare: dele location:loca andInfo:infor andOwnData:FALSE];
+                pin.pinTintColor = [dele getColorForPeerWithName:peers[i]];
                 break;
             }
+            i++;
         }
         
+        i = 0;
         
-        
-        pin.image = [UIImage imageNamed:@"location_pin2.png"];
-        
-        pin.userInteractionEnabled = YES;
+        //pin.userInteractionEnabled = YES;
         centero.backgroundColor = [UIColor clearColor];
         
         pin.detailCalloutAccessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"miso-2.png"]];

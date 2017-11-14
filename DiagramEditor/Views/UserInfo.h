@@ -21,8 +21,10 @@
 @property AppDelegate *delegate;
 @property CLLocation *location;
 @property NSArray<ClassAttribute*> *userinfo;
+@property bool isOwnData;
 
--(void) prepare: (AppDelegate *) delegate location: (CLLocation*) location andInfo: (NSArray<ClassAttribute*> *) userinfo;
+-(void) prepare: (AppDelegate *) delegate location: (CLLocation*) location andInfo: (NSArray<ClassAttribute*> *) userinfo andOwnData:
+    (bool) isOwnData;
 
 @end
 

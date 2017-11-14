@@ -29,12 +29,14 @@
 
 @implementation UserInfo
 
-- (void) prepare: (AppDelegate*) delegate location: (CLLocation *) location andInfo: (NSArray<ClassAttribute*> *) userinfo{
+- (void) prepare: (AppDelegate*) delegate location: (CLLocation *) location andInfo: (NSArray<ClassAttribute*> *) userinfo andOwnData:
+    (bool) isOwnData{
     _delegate = delegate;
     _location = location;
     self.userinfo = userinfo;
     self.table.delegate = self;
     self.table.dataSource = self;
+    self.isOwnData = isOwnData;
     [self.table registerNib:[UINib nibWithNibName:@"StringAttributeTableViewCell" bundle:nil] forCellReuseIdentifier:@"StrCell"];
     [self.table registerNib:[UINib nibWithNibName:@"BooleanAttributeTableViewCell" bundle:nil] forCellReuseIdentifier:@"BoolCell"];
     [self.table registerNib:[UINib nibWithNibName:@"DoubleTableViewCell" bundle:nil] forCellReuseIdentifier:@"DoubleCell"];
@@ -78,7 +80,7 @@
         [self checkForAPIString:_userinfo[indexPath.row] andCell:atvc];
         //atvc.textField.text = _userinfo[indexPath.row].defaultValue;
         atvc.backgroundColor = [UIColor clearColor];
-        if([private isEqualToString:@"privateData"])
+        if([private isEqualToString:@"privateData"] && !_isOwnData)
             atvc.textField.text = @"Private";
         
         return atvc;
@@ -88,7 +90,7 @@
         batvc.nameLabel.text = self.userData[indexPath.row];
         _userinfo[indexPath.row].defaultValue = @"1";
         [batvc.switchValue setOn: [_userinfo[indexPath.row].defaultValue intValue]];
-        if([private isEqualToString:@"privateData"])
+        if([private isEqualToString:@"privateData"] && !_isOwnData)
            [batvc.switchValue setEnabled:FALSE];
         
         batvc.backgroundColor = [UIColor clearColor];
@@ -103,7 +105,7 @@
         //iatvc.textField.text = _userinfo[indexPath.row].defaultValue;
         iatvc.backgroundColor = [UIColor clearColor];
     
-        if([private isEqualToString:@"privateData"])
+        if([private isEqualToString:@"privateData"] && !_isOwnData)
             iatvc.textField.text = @"0";
         
         return iatvc;
@@ -117,7 +119,7 @@
         [self checkForAPIDouble: _userinfo[indexPath.row] andCell:datvc];
         //datvc.textField.text = _userinfo[indexPath.row].defaultValue;
 
-        if([private isEqualToString:@"privateData"])
+        if([private isEqualToString:@"privateData"] && !_isOwnData)
             datvc.textField.text = @"0.00";
         
         return datvc;

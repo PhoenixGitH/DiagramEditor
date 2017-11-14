@@ -65,8 +65,6 @@ CLLocationManagerDelegate
     //Button outlets
    // __weak IBOutlet UIButton *saveButton;
     
-    
-    
     int zoomLevel; //0-> No zoom     1-> mid zoom   2-> Full zoom
     
     ComponentDetailsView * compDetView;
