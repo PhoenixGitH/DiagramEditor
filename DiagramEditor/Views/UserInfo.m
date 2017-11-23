@@ -69,6 +69,8 @@
     //NSString* type = [_userData objectAtIndex:indexPath.row];
     NSString * type = _userinfo[indexPath.row].type;
     
+    if([type isEqualToString:@"ExperienceLevel"]) type = @"int";
+    
     NSDictionary *annotations = _delegate.paletteAnnotations;
     
     NSString *private = [annotations objectForKey:@"privacity"];

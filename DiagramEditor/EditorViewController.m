@@ -253,7 +253,6 @@
         drawnsPolylineArray = [[NSMutableArray alloc] init];
         pathCoordinates = [[NSMutableDictionary alloc] init];
         
-        
         if(dele.loadingADiagram == YES){
             for(Component * comp in dele.components){
                 [self addComponentAsAnnotationToMap:comp onLatitude:comp.latitude andLongitude:comp.longitude];
@@ -4075,6 +4074,23 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
                                                                                  action:@selector(handleAnnotationPoint:)];
         pangr.cancelsTouchesInView = NO;
         [pin addGestureRecognizer:pangr];
+        
+        MKDirectionsRequest *request = [[MKDirectionsRequest alloc] init];
+        [request setSource:[MKMapItem mapItemForCurrentLocation]];
+        MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:CLLocationCoordinate2DMake(40.417f, -3.704f) addressDictionary:nil];
+        [request setDestination:[[MKMapItem alloc] initWithPlacemark: placemark]];
+        [request setTransportType:MKDirectionsTransportTypeWalking]; // This can be limited to automobile and walking directions.
+        [request setRequestsAlternateRoutes:NO]; // Gives you several route options.
+        MKDirections *directions = [[MKDirections alloc] initWithRequest:request];
+        [directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
+            if (!error) {
+                for (MKRoute *route in [response routes]) {
+                    [map addOverlay:[route polyline] level:MKOverlayLevelAboveRoads]; // Draws the route above roads, but below labels.
+                    // You can also get turn-by-turn steps, distance, advisory notices, ETA, etc by accessing various route properties.
+                }
+            }
+        }];
+        
         return pin;
     }else{
         MKPointAnnotation *an = ((MKPointAnnotation *) annotation);
@@ -4303,7 +4319,7 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
         [connOverlayDic setObject:conn forKey:key];
         
         
-        [map addOverlay:line];
+        [map addOverlay:line level:MKOverlayLevelAboveRoads];
         [map setNeedsDisplay];
         
        
