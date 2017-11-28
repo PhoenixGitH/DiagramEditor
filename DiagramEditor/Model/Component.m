@@ -1233,6 +1233,8 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
             conn.lineColor = [ColorPalette colorForString:conn.lineColorNameString];
         }
         
+        conn.references = pi.references;
+        
         if(conn.lineColor == nil){
             conn.lineColor = [UIColor redColor];
         }
@@ -1243,7 +1245,7 @@ NSString* const SHOW_INSPECTOR = @"ShowInspector";
         //[conn retrieveConnectionGraphicInfo:ni];
         
         [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
-        
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintMap" object:self];
         
         //TODO: Ofrecer aquí lo de los no draggables
         [self showAddReferencePopupForConnection:conn];

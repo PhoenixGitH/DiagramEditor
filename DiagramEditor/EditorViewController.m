@@ -4075,22 +4075,6 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
         pangr.cancelsTouchesInView = NO;
         [pin addGestureRecognizer:pangr];
         
-        MKDirectionsRequest *request = [[MKDirectionsRequest alloc] init];
-        [request setSource:[MKMapItem mapItemForCurrentLocation]];
-        MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:CLLocationCoordinate2DMake(40.417f, -3.704f) addressDictionary:nil];
-        [request setDestination:[[MKMapItem alloc] initWithPlacemark: placemark]];
-        [request setTransportType:MKDirectionsTransportTypeWalking]; // This can be limited to automobile and walking directions.
-        [request setRequestsAlternateRoutes:NO]; // Gives you several route options.
-        MKDirections *directions = [[MKDirections alloc] initWithRequest:request];
-        [directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
-            if (!error) {
-                for (MKRoute *route in [response routes]) {
-                    [map addOverlay:[route polyline] level:MKOverlayLevelAboveRoads]; // Draws the route above roads, but below labels.
-                    // You can also get turn-by-turn steps, distance, advisory notices, ETA, etc by accessing various route properties.
-                }
-            }
-        }];
-        
         return pin;
     }else{
         MKPointAnnotation *an = ((MKPointAnnotation *) annotation);
@@ -4313,14 +4297,58 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
         coords[1] = tView.coordinate;
         
         MKPolyline * line = [MKPolyline polylineWithCoordinates:coords count:numPoints];
-
         
-        NSString * key = [NSString stringWithFormat:@"%d",(int)line];
-        [connOverlayDic setObject:conn forKey:key];
+        NSDictionary *annotations;
+        
+        // Buscamos si esa referencia tiene anotación.
+        for(Reference *ref in conn.references){
+            if([conn.linkPaletteRefName isEqualToString:ref.name]){
+                annotations = ref.annotations;
+            }
+        }
+        bool isRoute = false;
+        NSString *type;
+        
+        // Tenemos que mirar que tipo de conexión hacer.
+        if(annotations.count > 0){
+            NSString *route = [annotations objectForKey:@"route"];
+            isRoute = [route isEqualToString:@"true"];
+            type = [annotations objectForKey:@"type"];
+        }
+        
+        if(isRoute){
+            MKDirectionsRequest *request = [[MKDirectionsRequest alloc] init];
+            
+            MKPlacemark *placemarkS = [[MKPlacemark alloc] initWithCoordinate:sView.coordinate addressDictionary:nil];
+            
+            [request setSource:[[MKMapItem alloc] initWithPlacemark: placemarkS]];
+            MKPlacemark *placemarkT = [[MKPlacemark alloc] initWithCoordinate:tView.coordinate addressDictionary:nil];
+            [request setDestination:[[MKMapItem alloc] initWithPlacemark: placemarkT]];
+            
+            // Type was walking.
+            if([type isEqualToString:@"walking"]){
+                [request setTransportType:MKDirectionsTransportTypeWalking]; // This can be limited to automobile and walking directions.
+            }
+            
+            [request setRequestsAlternateRoutes:NO]; // Gives you several route options.
+            MKDirections *directions = [[MKDirections alloc] initWithRequest:request];
+            [directions calculateDirectionsWithCompletionHandler:^(MKDirectionsResponse *response, NSError *error) {
+                if (!error) {
+                    for (MKRoute *route in [response routes]) {
+                        [map addOverlay:[route polyline] level:MKOverlayLevelAboveRoads]; // Draws the route above roads, but below labels.
+                        // You can also get turn-by-turn steps, distance, advisory notices, ETA, etc by accessing various route properties.
+                    }
+                }
+            }];
+        }else{
+            NSString * key = [NSString stringWithFormat:@"%d",(int)line];
+            
+            [connOverlayDic setObject:conn forKey:key];
+            [map addOverlay:line level:MKOverlayLevelAboveRoads];
+            [map setNeedsDisplay];
+        }
         
         
-        [map addOverlay:line level:MKOverlayLevelAboveRoads];
-        [map setNeedsDisplay];
         
        
     }

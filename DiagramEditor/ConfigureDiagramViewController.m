@@ -2222,6 +2222,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
                 ref.containment = [[rdic objectForKey:@"containment"]boolValue];
                 ref.target = [rdic objectForKey:@"target"];
                 ref.opposite = [rdic objectForKey:@"opposite"];
+                ref.annotations = [rdic objectForKey:@"annotations"];
                 
                 [refsArray addObject: ref];
             }

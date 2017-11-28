@@ -57,6 +57,7 @@
     AppDelegate * dele = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [dele.connections removeObject:self.connection];
     [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintCanvas" object:self];
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintMap" object:self];
     [self closeConnectionDetailsView];
 }
 

@@ -16,6 +16,7 @@
 @property NSString * opposite;
 @property NSNumber * min;
 @property NSNumber * max;
+@property NSDictionary* annotations;
 
 
 @end
