@@ -4298,12 +4298,12 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
         
         MKPolyline * line = [MKPolyline polylineWithCoordinates:coords count:numPoints];
         
-        NSDictionary *annotations;
+        NSArray *annotations = [[NSArray alloc] init];
         
         // Buscamos si esa referencia tiene anotación.
         for(Reference *ref in conn.references){
             if([conn.linkPaletteRefName isEqualToString:ref.name]){
-                annotations = ref.annotations;
+                annotations = (NSArray *) ref.annotations;
             }
         }
         bool isRoute = false;
@@ -4311,9 +4311,9 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
         
         // Tenemos que mirar que tipo de conexión hacer.
         if(annotations.count > 0){
-            NSString *route = [annotations objectForKey:@"route"];
+            NSString *route = [annotations[0] objectForKey:@"route"];
             isRoute = [route isEqualToString:@"true"];
-            type = [annotations objectForKey:@"type"];
+            type = [annotations[0] objectForKey:@"type"];
         }
         
         if(isRoute){
@@ -4341,15 +4341,13 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
                 }
             }];
         }else{
-            NSString * key = [NSString stringWithFormat:@"%d",(int)line];
-            
-            [connOverlayDic setObject:conn forKey:key];
             [map addOverlay:line level:MKOverlayLevelAboveRoads];
             [map setNeedsDisplay];
         }
         
+        NSString * key = [NSString stringWithFormat:@"%d",(int)line];
         
-        
+        [connOverlayDic setObject:conn forKey:key];
        
     }
     
