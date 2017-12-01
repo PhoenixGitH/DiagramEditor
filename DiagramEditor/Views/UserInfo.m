@@ -11,6 +11,7 @@
 #import "UserInfo.h"
 #import "BooleanAttributeTableViewCell.h"
 #import "StringAttributeTableViewCell.h"
+#import "EnumTableViewCell.h"
 #import "DoubleTableViewCell.h"
 #import "IntegerTableViewCell.h"
 #import "APIModel.h"
@@ -39,6 +40,7 @@
     self.isOwnData = isOwnData;
     [self.table registerNib:[UINib nibWithNibName:@"StringAttributeTableViewCell" bundle:nil] forCellReuseIdentifier:@"StrCell"];
     [self.table registerNib:[UINib nibWithNibName:@"BooleanAttributeTableViewCell" bundle:nil] forCellReuseIdentifier:@"BoolCell"];
+    [self.table registerNib:[UINib nibWithNibName:@"EnumTableViewCell" bundle:nil] forCellReuseIdentifier:@"EnumCell"];
     [self.table registerNib:[UINib nibWithNibName:@"DoubleTableViewCell" bundle:nil] forCellReuseIdentifier:@"DoubleCell"];
     [self.table registerNib:[UINib nibWithNibName:@"IntegerTableViewCell" bundle:nil] forCellReuseIdentifier:@"IntCell"];
     [self.table reloadData];
@@ -69,7 +71,7 @@
     //NSString* type = [_userData objectAtIndex:indexPath.row];
     NSString * type = _userinfo[indexPath.row].type;
     
-    if([type isEqualToString:@"ExperienceLevel"]) type = @"int";
+    //if([type isEqualToString:@"ExperienceLevel"]) type = @"int";
     
     NSDictionary *annotations = _delegate.paletteAnnotations;
     
@@ -125,6 +127,28 @@
             datvc.textField.text = @"0.00";
         
         return datvc;
+    }else{
+        //It is an enum?
+        if([_delegate.enumsDic objectForKey:type] != nil){
+            NSArray * options = [_delegate.enumsDic objectForKey:type];
+            EnumTableViewCell * etvc = [tableView dequeueReusableCellWithIdentifier:@"EnumCell"];
+            
+            etvc.options = options;
+            etvc.label.text = type;
+            etvc.backgroundColor = [UIColor clearColor];
+            
+            if([_delegate amITheMaster]|| _delegate.inMultipeerMode == NO){
+                [etvc.optionsPicker setUserInteractionEnabled:YES];
+            }else{
+                [etvc.optionsPicker setUserInteractionEnabled:NO];
+            }
+            
+            [etvc prepare];
+            etvc.selectionStyle = UITableViewCellSelectionStyleNone;
+                
+            
+            return etvc;
+        }
     }
     
     return nil;

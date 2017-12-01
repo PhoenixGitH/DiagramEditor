@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DiagramEditor/EditorViewController.m"
-            timestampString = "533567295.671114"
+            timestampString = "533825802.250154"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2566"
@@ -122,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DiagramEditor/EditorViewController.m"
-            timestampString = "533567295.673585"
+            timestampString = "533825802.251229"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "4432"
-            endingLineNumber = "4432"
+            startingLineNumber = "4442"
+            endingLineNumber = "4442"
             landmarkName = "-flyToLocation:"
             landmarkType = "7">
          </BreakpointContent>
@@ -138,7 +138,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DiagramEditor/EditorViewController.m"
-            timestampString = "533567295.675221"
+            timestampString = "533825802.251756"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2836"
@@ -154,7 +154,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DiagramEditor/EditorViewController.m"
-            timestampString = "533567295.676296"
+            timestampString = "533825802.252443"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "3108"
@@ -170,7 +170,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DiagramEditor/EditorViewController.m"
-            timestampString = "533567295.677222"
+            timestampString = "533825802.25318"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "3057"
@@ -196,11 +196,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DiagramEditor/EditorViewController.m"
-            timestampString = "533567295.678011"
+            timestampString = "533825802.253662"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "4518"
-            endingLineNumber = "4518"
+            startingLineNumber = "4528"
+            endingLineNumber = "4528"
             landmarkName = "-locationManager:didUpdateLocations:"
             landmarkType = "7">
          </BreakpointContent>
@@ -340,11 +340,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DiagramEditor/EditorViewController.m"
-            timestampString = "533567295.679052"
+            timestampString = "533825802.254293"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "4301"
-            endingLineNumber = "4301"
+            startingLineNumber = "4307"
+            endingLineNumber = "4307"
             landmarkName = "-updateMap:"
             landmarkType = "7">
          </BreakpointContent>
@@ -356,12 +356,44 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DiagramEditor/EditorViewController.m"
-            timestampString = "533567403.128387"
+            timestampString = "533825802.254674"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "4373"
-            endingLineNumber = "4373"
+            startingLineNumber = "4383"
+            endingLineNumber = "4383"
             landmarkName = "-mapView:rendererForOverlay:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DiagramEditor/Views/DetailsViews/ComponentDetailsView.m"
+            timestampString = "533822487.047183"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "490"
+            endingLineNumber = "490"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DiagramEditor/Views/UserInfo.m"
+            timestampString = "533825802.254995"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "132"
+            endingLineNumber = "132"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

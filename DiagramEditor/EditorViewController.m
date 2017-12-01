@@ -3968,7 +3968,9 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
         img = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
         // End resize things
+        
         pin.image = img;
+        
         // End pin image
         
         pin.userInteractionEnabled = YES;
@@ -4007,12 +4009,12 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
             
             [dic setObject:array forKey:@"InfoUser"];
             
-            data = [NSKeyedArchiver archivedDataWithRootObject:dic];
+            NSData *dataSend = [NSKeyedArchiver archivedDataWithRootObject:dic];
             NSError * error = nil;
             NSMutableDictionary * Datadic = [[NSMutableDictionary alloc] init];
             
             [Datadic setObject:kNewPeer forKey:@"msg"];
-            [Datadic setObject:data forKey:@"data"];
+            [Datadic setObject:dataSend forKey:@"data"];
             
             NSData *finalData = [NSKeyedArchiver archivedDataWithRootObject:Datadic];
             
@@ -4022,6 +4024,10 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
                                   withMode:MCSessionSendDataReliable
                                      error:&error];
         }
+        
+        /*if(!data){
+            return nil;
+        }*/
         
         return pin;
     }else if([annotation isKindOfClass:[AlertAnnotation class]]){
@@ -4328,6 +4334,10 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
             // Type was walking.
             if([type isEqualToString:@"walking"]){
                 [request setTransportType:MKDirectionsTransportTypeWalking]; // This can be limited to automobile and walking directions.
+            }else if([type isEqualToString:@"driving"]){
+                [request setTransportType:MKDirectionsTransportTypeAutomobile]; // This can be limited to automobile and walking directions.
+            }else{
+                [request setTransportType:MKDirectionsTransportTypeAny]; // This can be limited to automobile and walking directions.
             }
             
             [request setRequestsAlternateRoutes:NO]; // Gives you several route options.
