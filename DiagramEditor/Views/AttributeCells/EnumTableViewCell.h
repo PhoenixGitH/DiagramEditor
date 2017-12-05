@@ -19,6 +19,7 @@
 @property Component * previewComp;
 
 @property NSArray * options;
+@property NSInteger selectedIndex;
 
 -(void)prepare;
 @end

@@ -1994,6 +1994,33 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
         //Load no visible elements
         for(NSDictionary * classDic in classes){
             
+            NSString *root = [classDic objectForKey:@"root"];
+            
+            if([root isEqualToString:@"true"]){
+                dele.diagramInfo = [[Component alloc] init];
+                
+                NSMutableArray *attrsArray = [[NSMutableArray alloc] init];
+                NSArray *attrs = [classDic objectForKey:@"attributes"];
+                for(int a = 0; a < attrs.count; a++){
+                    NSDictionary * atrDic = [attrs objectAtIndex:a];
+                    temp = [[ClassAttribute alloc]init];
+                    temp.name = [atrDic objectForKey:@"name"];
+                    temp.type = [atrDic objectForKey:@"type"];
+                    temp.min = [f numberFromString:[atrDic objectForKey:@"min"]];
+                    temp.max = [f numberFromString:[atrDic objectForKey:@"max"]];
+                    temp.defaultValue = [atrDic objectForKey:@"default"];
+                    temp.annotations = [atrDic objectForKey:@"annotations"];
+                    if([temp.defaultValue isEqualToString:@"null"]){
+                        temp.defaultValue = @"";
+                    }
+                    
+                    [attrsArray addObject:temp];
+                }
+                
+                dele.diagramInfo.attributes = attrsArray;
+                dele.diagramInfo.image = [UIImage imageNamed:@"infoDiagram.png"];
+            }
+            
             NSString * name = [classDic objectForKey:@"name"];
             
             //Check if I don't have a palette item with this name

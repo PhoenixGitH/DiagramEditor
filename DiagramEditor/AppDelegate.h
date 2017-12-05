@@ -89,8 +89,7 @@
 @property NSMutableArray * drawnsArray;
 
 @property NSMutableDictionary * peersConnected;
-
-
+@property Component * diagramInfo;
 
 @property DrawnAlert * selectedDrawn;
 @property YesOrNoView * yonv;

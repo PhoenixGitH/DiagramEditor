@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		421327C71EDD6F1800786C46 /* miso-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 421327C61EDD6F1800786C46 /* miso-2.png */; };
+		4296E5BF1FD6939E00C0C0AB /* infoIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4296E5BE1FD6939D00C0C0AB /* infoIcon.png */; };
 		42991C7B1EB33229007EE86D /* UserInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42991C7A1EB33229007EE86D /* UserInfo.xib */; };
 		429E72F91E979D88006FFDA3 /* CallModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E72F81E979D88006FFDA3 /* CallModel.m */; };
 		429E73131E979DF7006FFDA3 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 429E72FD1E979DF7006FFDA3 /* Info.plist */; };
@@ -219,6 +220,7 @@
 
 /* Begin PBXFileReference section */
 		421327C61EDD6F1800786C46 /* miso-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "miso-2.png"; sourceTree = "<group>"; };
+		4296E5BE1FD6939D00C0C0AB /* infoIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = infoIcon.png; sourceTree = "<group>"; };
 		42991C7A1EB33229007EE86D /* UserInfo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserInfo.xib; sourceTree = "<group>"; };
 		429E72F71E979D88006FFDA3 /* CallModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallModel.h; sourceTree = "<group>"; };
 		429E72F81E979D88006FFDA3 /* CallModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallModel.m; sourceTree = "<group>"; };
@@ -850,6 +852,7 @@
 		F17B75AE1C22D9D500AB1B57 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				4296E5BE1FD6939D00C0C0AB /* infoIcon.png */,
 				421327C61EDD6F1800786C46 /* miso-2.png */,
 				42C8FE4B1EBB3B9F00A95808 /* location_pin2.png */,
 				42C8FE471EBB37DC00A95808 /* location_pin.png */,
@@ -1209,6 +1212,7 @@
 				F1FEE7131CE099FF00FD4E9B /* note.png in Resources */,
 				42C8FE4C1EBB3B9F00A95808 /* location_pin2.png in Resources */,
 				F157993D1C86FE030009D4C7 /* CloudFileCollectionViewCell.xib in Resources */,
+				4296E5BF1FD6939E00C0C0AB /* infoIcon.png in Resources */,
 				F163AFE41C7B173300BAE67C /* DFAAutomaton.graphicR in Resources */,
 				F10AB80C1C50E85100DE6DCE /* ok.png in Resources */,
 				F1B77AB91D80280800753DB0 /* NodeEdgeCell.xib in Resources */,

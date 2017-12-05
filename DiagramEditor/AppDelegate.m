@@ -194,6 +194,8 @@
         
         self.paletteAnnotations = [dic objectForKey:@"annotations"];
         
+        self.enumsDic = [dic objectForKey:@"enumsDic"];
+        
         self.peersConnected = [dic objectForKey:@"connected"];
         self.userArray = [dic objectForKey:@"userInfo"];
         
@@ -801,6 +803,8 @@
     
     
     [dic setObject:_paletteAnnotations forKey:@"annotations"];
+    
+    [dic setObject:_enumsDic forKey:@"enumsDic"];
     
     NSData * data = [NSKeyedArchiver archivedDataWithRootObject:dic];
     return data;

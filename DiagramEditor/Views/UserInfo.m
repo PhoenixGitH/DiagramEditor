@@ -43,8 +43,8 @@
     [self.table registerNib:[UINib nibWithNibName:@"EnumTableViewCell" bundle:nil] forCellReuseIdentifier:@"EnumCell"];
     [self.table registerNib:[UINib nibWithNibName:@"DoubleTableViewCell" bundle:nil] forCellReuseIdentifier:@"DoubleCell"];
     [self.table registerNib:[UINib nibWithNibName:@"IntegerTableViewCell" bundle:nil] forCellReuseIdentifier:@"IntCell"];
-    [self.table reloadData];
     [self.table layoutIfNeeded];
+    [self.table reloadData];
     self.table.translatesAutoresizingMaskIntoConstraints = NO;
     [self.table sizeToFit];
 }
@@ -137,15 +137,10 @@
             etvc.label.text = type;
             etvc.backgroundColor = [UIColor clearColor];
             
-            if([_delegate amITheMaster]|| _delegate.inMultipeerMode == NO){
-                [etvc.optionsPicker setUserInteractionEnabled:YES];
-            }else{
-                [etvc.optionsPicker setUserInteractionEnabled:NO];
-            }
-            
             [etvc prepare];
             etvc.selectionStyle = UITableViewCellSelectionStyleNone;
-                
+            
+            [etvc.optionsPicker selectRow:[_userinfo[indexPath.row].currentValue integerValue] inComponent:0 animated:NO];
             
             return etvc;
         }

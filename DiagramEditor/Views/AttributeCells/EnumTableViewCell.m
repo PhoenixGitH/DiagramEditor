@@ -75,6 +75,7 @@
     }
     [_previewComp updateNameLabel];
     [_previewComp setNeedsDisplay];
+    _selectedIndex = row;
 }
 
 

@@ -35,6 +35,7 @@
 #import "StringAttributeTableViewCell.h"
 #import "DoubleTableViewCell.h"
 #import "IntegerTableViewCell.h"
+#import "EnumTableViewCell.h"
 
 #define fileExtension @"demiso"
 
@@ -550,6 +551,17 @@
 }
 
 #pragma mark Notificationhandlers
+
+- (IBAction)handleInfoTouch:(id)sender {
+    
+    
+    //Load component details view
+    compDetView.comp = dele.diagramInfo;
+    compDetView.scroll = scrollView;
+    //[compDetView prepare];
+    [self showDetailsView];
+}
+
 
 -(void)handleDrawTouch:(UITapGestureRecognizer *)recog{
     DrawingView * dv = [[[NSBundle mainBundle] loadNibNamed:@"DrawingView"
@@ -4025,9 +4037,9 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
                                      error:&error];
         }
         
-        /*if(!data){
-            return nil;
-        }*/
+        if(!data){
+            pin.image = [UIImage imageNamed:@"location_pin2.png"];
+        }
         
         return pin;
     }else if([annotation isKindOfClass:[AlertAnnotation class]]){
@@ -4160,6 +4172,12 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
                 attr.currentValue = ((IntegerTableViewCell *) center.table.visibleCells[i]).textField.text;
             }else if([type isEqualToString:@"EDouble"] || [type isEqualToString:@"EFloat"]){
                 attr.currentValue = ((DoubleTableViewCell *) center.table.visibleCells[i]).textField.text;
+            }else{
+                //It is an enum?
+                if([dele.enumsDic objectForKey:type] != nil){
+                    EnumTableViewCell *cell = (EnumTableViewCell *) center.table.visibleCells[i];
+                    attr.currentValue = [NSString stringWithFormat:@"%ld", cell.selectedIndex];
+                }
             }
             // Go to next row in section.
             i++;
