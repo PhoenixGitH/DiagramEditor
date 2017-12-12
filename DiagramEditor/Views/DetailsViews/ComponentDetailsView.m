@@ -51,56 +51,57 @@
     
     previewComponent.layer.masksToBounds = NO;
 }
-- (void)prepare {
+- (void)prepare: (bool) root{
     
     
     
     table.delegate = self;
     table.dataSource = self;
     
-    //remove all subviews from previewcomponentView
-    NSArray *vtr = [previewComponentView subviews];
-    for (UIView *v in vtr) {
-        [v removeFromSuperview];
+    if(!root){
+        //remove all subviews from previewcomponentView
+        NSArray *vtr = [previewComponentView subviews];
+        for (UIView *v in vtr) {
+            [v removeFromSuperview];
+        }
+        
+        
+        NSData * buff = [NSKeyedArchiver archivedDataWithRootObject:comp];
+        previewComponent = [NSKeyedUnarchiver unarchiveObjectWithData:buff];
+        
+        CGRect frame = previewComponent.frame;
+        frame.origin.x = 0;
+        frame.origin.y = 0;
+        frame.size.width = previewComponentView.frame.size.width;
+        frame.size.height = previewComponentView.frame.size.height;
+        [previewComponent setFrame:frame];
+        
+        [previewComponentView setBounds:comp.bounds];
+        [previewComponent setBounds:comp.bounds];
+        
+        [previewComponentView addSubview:previewComponent];
+        
+        previewComponent.textLayer = nil;
+        [previewComponent prepare];
+        [previewComponent updateNameLabel];
+        
+        /*for (UIGestureRecognizer *recognizer in previewComponent.gestureRecognizers) {
+         [previewComponent removeGestureRecognizer:recognizer];
+         }*/
+        for (UIGestureRecognizer *recognizer in previewComponent.gestureRecognizers) {
+            [previewComponent removeGestureRecognizer:recognizer];
+        }
+        
+        //Remove all previewComponents subviews
+        NSArray *viewsToRemove = [previewComponent subviews];
+        for (UIView *v in viewsToRemove) {
+            [v removeFromSuperview];
+        }
+        
+        //[previewComponent addSubview:temp];
+        
+        [previewComponent setNeedsDisplay];
     }
-    
-
-    NSData * buff = [NSKeyedArchiver archivedDataWithRootObject:comp];
-    previewComponent = [NSKeyedUnarchiver unarchiveObjectWithData:buff];
-    
-    CGRect frame = previewComponent.frame;
-    frame.origin.x = 0;
-    frame.origin.y = 0;
-    frame.size.width = previewComponentView.frame.size.width;
-    frame.size.height = previewComponentView.frame.size.height;
-    [previewComponent setFrame:frame];
-    
-    [previewComponentView setBounds:comp.bounds];
-    [previewComponent setBounds:comp.bounds];
-    
-    [previewComponentView addSubview:previewComponent];
-    
-    previewComponent.textLayer = nil;
-    [previewComponent prepare];
-    [previewComponent updateNameLabel];
-
-    
-    /*for (UIGestureRecognizer *recognizer in previewComponent.gestureRecognizers) {
-        [previewComponent removeGestureRecognizer:recognizer];
-    }*/
-    for (UIGestureRecognizer *recognizer in previewComponent.gestureRecognizers) {
-        [previewComponent removeGestureRecognizer:recognizer];
-    }
-    
-    //Remove all previewComponents subviews
-    NSArray *viewsToRemove = [previewComponent subviews];
-    for (UIView *v in viewsToRemove) {
-        [v removeFromSuperview];
-    }
-    
-    //[previewComponent addSubview:temp];
-    
-    [previewComponent setNeedsDisplay];
     
     dele = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
@@ -126,11 +127,6 @@
     
     [table reloadData];
     
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(updateThisView:)
-                                                 name:@"repaintCanvas" object:nil];
-    
 }
 
 -(void)updateThisView: (NSNotification *)not{
@@ -138,6 +134,8 @@
 }
 
 - (IBAction)closeDetailsViw:(id)sender {
+    [self showButtons];
+    [self hideInfo];
     [delegate closeDetailsViewAndUpdateThings];
 }
 
@@ -655,7 +653,8 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
 
 #pragma mark UITapGestureRecognizer methods
 -(void)handleTap: (UITapGestureRecognizer *)recog{
-    
+    [self showButtons];
+    [self hideInfo];
     [self setHidden:YES];
 }
 
@@ -859,6 +858,24 @@ cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
     }else{ //Zoom to localization
     }
    
+}
+
+- (void) showButtons{
+    deleteButton.hidden = FALSE;
+    searchButton.hidden = FALSE;
+}
+
+- (void) hideButtons{
+    deleteButton.hidden = TRUE;
+    searchButton.hidden = TRUE;
+}
+
+- (void) showInfo{
+    infoImage.hidden = FALSE;
+}
+
+- (void) hideInfo{
+    infoImage.hidden = TRUE;
 }
 
 @end

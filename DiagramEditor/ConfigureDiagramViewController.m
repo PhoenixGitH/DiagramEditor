@@ -2017,8 +2017,8 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
                     [attrsArray addObject:temp];
                 }
                 
+                dele.diagramInfo.className = [classDic objectForKey:@"name"];
                 dele.diagramInfo.attributes = attrsArray;
-                dele.diagramInfo.image = [UIImage imageNamed:@"infoDiagram.png"];
             }
             
             NSString * name = [classDic objectForKey:@"name"];
@@ -2553,6 +2553,17 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
                     attr.currentValue = [user objectForKey:[@"_" stringByAppendingString:attr.name]];
                 }
             }
+            
+            NSDictionary *diaInfo = [diaDict objectForKey:@"diagramInfo"];
+            for(ClassAttribute *attr in dele.diagramInfo.attributes){
+                NSArray *array = [dele.enumsDic objectForKey:attr.type];
+                if(array){
+                    attr.currentValue = [NSString stringWithFormat:@"%lul", [array indexOfObject:attr.name]];
+                }else{
+                    attr.currentValue = [diaInfo objectForKey:[@"_" stringByAppendingString:attr.name]];
+                }
+            }
+            //NSMutableArray *diaInfo = [[NSMutableArray init]alloc];
             
             NSMutableArray * loadedComponents = [[NSMutableArray alloc] init];
             for(NSDictionary * dic in nodes){

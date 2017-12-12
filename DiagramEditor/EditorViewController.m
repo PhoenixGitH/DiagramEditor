@@ -558,8 +558,13 @@
     //Load component details view
     compDetView.comp = dele.diagramInfo;
     compDetView.scroll = scrollView;
+    [compDetView hideButtons];
+    [compDetView showInfo];
+    [compDetView prepare:TRUE];
     //[compDetView prepare];
     [self showDetailsView];
+    
+    
 }
 
 
@@ -842,10 +847,10 @@
 
 #pragma mark Show/Hide detailsView
 -(void)showDetailsView{
-    [compDetView prepare];
     [self.view bringSubviewToFront:compDetView];
     [compDetView setHidden:NO];
 }
+
 -(void)hideDetailsView{
     [compDetView setHidden:YES];
 }
@@ -895,7 +900,7 @@
     //Load component details view
     compDetView.comp = temp;
     compDetView.scroll = scrollView;
-    //[compDetView prepare];
+    [compDetView prepare: FALSE];
     [self showDetailsView];
     
 }
@@ -1617,7 +1622,9 @@
         NSDictionary *annotations = dele.paletteAnnotations;
         
         [writer writeStartElement:@"user"];
-        [writer writeAttribute:@"pinImage" value: [annotations objectForKey:@"pinImage"]];
+        if([annotations objectForKey:@"pinImage"]){
+            [writer writeAttribute:@"pinImage" value: [annotations objectForKey:@"pinImage"]];
+        }
         
         for(ClassAttribute *attr in dele.userArray){
             [writer writeAttribute:attr.name value: attr.currentValue];
@@ -1626,6 +1633,14 @@
         [writer writeEndElement];
         
     }
+    
+    [writer writeStartElement:@"diagramInfo"];
+    NSArray *info = dele.diagramInfo.attributes;
+    
+    for(ClassAttribute *attr in info){
+        [writer writeAttribute:attr.name value: attr.currentValue];
+    }
+    [writer writeEndElement];
     
     
     [writer writeStartElement:@"palette_name"];
@@ -1636,6 +1651,8 @@
     [writer writeStartElement:@"subpalette"];
     [writer writeAttribute:@"name" value: dele.subPalette];
     [writer writeEndElement];
+    
+    
     
     [writer writeStartElement:@"nodes"];
     Component * temp = nil;

@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -13,10 +16,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oA1-q2-efZ">
+                    <rect key="frame" x="0.0" y="0.0" width="378" height="594"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XdL-iG-QHV">
+                            <rect key="frame" x="20" y="32" width="337" height="542"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F5G-Xd-gpG">
+                                    <rect key="frame" x="30" y="35" width="64" height="64"/>
                                     <color key="backgroundColor" red="0.35686275362968445" green="0.42745098471641541" blue="0.57254904508590698" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="64" id="5na-tb-np5"/>
@@ -30,6 +36,7 @@
                                     </variation>
                                 </view>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gfp-e9-83Z">
+                                    <rect key="frame" x="287" y="18" width="30" height="30"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="30" id="7X0-GI-Hbh"/>
                                         <constraint firstAttribute="height" constant="30" id="kS4-lR-WTD"/>
@@ -40,11 +47,14 @@
                                     </connections>
                                 </button>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="XXy-KM-bF0">
+                                    <rect key="frame" x="8" y="115" width="321" height="419"/>
                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 </tableView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Lp-X2-gES" userLabel="labelsGroup">
+                                    <rect key="frame" x="121" y="56" width="184" height="51"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Class:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZhC-sB-fOT">
+                                            <rect key="frame" x="8" y="8" width="47" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="O5u-oD-iE7"/>
                                                 <constraint firstAttribute="width" constant="47" id="bGE-bp-jNH"/>
@@ -54,6 +64,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="0yh-dn-1P4">
+                                            <rect key="frame" x="59" y="8" width="117" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="Cxb-19-zYN"/>
                                             </constraints>
@@ -69,6 +80,7 @@
                                     </constraints>
                                 </view>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VNz-cj-wNo" userLabel="Search">
+                                    <rect key="frame" x="237" y="18" width="30" height="30"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="30" id="Bzx-Zt-Eqz"/>
                                         <constraint firstAttribute="height" constant="30" id="hAu-bU-0rg"/>
@@ -78,6 +90,9 @@
                                         <action selector="showInCanvas:" destination="iN0-l3-epB" eventType="touchUpInside" id="n5s-cv-Yzz"/>
                                     </connections>
                                 </button>
+                                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="infoIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="17i-99-a3n">
+                                    <rect key="frame" x="30" y="35" width="64" height="64"/>
+                                </imageView>
                             </subviews>
                             <color key="backgroundColor" red="0.50980395078659058" green="0.56470590829849243" blue="0.67843139171600342" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
@@ -91,9 +106,12 @@
                                 <constraint firstItem="2Lp-X2-gES" firstAttribute="top" secondItem="XdL-iG-QHV" secondAttribute="top" constant="56" id="HSA-XZ-zui"/>
                                 <constraint firstItem="ZhC-sB-fOT" firstAttribute="top" secondItem="gfp-e9-83Z" secondAttribute="bottom" constant="16" id="IAG-6Z-SB7"/>
                                 <constraint firstItem="VNz-cj-wNo" firstAttribute="top" secondItem="XdL-iG-QHV" secondAttribute="top" constant="18" id="K4L-XW-J2v"/>
+                                <constraint firstItem="17i-99-a3n" firstAttribute="centerY" secondItem="F5G-Xd-gpG" secondAttribute="centerY" id="KpQ-HZ-xy0"/>
                                 <constraint firstItem="gfp-e9-83Z" firstAttribute="top" secondItem="XdL-iG-QHV" secondAttribute="top" constant="18" id="SQw-UD-kas"/>
                                 <constraint firstItem="F5G-Xd-gpG" firstAttribute="top" secondItem="XdL-iG-QHV" secondAttribute="top" constant="35" id="aIR-9L-hcw"/>
+                                <constraint firstItem="XXy-KM-bF0" firstAttribute="top" secondItem="17i-99-a3n" secondAttribute="bottom" constant="16" id="azL-TE-2fJ"/>
                                 <constraint firstAttribute="width" constant="337" id="djV-pD-UQT"/>
+                                <constraint firstItem="17i-99-a3n" firstAttribute="centerX" secondItem="F5G-Xd-gpG" secondAttribute="centerX" id="dqL-tq-Qbz"/>
                                 <constraint firstAttribute="trailing" secondItem="gfp-e9-83Z" secondAttribute="trailing" constant="20" id="eft-tW-YUZ"/>
                                 <constraint firstItem="F5G-Xd-gpG" firstAttribute="leading" secondItem="XdL-iG-QHV" secondAttribute="leading" constant="30" id="fQf-Pm-Kkw"/>
                                 <constraint firstItem="ZhC-sB-fOT" firstAttribute="leading" secondItem="F5G-Xd-gpG" secondAttribute="trailing" constant="35" id="gvB-tO-s6i"/>
@@ -101,6 +119,7 @@
                                 <constraint firstAttribute="width" relation="lessThanOrEqual" priority="750" constant="600" id="oNM-7q-pNh"/>
                                 <constraint firstAttribute="bottom" secondItem="XXy-KM-bF0" secondAttribute="bottom" constant="8" id="pol-sL-xi8"/>
                                 <constraint firstAttribute="trailing" secondItem="XXy-KM-bF0" secondAttribute="trailing" constant="8" id="rxd-eE-duo"/>
+                                <constraint firstItem="2Lp-X2-gES" firstAttribute="leading" secondItem="17i-99-a3n" secondAttribute="trailing" constant="27" id="xai-a4-KTa"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -129,13 +148,17 @@
                 <outlet property="blurView" destination="oA1-q2-efZ" id="twD-ey-T09"/>
                 <outlet property="classLabel" destination="0yh-dn-1P4" id="9nO-B3-PZE"/>
                 <outlet property="containerView" destination="XdL-iG-QHV" id="Urq-Ir-7gR"/>
+                <outlet property="deleteButton" destination="gfp-e9-83Z" id="obC-RX-spc"/>
+                <outlet property="infoImage" destination="17i-99-a3n" id="g4O-6b-x9F"/>
                 <outlet property="previewComponentView" destination="F5G-Xd-gpG" id="73f-vf-lMC"/>
+                <outlet property="searchButton" destination="VNz-cj-wNo" id="NFG-Qp-yyY"/>
                 <outlet property="table" destination="XXy-KM-bF0" id="Ahd-XS-nnX"/>
             </connections>
             <point key="canvasLocation" x="380" y="291"/>
         </view>
     </objects>
     <resources>
+        <image name="infoIcon.png" width="100" height="100"/>
         <image name="search.png" width="100" height="100"/>
         <image name="trash0.png" width="100" height="100"/>
     </resources>

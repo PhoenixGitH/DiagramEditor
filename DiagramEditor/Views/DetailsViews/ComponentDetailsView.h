@@ -18,10 +18,15 @@
     Component * previewComponent;
     __weak IBOutlet UILabel *typeLabel;
     
+    __weak IBOutlet UIButton *searchButton;
+    __weak IBOutlet UIButton *deleteButton;
+    
+    
     AppDelegate * dele;
     __weak IBOutlet UILabel *classLabel;
     
 
+    __weak IBOutlet UIImageView *infoImage;
     __weak IBOutlet UITableView *table;
 
     
@@ -38,10 +43,15 @@
 @property Component * comp;
 
 @property UIScrollView * scroll;
-- (void)prepare;
+- (void)prepare: (bool)root;
 - (IBAction)closeDetailsViw:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIView *background;
+
+- (void)hideButtons;
+- (void)showButtons;
+- (void)hideInfo;
+- (void)showInfo;
 
 @end;
 
@@ -49,5 +59,6 @@
 
 @required
 -(void)closeDetailsViewAndUpdateThings;
+
 
 @end

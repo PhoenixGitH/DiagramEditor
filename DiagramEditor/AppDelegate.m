@@ -194,6 +194,8 @@
         
         self.paletteAnnotations = [dic objectForKey:@"annotations"];
         
+        self.diagramInfo = [dic objectForKey:@"diagramInfo"];
+        
         self.enumsDic = [dic objectForKey:@"enumsDic"];
         
         self.peersConnected = [dic objectForKey:@"connected"];
@@ -243,6 +245,7 @@
             self.elementsDictionary = [dic objectForKey:@"elementsDictionary"];
             //self.drawnsArray = [dic objectForKey:@"drawnsArray"];
             self.notesArray = [dic objectForKey:@"notesArray"];
+            self.diagramInfo = [dic objectForKey:@"diagramInfo"];
             
             if(_isGeoPalette){
                 for(id<MKAnnotation>  an in _map.annotations) {
@@ -804,6 +807,8 @@
     
     [dic setObject:_paletteAnnotations forKey:@"annotations"];
     
+    [dic setObject:_diagramInfo forKey:@"diagramInfo"];
+    
     [dic setObject:_enumsDic forKey:@"enumsDic"];
     
     NSData * data = [NSKeyedArchiver archivedDataWithRootObject:dic];
@@ -835,6 +840,10 @@
     //Drawns
     if(drawnsArray != nil)
         [dic setObject:drawnsArray forKey:@"drawnsArray"];
+    
+    if(_diagramInfo){
+        [dic setObject:_diagramInfo forKey:@"diagramInfo"];
+    }
     
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dic];
     
