@@ -279,6 +279,9 @@
                 UIPanGestureRecognizer * pang = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handleAlertPoint:)];
                 [al addGestureRecognizer:pang];
             }
+            
+            //repaint canvas
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintMap" object:self];
         }
         
         
@@ -1812,6 +1815,10 @@
             if(c.linkPaletteRefName != nil)
                 [writer writeAttribute:@"link" value:c.linkPaletteRefName];
         }
+        //Convertimos los datos a string.
+        NSData *refDat = [NSKeyedArchiver archivedDataWithRootObject:c.references];
+        [writer writeAttribute:@"references" value:[refDat base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed]];
+        
         [writer writeEndElement];
     }
     [writer writeEndElement];
@@ -4273,7 +4280,6 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
             view.comp.longitude = coor.longitude;
             view.comp.latitude = coor.latitude;
             [[NSNotificationCenter defaultCenter]postNotificationName:@"repaintMap" object:nil];
-            
             [self resendInfo];
         }
         
@@ -4324,18 +4330,22 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
         Component * source = conn.source;
         Component * target = conn.target;
         
-        GeoComponentAnnotationView * sView = source.annotationView;
-        GeoComponentAnnotationView * tView = target.annotationView;
+        //GeoComponentAnnotationView * sView = source.annotationView;
+        //GeoComponentAnnotationView * tView = target.annotationView;
         
         
         int numPoints = 2;
         CLLocationCoordinate2D* coords = malloc(numPoints * sizeof(CLLocationCoordinate2D));
-        //coords[0].latitude = source.latitude;
-        //coords[0].longitude = source.longitude;
-        //coords[1].latitude = target.latitude;
-        //coords[1].longitude = target.longitude;
-        coords[0] = sView.coordinate;
-        coords[1] = tView.coordinate;
+        
+        CLLocationCoordinate2D sourceCoord = CLLocationCoordinate2DMake(source.latitude, source.longitude);
+        CLLocationCoordinate2D targetCoord = CLLocationCoordinate2DMake(target.latitude, target.longitude);
+        
+        coords[0] = sourceCoord;
+        coords[1] = targetCoord;
+        //coords[0] = sView.coordinate;
+        //coords[1] = tView.coordinate;
+        
+        
         
         MKPolyline * line = [MKPolyline polylineWithCoordinates:coords count:numPoints];
         
@@ -4360,10 +4370,10 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
         if(isRoute){
             MKDirectionsRequest *request = [[MKDirectionsRequest alloc] init];
             
-            MKPlacemark *placemarkS = [[MKPlacemark alloc] initWithCoordinate:sView.coordinate addressDictionary:nil];
+            MKPlacemark *placemarkS = [[MKPlacemark alloc] initWithCoordinate:sourceCoord addressDictionary:nil];
             
             [request setSource:[[MKMapItem alloc] initWithPlacemark: placemarkS]];
-            MKPlacemark *placemarkT = [[MKPlacemark alloc] initWithCoordinate:tView.coordinate addressDictionary:nil];
+            MKPlacemark *placemarkT = [[MKPlacemark alloc] initWithCoordinate:targetCoord addressDictionary:nil];
             [request setDestination:[[MKMapItem alloc] initWithPlacemark: placemarkT]];
             
             // Type was walking.
@@ -4387,7 +4397,7 @@ void MyCGPathApplierFunc (void *info, const CGPathElement *element) {
             }];
         }else{
             [map addOverlay:line level:MKOverlayLevelAboveRoads];
-            [map setNeedsDisplay];
+            //[map setNeedsDisplay];
         }
         
         NSString * key = [NSString stringWithFormat:@"%d",(int)line];

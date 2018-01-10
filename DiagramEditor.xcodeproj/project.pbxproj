@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		421327C71EDD6F1800786C46 /* miso-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 421327C61EDD6F1800786C46 /* miso-2.png */; };
+		4279266120064106008AED22 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4279266020064106008AED22 /* LoginViewController.m */; };
 		4296E5BF1FD6939E00C0C0AB /* infoIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4296E5BE1FD6939D00C0C0AB /* infoIcon.png */; };
 		42991C7B1EB33229007EE86D /* UserInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42991C7A1EB33229007EE86D /* UserInfo.xib */; };
 		429E72F91E979D88006FFDA3 /* CallModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 429E72F81E979D88006FFDA3 /* CallModel.m */; };
@@ -220,6 +221,8 @@
 
 /* Begin PBXFileReference section */
 		421327C61EDD6F1800786C46 /* miso-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "miso-2.png"; sourceTree = "<group>"; };
+		4279265F20064055008AED22 /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		4279266020064106008AED22 /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		4296E5BE1FD6939D00C0C0AB /* infoIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = infoIcon.png; sourceTree = "<group>"; };
 		42991C7A1EB33229007EE86D /* UserInfo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserInfo.xib; sourceTree = "<group>"; };
 		429E72F71E979D88006FFDA3 /* CallModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallModel.h; sourceTree = "<group>"; };
@@ -961,6 +964,8 @@
 				F18510871C1824C8004EC4C8 /* Info.plist */,
 				F18510841C1824C8004EC4C8 /* LaunchScreen.storyboard */,
 				F185107F1C1824C8004EC4C8 /* Main.storyboard */,
+				4279266020064106008AED22 /* LoginViewController.m */,
+				4279265F20064055008AED22 /* LoginViewController.h */,
 				42A9E3C51ECAF2EF0030F319 /* DeviceInfo */,
 			);
 			path = DiagramEditor;
@@ -1262,6 +1267,7 @@
 				F1B77ACF1D81709000753DB0 /* RemovableReference.m in Sources */,
 				F1685EAE1C1831840094097E /* ComponentDetailsView.m in Sources */,
 				F128C9911DABAA0100288623 /* AlertAnnotationView.m in Sources */,
+				4279266120064106008AED22 /* LoginViewController.m in Sources */,
 				F1E763CE1DB8BEBF0099148E /* EnumTableViewCell.m in Sources */,
 				F15865141C85A2CA007D2E75 /* CloudDiagramsExplorer.m in Sources */,
 				F153797D1C91B9EA001D8FFB /* RowSwitchTableViewCell.m in Sources */,

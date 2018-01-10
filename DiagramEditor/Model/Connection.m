@@ -113,6 +113,8 @@
     
     [coder encodeObject:instancesOfClassesDictionary forKey:@"instancesOfClassesDictionary"];
     
+    [coder encodeObject:_linkPaletteRefName forKey:@"linkReference"];
+    
 }
 
 - (id)initWithCoder:(NSCoder *)coder {
@@ -135,7 +137,7 @@
         self.lineColorNameString = [coder decodeObjectForKey:@"lineColorNameString"];
         
         self.instancesOfClassesDictionary = [coder decodeObjectForKey:@"instancesOfClassesDictionary"];
-
+        self.linkPaletteRefName = [coder decodeObjectForKey:@"linkReference"];
     }
     return self;
 }

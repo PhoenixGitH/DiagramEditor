@@ -2529,8 +2529,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
             pal = nil;
         }else{
             palette = paletteForUse;
-            
-            
+        
             [palette preparePalette];
             
             dele.paletteItems = [[NSMutableArray alloc] initWithArray:palette.paletteItems];
@@ -3057,7 +3056,13 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
         }
     }
     
+    NSString * strData = [dic objectForKey:@"_references"];
+    NSData* data = [[NSData alloc] initWithBase64EncodedString:strData options:(NSDataBase64DecodingIgnoreUnknownCharacters)];
+    
+    conn.references = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    
     //conn.name = name;
+    conn.linkPaletteRefName = link;
     conn.source = source;
     conn.target = target;
     conn.className = className;
@@ -3068,6 +3073,7 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
                 
                 //Pi = the class that has that linkPalette (e.g class)
                 LinkPalette * lp = [pi.linkPaletteDic objectForKey:link];
+                
                 
                 conn.lineColorNameString = [lp.colorDic objectForKey:@"_name"];
                 conn.lineColor = [ColorPalette colorForString:conn.lineColorNameString];

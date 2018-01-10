@@ -56,6 +56,7 @@
     [coder encodeObject:self.max forKey:@"max"];
     [coder encodeObject:self.opposite forKey:@"opposite"];
     [coder encodeBool:self.containment forKey:@"containment"];
+    [coder encodeObject:_annotations forKey:@"annotations"];
 }
 
 - (id)initWithCoder:(NSCoder *)coder {
@@ -68,6 +69,7 @@
         self.max = [coder decodeObjectForKey:@"max"];
         self.opposite = [coder decodeObjectForKey:@"opposite"];
         self.containment = [coder decodeBoolForKey:@"containment"];
+        self.annotations = [coder decodeObjectForKey:@"annotations"];
     }
     return self;
 }
