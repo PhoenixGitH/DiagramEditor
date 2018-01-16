@@ -9,9 +9,10 @@
 #ifndef LoginViewController_h
 #define LoginViewController_h
 
+#import <UIKit/UIKit.h>
 
 
-@interface LoginViewController: UIViewController
+@interface LoginViewController : UIViewController
     
 
 

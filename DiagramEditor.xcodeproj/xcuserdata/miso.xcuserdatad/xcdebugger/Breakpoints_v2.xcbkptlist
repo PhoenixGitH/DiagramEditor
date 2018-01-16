@@ -212,11 +212,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DiagramEditor/ConfigureDiagramViewController.m"
-            timestampString = "537194992.758423"
+            timestampString = "537443507.559913"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "685"
-            endingLineNumber = "685"
+            startingLineNumber = "686"
+            endingLineNumber = "686"
             landmarkName = "+getPalettesForContent:"
             landmarkType = "7">
          </BreakpointContent>
@@ -228,11 +228,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DiagramEditor/ConfigureDiagramViewController.m"
-            timestampString = "537194992.758814"
+            timestampString = "537443507.560007"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3409"
-            endingLineNumber = "3409"
+            startingLineNumber = "3410"
+            endingLineNumber = "3410"
             landmarkName = "-parseRemainingContent"
             landmarkType = "7">
          </BreakpointContent>
@@ -244,11 +244,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DiagramEditor/ConfigureDiagramViewController.m"
-            timestampString = "537194992.758945"
+            timestampString = "537443507.560051"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "333"
-            endingLineNumber = "333"
+            startingLineNumber = "334"
+            endingLineNumber = "334"
             landmarkName = "-loadPalettesFromServer"
             landmarkType = "7">
          </BreakpointContent>
@@ -260,11 +260,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DiagramEditor/ConfigureDiagramViewController.m"
-            timestampString = "537194992.759071"
+            timestampString = "537443507.5600899"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1894"
-            endingLineNumber = "1894"
+            startingLineNumber = "1895"
+            endingLineNumber = "1895"
             landmarkName = "-completePaletteForJSONAttributes"
             landmarkType = "7">
          </BreakpointContent>
@@ -308,11 +308,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DiagramEditor/ConfigureDiagramViewController.m"
-            timestampString = "537194992.759226"
+            timestampString = "537443507.560154"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2089"
-            endingLineNumber = "2089"
+            startingLineNumber = "2090"
+            endingLineNumber = "2090"
             landmarkName = "-completePaletteForJSONAttributes"
             landmarkType = "7">
          </BreakpointContent>
@@ -324,11 +324,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DiagramEditor/ConfigureDiagramViewController.m"
-            timestampString = "537194992.7593271"
+            timestampString = "537443507.560195"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2559"
-            endingLineNumber = "2559"
+            startingLineNumber = "2560"
+            endingLineNumber = "2560"
             landmarkName = "-parseXMLDiagramWithText:"
             landmarkType = "7">
          </BreakpointContent>
@@ -340,11 +340,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DiagramEditor/ConfigureDiagramViewController.m"
-            timestampString = "537194992.759423"
+            timestampString = "537443507.560232"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2252"
-            endingLineNumber = "2252"
+            startingLineNumber = "2253"
+            endingLineNumber = "2253"
             landmarkName = "-getAttributesForClass:onClassArray:storeOnAttributesArray:andReferencesArray:"
             landmarkType = "7">
          </BreakpointContent>
@@ -356,11 +356,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DiagramEditor/ConfigureDiagramViewController.m"
-            timestampString = "537194992.759517"
+            timestampString = "537443507.560269"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2383"
-            endingLineNumber = "2383"
+            startingLineNumber = "2384"
+            endingLineNumber = "2384"
             landmarkName = "-parseXMLDiagramWithText:"
             landmarkType = "7">
          </BreakpointContent>
@@ -372,11 +372,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DiagramEditor/ConfigureDiagramViewController.m"
-            timestampString = "537194992.759609"
+            timestampString = "537443507.560306"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2595"
-            endingLineNumber = "2595"
+            startingLineNumber = "2596"
+            endingLineNumber = "2596"
             landmarkName = "-parseXMLDiagramWithText:"
             landmarkType = "7">
          </BreakpointContent>
@@ -388,11 +388,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DiagramEditor/ConfigureDiagramViewController.m"
-            timestampString = "537194992.759702"
+            timestampString = "537443507.560342"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3059"
-            endingLineNumber = "3059"
+            startingLineNumber = "3060"
+            endingLineNumber = "3060"
             landmarkName = "-connectionFromDictionary:andComponentsArray:"
             landmarkType = "7">
          </BreakpointContent>

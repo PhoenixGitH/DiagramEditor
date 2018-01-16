@@ -55,7 +55,7 @@
     }else if(section == 1){ //Create palette
         return 1;
     }else if(section == 2){ //Info
-        return 2;
+        return 3;
     }else{
         return 0;
     }
@@ -95,6 +95,8 @@
             cell.textLabel.text = @"Who are we?";
         }else if(indexPath.row == 1){
             cell.textLabel.text = @"Tutorial";
+        }else if(indexPath.row == 2){
+            cell.textLabel.text = @"Exit";
         }
     }
     

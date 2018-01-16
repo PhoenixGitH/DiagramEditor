@@ -21,6 +21,7 @@
 
 #import "ExploreFilesView.h"
 #import "EditorViewController.h"
+#import "LoginViewController.h"
 
 #import "Connection.h"
 
@@ -3607,6 +3608,10 @@ editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
             else if(option == 1){ //Tutorial
                 doingTutorial = YES;
                 [self startConfigureCVTutorial];
+            }else if(option == 2){ //Exit
+                UIStoryboard* sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                LoginViewController *lvc = [sb instantiateViewControllerWithIdentifier:@"LoginViewControllerID"];
+                [self showViewController:lvc sender:self];
             }
             break;
             

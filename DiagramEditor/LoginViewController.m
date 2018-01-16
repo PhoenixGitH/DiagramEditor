@@ -20,9 +20,8 @@
 
 - (IBAction)LogAsGuest:(id)sender {
     UIStoryboard* sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    ConfigureDiagramViewController *cdc = [sb instantiateViewControllerWithIdentifier:@"ConfigureDiagramController"];
-    
-    [self showViewController:cdc animated:YES sender:self];
+    ConfigureDiagramViewController *cdc = [sb instantiateViewControllerWithIdentifier:@"ConfigureViewControllerID"];
+    [self showViewController:cdc sender:self];
 }
 
 @end
