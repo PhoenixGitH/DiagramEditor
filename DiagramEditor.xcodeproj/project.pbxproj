@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		421327C71EDD6F1800786C46 /* miso-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 421327C61EDD6F1800786C46 /* miso-2.png */; };
+		424760232015DF7C002432E8 /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 424760222015DF7C002432E8 /* RegisterViewController.m */; };
 		4279266120064106008AED22 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4279266020064106008AED22 /* LoginViewController.m */; };
 		4296E5BF1FD6939E00C0C0AB /* infoIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4296E5BE1FD6939D00C0C0AB /* infoIcon.png */; };
 		42991C7B1EB33229007EE86D /* UserInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42991C7A1EB33229007EE86D /* UserInfo.xib */; };
@@ -221,6 +222,8 @@
 
 /* Begin PBXFileReference section */
 		421327C61EDD6F1800786C46 /* miso-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "miso-2.png"; sourceTree = "<group>"; };
+		424760222015DF7C002432E8 /* RegisterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
+		424760242015DF8B002432E8 /* RegisterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		4279265F20064055008AED22 /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		4279266020064106008AED22 /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		4296E5BE1FD6939D00C0C0AB /* infoIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = infoIcon.png; sourceTree = "<group>"; };
@@ -964,6 +967,8 @@
 				F18510871C1824C8004EC4C8 /* Info.plist */,
 				F18510841C1824C8004EC4C8 /* LaunchScreen.storyboard */,
 				F185107F1C1824C8004EC4C8 /* Main.storyboard */,
+				424760222015DF7C002432E8 /* RegisterViewController.m */,
+				424760242015DF8B002432E8 /* RegisterViewController.h */,
 				4279266020064106008AED22 /* LoginViewController.m */,
 				4279265F20064055008AED22 /* LoginViewController.h */,
 				42A9E3C51ECAF2EF0030F319 /* DeviceInfo */,
@@ -1252,6 +1257,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F16C7DC11C577E9100CA9B25 /* Reference.m in Sources */,
+				424760232015DF7C002432E8 /* RegisterViewController.m in Sources */,
 				429E732C1EA60738006FFDA3 /* ReadAction.m in Sources */,
 				F107E4641C72221A007DD29E /* ThinkingView.m in Sources */,
 				429E73161E979DF7006FFDA3 /* JSONModelError.m in Sources */,

@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DiagramEditor/EditorViewController.m"
-            timestampString = "537194992.75002"
+            timestampString = "537965124.028301"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2602"
@@ -122,7 +122,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DiagramEditor/EditorViewController.m"
-            timestampString = "537194992.752009"
+            timestampString = "537965124.028568"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "4487"
@@ -138,7 +138,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DiagramEditor/EditorViewController.m"
-            timestampString = "537194992.753938"
+            timestampString = "537965124.028628"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2872"
@@ -154,7 +154,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DiagramEditor/EditorViewController.m"
-            timestampString = "537194992.754899"
+            timestampString = "537965124.028679"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "3144"
@@ -170,7 +170,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DiagramEditor/EditorViewController.m"
-            timestampString = "537194992.75594"
+            timestampString = "537965124.028731"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "3093"
@@ -196,7 +196,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DiagramEditor/EditorViewController.m"
-            timestampString = "537194992.757395"
+            timestampString = "537965124.0287859"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "4573"
@@ -404,12 +404,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DiagramEditor/EditorViewController.m"
-            timestampString = "537194992.759805"
+            timestampString = "537965124.029034"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "4343"
             endingLineNumber = "4343"
             landmarkName = "-updateMap:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DiagramEditor/RARest.m"
+            timestampString = "537965298.75508"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
+            landmarkName = "-getValue"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
