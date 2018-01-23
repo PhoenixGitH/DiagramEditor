@@ -19,6 +19,10 @@
     _role = @"editor";
 }
 
+- (IBAction)backPressed:(id)sender {
+    [self dismissViewControllerAnimated:TRUE completion:nil];
+}
+
 - (IBAction)typeUserChanged:(UISegmentedControl *)sender {
     if(sender.selectedSegmentIndex == 0){
         _role = @"editor";
